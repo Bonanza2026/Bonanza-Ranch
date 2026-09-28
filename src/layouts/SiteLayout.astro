@@ -3,6 +3,7 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CookieNotice from "../components/CookieNotice.astro";
 import ContactOptions from "../components/ContactOptions.astro";
+import { languagePages, siteUrl } from '../../site.config.mjs';
 import "../styles/reference.css";
 import "../styles/bonanza.css";
 import "../styles/dream.css";
@@ -15,6 +16,10 @@ const {
   description = "Weite Landschaft, wilde Begegnungen und ein Leben voller Möglichkeiten. Entdecken Sie die Vision von Bonanza Ranch in Südafrika.",
   lang = "de",
 } = Astro.props;
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const pages = languagePages.find((pair) => Object.values(pair).includes(pathname)) || languagePages[0];
+const canonical = siteUrl + pages[lang === 'en' ? 'en' : 'de'];
+const isHome = ['/', '/de', '/en'].includes(pathname);
 ---
 
 <!doctype html>
@@ -25,7 +30,25 @@ const {
     <meta name="theme-color" content="#fafaf8" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="/bonanza/logo.webp" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="de" href={siteUrl + pages.de} />
+    <link rel="alternate" hreflang="en" href={siteUrl + pages.en} />
+    <link rel="alternate" hreflang="x-default" href={siteUrl + pages.en} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Bonanza Ranch" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'en' ? 'en_GB' : 'de_DE'} />
+    <meta property="og:image" content={siteUrl + '/media/hero-poster-fast.webp'} />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:alt" content={lang === 'en' ? 'The landscape of Bonanza Ranch in South Africa' : 'Die Landschaft der Bonanza Ranch in Südafrika'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="/bonanza/favicon.png" />
+    <link rel="preload" href="/fonts/InterTight-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Oswald-latin.woff2" as="font" type="font/woff2" crossorigin />
+    {isHome && <link rel="preload" href="/media/hero-poster-fast.webp" as="image" fetchpriority="high" />}
   </head>
   <body>
     <a href="#inhalt" class="skip-link">

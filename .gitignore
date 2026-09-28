@@ -15,6 +15,8 @@ docs/*
 !docs/media-optimization.json
 !docs/generated-editorial-images.json
 !docs/map-relief-source.json
+!docs/TECHNICAL-REVIEW.md
 scripts/*
 !scripts/language-routing.test.mjs
 !scripts/optimize-current-media.mjs
+!scripts/site-integrity.test.mjs

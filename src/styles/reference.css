@@ -17,19 +17,17 @@ html.is-transitioning body {
 }
 @font-face {
   font-family: Inter Tight;
-  src:
-    url(/fonts/InterTight-VariableFont_wght.woff2) format("woff2"),
-    url(/fonts/InterTight-VariableFont_wght.woff) format("woff");
+  src: url(/fonts/InterTight-latin.woff2) format("woff2");
   font-style: normal;
-  font-weight: 500;
+  font-weight: 100 900;
+  font-display: swap;
 }
 @font-face {
   font-family: Inter Tight;
-  src:
-    url(/fonts/InterTight-Italic-VariableFont_wght.woff2) format("woff2"),
-    url(/fonts/InterTight-Italic-VariableFont_wght.woff) format("woff");
+  src: url(/fonts/InterTight-Italic-latin.woff2) format("woff2");
   font-style: italic;
-  font-weight: 500;
+  font-weight: 100 900;
+  font-display: swap;
 }
 @font-face {
   font-family: Cardinal Classic Long;
@@ -90,10 +88,9 @@ html.is-transitioning body {
 }
 @font-face {
   font-family: Oswald;
-  src:
-    url(/fonts/Oswald-VariableFont_wght.woff2) format("woff2"),
-    url(/fonts/Oswald-VariableFont_wght.woff) format("woff");
+  src: url(/fonts/Oswald-latin.woff2) format("woff2");
   font-style: normal;
+  font-display: swap;
 }
 html.lenis,
 html.lenis body {

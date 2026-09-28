@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview --host 127.0.0.1 --port 4323",
     "qa": "npm run build && npm test",
-    "test": "node --test scripts/language-routing.test.mjs"
+    "test": "node --test scripts/*.test.mjs"
   },
   "dependencies": {
     "@vercel/functions": "^3.9.9",

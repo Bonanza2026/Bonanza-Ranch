@@ -1,4 +1,4 @@
 ---
 export function getStaticPaths(){return [{params:{slug:'freizeit'}},{params:{slug:'sicherheit'}}]}
-return Astro.redirect('/#'+Astro.params.slug,301);
+return Astro.redirect('/de#'+Astro.params.slug,301);
 ---

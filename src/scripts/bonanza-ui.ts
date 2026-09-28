@@ -56,7 +56,14 @@ export function initializeBonanzaUI(lenis: any) {
   menu.querySelectorAll<HTMLElement>("[data-preview]").forEach((link) => {
     link.addEventListener("mouseenter", () => {
       if (!preview) return;
-      preview.innerHTML = `<div class="menu-img_item"><img class="img-fill" src="${link.dataset.preview}" alt=""></div>`;
+      const item = document.createElement('div');
+      item.className = 'menu-img_item';
+      const image = document.createElement('img');
+      image.className = 'img-fill';
+      image.src = link.dataset.preview!;
+      image.alt = '';
+      item.append(image);
+      preview.replaceChildren(item);
       gsap.fromTo(
         preview,
         { clipPath: "inset(0 100% 0 0)", opacity: 1 },

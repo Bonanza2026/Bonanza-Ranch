@@ -147,7 +147,7 @@ const imageStyle = (position = '50% 50%') => `position:absolute;inset:0;width:10
     </div>
   </div>
 </div>
-<script id="bonanza-page-data" type="application/json" set:html={JSON.stringify(pageData).replace(/</g, '\u003c')} />
+<script id="bonanza-page-data" type="application/json" set:html={JSON.stringify(pageData).replace(/</g, '\\u003c')} />
 
 <style>
   .gallery-slider_zone { z-index:3; }

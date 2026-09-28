@@ -1,13 +1,14 @@
 ---
+import { languagePages } from '../../site.config.mjs';
 const {lang = 'de'} = Astro.props;
 const en = lang === 'en';
-const home = en ? '/en' : '/';
+const home = en ? '/en' : '/de';
 const leisure = home + '#freizeit';
 const security = home + '#sicherheit';
-const paths: Record<string,string> = {'/':'/en','/freizeit':'/en/leisure','/sicherheit':'/en/security','/impressum':'/en/legal','/datenschutz':'/en/privacy'};
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
-const dePath = en ? Object.keys(paths).find(k => paths[k] === pathname) || '/' : pathname;
-const enPath = paths[dePath] || '/en';
+const pages = languagePages.find((pair) => Object.values(pair).includes(pathname)) || languagePages[0];
+const dePath = pages.de;
+const enPath = pages.en;
 ---
 <!-- Adapted as an Astro component; reference layout and motion selectors retained. -->
 <nav aria-label={en ? "Main navigation" : "Hauptnavigation"}>

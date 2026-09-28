@@ -23,7 +23,7 @@ test('manual choice takes priority over country, malformed preferences are ignor
   assert.equal(middleware(request('ZA','not_bonanza_language=de')).status, 307);
 });
 test('explicit language pages, assets and legal links are not redirected', () => {
-  for (const path of ['/en','/datenschutz','/impressum','/media/hero_video.webm']) {
+  for (const path of ['/de','/en','/datenschutz','/impressum','/robots.txt','/llms.txt','/sitemap.xml','/media/hero_video.webm']) {
     assert.equal(middleware(request('US',undefined,path)).headers.get('x-middleware-next'), '1');
   }
 });
