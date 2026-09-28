@@ -66,42 +66,42 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       { y: -200 },
       { y: 0, ease: "none", scrollTrigger: entrance },
     );
-    const opening = {
-      trigger: wrapper,
-      start: "top 65%",
-      end: "bottom top",
-      scrub: true,
-      invalidateOnRefresh: true,
-    };
-    gsap.fromTo(
-      ".reserve-center",
-      { scale: 1, clipPath: "inset(0% 0% 0% 0%)" },
-      {
-        scale: 1.4,
-        clipPath: "inset(10% 0% 10% 0%)",
-        ease: "power1.inOut",
-        scrollTrigger: opening,
-      },
-    );
-    gsap.fromTo(
-      ".reserve-side-left",
-      { x: 0 },
-      {
-        x: () => -w() / 12,
-        ease: "power1.inOut",
-        scrollTrigger: opening,
-      },
-    );
-    gsap.fromTo(
-      ".reserve-side-right",
-      { x: 0 },
-      {
-        x: () => w() / 12,
-        ease: "power1.inOut",
-        scrollTrigger: opening,
-      },
-    );
   }
+  const opening = {
+    trigger: small ? ".reserve-triptych-sticky" : wrapper,
+    start: small ? "top 38.8889%" : "top 65%",
+    end: small ? "top top" : "bottom top",
+    scrub: true,
+    invalidateOnRefresh: true,
+  };
+  gsap.fromTo(
+    ".reserve-center",
+    { scale: 1, clipPath: "inset(0% 0% 0% 0%)" },
+    {
+      scale: small ? 360 / 220 : 1.4,
+      clipPath: small ? "inset(0% 0% 0% 0%)" : "inset(10% 0% 10% 0%)",
+      ease: "power1.inOut",
+      scrollTrigger: opening,
+    },
+  );
+  gsap.fromTo(
+    ".reserve-side-left",
+    { x: 0 },
+    {
+      x: () => -w() * (small ? 0.19444444 : 1 / 12),
+      ease: "power1.inOut",
+      scrollTrigger: opening,
+    },
+  );
+  gsap.fromTo(
+    ".reserve-side-right",
+    { x: 0 },
+    {
+      x: () => w() * (small ? 0.19444444 : 1 / 12),
+      ease: "power1.inOut",
+      scrollTrigger: opening,
+    },
+  );
   gsap.fromTo(
     ".reserve-editorial-image img",
     { yPercent: -8 },
@@ -120,7 +120,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
     track = root.querySelector<HTMLElement>(".life-track")!;
   if (small) {
     const photos = root.querySelectorAll<HTMLElement>(
-      ".reserve-triptych figure, .worlds-mobile-photo, .life-chapter:not(.life-finale) .story-photo",
+      ".worlds-mobile-photo, .life-chapter:not(.life-finale) .story-photo",
     );
     photos.forEach((photo, index) => {
       gsap.fromTo(
