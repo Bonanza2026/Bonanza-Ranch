@@ -1,3 +1,4 @@
+body:has(.legal-page) > nav { color: #19362d !important; background: #fafaf8; }
 .cookie-notice {
   position: fixed;
   bottom: 24px;
