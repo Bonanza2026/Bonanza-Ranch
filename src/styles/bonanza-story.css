@@ -333,9 +333,6 @@ html[lang="en"] .flight-arrival-word {
   font-size: clamp(18px, 1.5vw, 24px);
   line-height: 1.6;
 }
-.wildlife-copy p + p {
-  color: #f5f3edb3;
-}
 .life-iconic {
   width: 100vw;
   display: flex;
