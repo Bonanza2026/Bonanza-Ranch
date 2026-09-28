@@ -77,3 +77,7 @@ Build-time PurgeCSS removes unused selectors from the generated inline styles wh
 Validation: production build and all ten tests pass. Browser checks at 320 x 568, 390 x 844 and 1440 x 900 covered the hero, arrival, wildlife sequence, experience headings and closing section. Mobile has no WebGL canvases or horizontal overflow; desktop still renders the curved gallery. Desktop-to-phone resize clears caption accessibility states. The browser reported no console errors. These checks use viewport emulation, not physical devices.
 
 The measurement after font subsetting was 82 performance (FCP 1.4 s, LCP 4.2 s, TBT 0 ms, CLS 0, Speed Index 4.9 s). This shows run-to-run variation from the preceding 85 result; the final deployed mobile layout and CSS cleanup require a fresh measurement.
+
+Final deployed PageSpeed Insights run at 01:17 CEST, commit ae6c4df: **100 mobile performance**, FCP 1.0 s, LCP 1.0 s, TBT 20 ms, CLS 0.014 and Speed Index 1.5 s. Accessibility 96, Best Practices 100, SEO 100. Unused CSS estimate is now 12 KiB instead of 31 KiB. This is a single laboratory run, not a field-data guarantee. Report: https://pagespeed.web.dev/analysis/https-bonanza-gamma-vercel-app-en/999z7ux1cm?form_factor=mobile
+
+Vercel reported deployment complete. The public German page was checked in the browser: mobile captions use the sequential grid, experience headings are centred and no WebGL canvas is mounted.
