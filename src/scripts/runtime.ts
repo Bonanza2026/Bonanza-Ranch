@@ -18,9 +18,10 @@ import { createDreamMotion } from "./dream-motion";
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MotionPathPlugin, CustomEase);
 ScrollTrigger.config({ ignoreMobileResize: true });
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+const nativeScroll = new URLSearchParams(location.search).get("scroll") === "native";
 const lenis = new Lenis({
   autoRaf: false,
-  smoothWheel: !reduced.matches,
+  smoothWheel: !reduced.matches && !nativeScroll,
   syncTouch: false,
 });
 lenis.on("scroll", ScrollTrigger.update);
@@ -103,7 +104,13 @@ function setupMotion() {
   cleanups.push(() => context.revert());
   ScrollTrigger.refresh();
 }
-document.fonts.ready.then(setupMotion);
+// Start the journey immediately. Slow font downloads must not leave the hero
+// pinned without its flight timeline; only measurements need a later refresh.
+setupMotion();
+document.fonts.ready.then(() => {
+  lenis.resize();
+  ScrollTrigger.refresh();
+});
 let width = innerWidth,
   resizeTimer: ReturnType<typeof setTimeout>;
 addEventListener("resize", () => {
