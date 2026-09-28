@@ -305,6 +305,7 @@ html[lang="en"] .flight-arrival-word {
 }
 .life-wildlife {
   width: 110vw;
+  margin-left: clamp(32px, 4vw, 80px);
   display: grid;
   grid-template-columns: 46vw minmax(0, 1fr);
 }
@@ -1154,6 +1155,7 @@ html[lang="en"] .flight-arrival-word {
   .life-wildlife {
     width: 100%;
     height: auto;
+    margin: 24px 0 0;
     padding: 0;
     display: block;
   }
