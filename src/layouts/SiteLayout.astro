@@ -90,7 +90,18 @@ const isHome = ['/', '/de', '/en'].includes(pathname);
       </video>
     </dialog>
     <script>
-      import "../scripts/runtime";
+      // Let the server-rendered hero paint before initializing scroll scenes.
+      const start = () => import("../scripts/runtime");
+      if (typeof PerformanceObserver !== 'undefined' && PerformanceObserver.supportedEntryTypes.includes('paint')) {
+        const observer = new PerformanceObserver((list) => {
+          if (!list.getEntries().some(entry => entry.name === 'first-contentful-paint')) return;
+          observer.disconnect();
+          start();
+        });
+        observer.observe({type: 'paint', buffered: true});
+      } else {
+        requestAnimationFrame(() => requestAnimationFrame(start));
+      }
     </script>
   </body>
 </html>
