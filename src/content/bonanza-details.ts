@@ -28,7 +28,7 @@ export const bonanzaDetails: Record<DetailSlug, DetailPage> = {
       { id: 'service', title: 'Die Zeit gehört Ihnen.', body: 'Ein persönlicher Butler-Service rund um die Uhr soll den Alltag erleichtern. Das Clubhaus wird als Ort für lange Abende gedacht: mit Lounge, Boma-Feuer und einem Gourmet-Braai unter freiem Himmel.', image: '/bonanza/concepts/clubhouse-concept.webp', alt: 'Unverbindliche Konzeptvisualisierung einer Clubhaus-Lounge mit Boma-Feuer', concept: true, facts: ['Butler-Service 24/7 und Privatkoch', 'Clubhaus, Lounge und Boma-Feuerstelle', 'Sternenbeobachtung, Weinverkostungen und private Veranstaltungen im Konzept', 'Helikopter-Anreise und Landeplatz im Planungskonzept'] },
     ],
     gallery: [lake, flowers, { image: '/bonanza/experiences/giraffes.webp', alt: 'Giraffen zwischen grünen Sträuchern', title: 'Begegnungen in der Natur', body: 'Wildlife-Motiv aus der bereitgestellten Bildsammlung. Geführte Erlebnisse mit Rangern sind Teil des Konzepts.', position: '50% 28%' }],
-    closing: 'Mehr Raum für das Leben.', closingBody: 'Bonanza Ranch Eco Wildlife Estate · Die Vision eines privaten Rückzugsorts in Südafrika.',
+    closing: 'Mehr Raum für das Leben.', closingBody: 'Bonanza Ranch Eco Wildlife Estate © · Die Vision eines privaten Rückzugsorts in Südafrika.',
     closingImages: [{ ...flowers, image: '/bonanza/experiences/mist-trail.webp', alt: 'Ein schmaler Weg führt durch eine neblige Landschaft' }, lake, { ...flowers, image: '/bonanza/experiences/protea.webp', alt: 'Rosa Protea vor einer Berglandschaft' }],
   },
   sicherheit: {
