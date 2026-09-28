@@ -1,0 +1,4 @@
+---
+export function getStaticPaths(){return [{params:{slug:'leisure'},props:{anchor:'freizeit'}},{params:{slug:'security'},props:{anchor:'sicherheit'}}]}
+return Astro.redirect('/en/#'+Astro.props.anchor,301);
+---

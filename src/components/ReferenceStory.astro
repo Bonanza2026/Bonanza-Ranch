@@ -1,0 +1,408 @@
+---
+import StoryImage from "./StoryImage.astro";
+const { lang = "de" } = Astro.props;
+const en = lang === "en";
+const t = (de: string, english: string) => (en ? english : de);
+const e = "/bonanza/experiences/",
+  c = "/bonanza/concepts/";
+const images = [
+  "horse",
+  "giraffes",
+  "elephant",
+  "lake",
+  "kudu",
+  "safari-drive",
+  "mountain-lake",
+  "protea",
+  "bird",
+  "bush-trail",
+  "rhino",
+  "cheetahs",
+  "wildflowers",
+];
+---
+
+<section class="wild-worlds" id="wildnis" data-nav-theme="light">
+  <header class="worlds-intro">
+    <h2 class="worlds-heading">
+      <span>{t("Wildnis.", "Wilderness.")}</span>
+      <em>{t("Ganz nah.", "Up close.")}</em>
+    </h2>
+  </header>
+  <div class="worlds-stage">
+    <div class="worlds-webgl" aria-hidden="true">
+      <div class="worlds-fallback">
+        {["kudu", "giraffes", "elephant"].map((name) => (
+          <img
+            src={`${e}${name}.webp`}
+            alt=""
+            width="1440"
+            height="960"
+            loading="lazy"
+          />
+        ))}
+      </div>
+    </div>
+    <div class="worlds-captions">
+      <div class="worlds-caption">
+        <h3>
+          {t("Safari.", "Safari.")}{" "}
+          <em>{t("Vor Ihrer Haustür.", "At your doorstep.")}</em>
+        </h3>
+        <p>
+          {t(
+            "Früh aufbrechen. Mit Rangern den Spuren der Tiere folgen. Geführte Safaris gehören zur Vision von Bonanza.",
+            "An early start. Following wildlife tracks with rangers. Guided safaris form part of the Bonanza vision.",
+          )}
+        </p>
+      </div>
+      <div class="worlds-caption">
+        <h3>
+          {t("Beobachten.", "Watch.")}{" "}
+          <em>{t("Zeit vergessen.", "Forget the time.")}</em>
+        </h3>
+        <p>
+          {t(
+            "Eine Herde am Horizont. Ein Rascheln im Busch. Begegnungen, für die man keinen Termin braucht.",
+            "A herd on the horizon. A rustle in the bush. Encounters you cannot put in a diary.",
+          )}
+        </p>
+      </div>
+      <div class="worlds-caption">
+        <h3>
+          {t("Wildnis braucht", "Wildlife needs")}{" "}
+          <em>{t("Freiraum.", "room to roam.")}</em>
+        </h3>
+        <p>
+          {t(
+            "Das geplante Wildschutzgebiet soll weite Lebensräume erhalten. Ein Ort für Südafrikas Tierwelt. Und für Menschen, die ihr näher sein möchten.",
+            "The planned reserve is intended to preserve open habitats. A place for South Africa’s wildlife, and for people who want to live closer to it.",
+          )}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section
+  class="life-film"
+  id="freizeit"
+  data-nav-theme="light"
+  aria-label={t(
+    "Die geplanten Erlebnisse auf Bonanza",
+    "Experiences envisaged on Bonanza",
+  )}
+>
+  <div class="life-stage">
+    <div class="life-track">
+      <article class="life-chapter life-intro" data-life-chapter>
+        <div class="life-card">
+          <h2 class="life-card-title">{t("ERLEBNISSE", "EXPERIENCES")}</h2>
+          <p class="life-card-summary">
+            {t(
+              "Ein Ausritt am Morgen. Ein langer Abend am Feuer. Dazwischen entscheiden Sie. Das ist die Freizeitvision für Bonanza.",
+              "A morning in the saddle. A long evening by the fire. What happens in between is up to you. This is the life envisaged at Bonanza.",
+            )}
+          </p>
+          <div class="life-card-picture">
+            <StoryImage
+              src={`${e}horse.webp`}
+              alt={t("Pferd im hohen Gras", "Horse in tall grass")}
+              position="50% 15%"
+            />
+            <h3>
+              <em>{t("Im", "In the")}</em>
+              <span>{t("SATTEL", "SADDLE")}</span>
+            </h3>
+            <p>
+              {t(
+                "Mit einem Ranger aufbrechen, bevor der Tag heiß wird. Geplant sind eine eigene Reitanlage mit 30 Pferden und geführte Ausritte durch das Reservat.",
+                "Set out with a ranger before the heat of the day. Private stables with 30 horses and guided rides through the reserve are planned.",
+              )}
+            </p>
+          </div>
+        </div>
+      </article>
+      <article
+        class="life-chapter life-full-photo"
+        aria-label={t("Safari in Südafrika", "Safari in South Africa")}
+      >
+        <StoryImage
+          src={`${e}safari-drive.webp`}
+          caption={t("Safari mit Rangern · 50 km Offroad-Strecken im Konzept", "Ranger-led safaris · 50 km of off-road trails envisaged")}
+          alt={t(
+            "Safari-Ausfahrt in Südafrika",
+            "Safari drive in South Africa",
+          )}
+        />
+      </article>
+      <article class="life-chapter life-iconic" data-life-chapter>
+        <div class="iconic-column">
+          <h3>
+            <em>{t("Ans", "By the")}</em>
+            <span>{t("WASSER", "WATER")}</span>
+          </h3>
+          <p>
+            {t(
+              "Früh die Angel auswerfen. Später mit dem Kajak hinaus. Angeln, Kajakfahren und Jetski sind im Freizeitkonzept vorgesehen.",
+              "Cast a line early. Take a kayak out later. Fishing, kayaking and jet skiing are envisaged in the leisure programme.",
+            )}
+          </p>
+          <StoryImage
+            src={`${e}lake.webp`}
+            alt={t(
+              "See in weiter Berglandschaft",
+              "Lake in open mountain scenery",
+            )}
+          />
+        </div>
+      </article>
+      <article class="life-chapter life-full-photo">
+        <StoryImage
+          src={`${e}bush-trail.webp`}
+          caption={t("150 km Wege geplant · fürs Mountainbike, Gravelbike und den langen Weg nach Hause", "150 km of trails planned · for mountain bikes, gravel bikes and the long way home")}
+          alt={t(
+            "Wege durch die südafrikanische Landschaft",
+            "Trails through South African countryside",
+          )}
+        />
+      </article>
+      <article class="life-chapter life-finesse" data-life-chapter>
+        <h3>
+          <em>{t("Lust auf", "Time for")}</em>
+          <span>{t("EIN MATCH?", "A MATCH?")}</span>
+        </h3>
+        <div class="finesse-pictures">
+          <StoryImage
+            src={`${c}racket-concept.webp`}
+            caption={t("2 beleuchtete Padel-Courts geplant", "2 floodlit padel courts planned")}
+            alt={t("Padel und Tennis, Konzeptbild", "Padel and tennis concept")}
+            concept
+            lang={lang}
+          />
+          <StoryImage
+            src={`${c}golf-concept.webp`}
+            caption={t("18-Loch-Golf als Ausflug in die Umgebung", "18-hole golf outings in the surrounding area")}
+            alt={t(
+              "Golfausflug, Symbolbild",
+              "Golf outing, illustrative image",
+            )}
+            concept
+            lang={lang}
+          />
+          <StoryImage
+            src={`${c}tennis-court-concept.webp`}
+            alt={t("Tennisplatz in der Klein Karoo, Konzeptbild", "Tennis court in the Klein Karoo, concept")}
+            caption={t("2 Allwetter-Tennisplätze geplant", "2 all-weather tennis courts planned")}
+            concept
+            lang={lang}
+          />
+        </div>
+        <p>
+          {t(
+            "Ein Doppel am Haupthaus, danach auf die Terrasse. Padel, Tennis und Indoor-Tischtennis gehören zur Planung. Draußen sollen Bogenschießen und zwei Shooting Ranges das Angebot ergänzen. Für Golf ist ein 18-Loch-Platz in der Umgebung vorgesehen.",
+            "Doubles by the main lodge, then a seat on the terrace. Padel, tennis and indoor table tennis are planned. Archery and two shooting ranges would add to the outdoor programme. Golf is envisaged at an 18-hole course in the surrounding area.",
+          )}
+        </p>
+      </article>
+      <article class="life-chapter life-amenities" data-life-chapter>
+        <p>
+          {t(
+            "Vom Pool an den gedeckten Tisch. Später rückt man am Feuer zusammen. Geplant sind Pool, Spa und Sauna sowie ein Clubhaus für Braai-Abende, Weinverkostungen und private Feiern.",
+            "From the pool to a table set for dinner. Later, everyone gathers around the fire. Plans include a pool, spa and sauna, plus a clubhouse for braais, wine tastings and private celebrations.",
+          )}
+        </p>
+        <div class="amenities-pictures">
+          <StoryImage
+            src={`${c}wellbeing-concept.webp`}
+            caption={t("Pool, Spa & Sauna · geplant", "Pool, spa & sauna · planned")}
+            alt={t(
+              "Geplanter Wellnessbereich, Konzeptbild",
+              "Planned wellness area, concept",
+            )}
+            concept
+            lang={lang}
+          />
+          <StoryImage
+            src={`${c}clubhouse-concept.webp`}
+            caption={t("Clubhaus, Boma & Sternen-Deck · geplant", "Clubhouse, boma & stargazing deck · planned")}
+            alt={t(
+              "Clubhaus im Abendlicht, Konzeptbild",
+              "Clubhouse at dusk, concept",
+            )}
+            concept
+            lang={lang}
+          />
+          <h3>
+            <em>{t("Lange", "Long")}</em>
+            <span>{t("ABENDE", "EVENINGS")}</span>
+          </h3>
+        </div>
+      </article>
+      <article class="life-chapter life-service" data-life-chapter>
+        <div class="service-copy">
+          <p>
+            {t(
+              "Gäste erwarten, ohne den ganzen Tag vorzubereiten. Im Konzept: ein persönlicher Butler rund um die Uhr, ein Privatkoch und organisierte Transfers. Ein eigener Helikopter-Landeplatz ist ebenfalls geplant.",
+              "Welcome guests without spending the day preparing. The concept includes a personal butler around the clock, a private chef and organised transfers. A private helicopter landing area is also planned.",
+            )}
+          </p>
+        </div>
+        <StoryImage
+          src={`${c}helipad-concept.webp`}
+          caption={t("Anreise per Helikopter · Landeplatz geplant", "Arrive by helicopter · landing area planned")}
+          alt={t(
+            "Helikopter-Anreise, Konzeptbild",
+            "Helicopter arrival concept",
+          )}
+          class="service-left"
+          concept
+          lang={lang}
+        />
+        <div class="service-center">
+          <h3>
+            <em>{t("Butler &", "Butler &")}</em>
+            <span>{t("PRIVATKOCH", "PRIVATE CHEF")}</span>
+          </h3>
+          <StoryImage
+            src={`${c}butler-dinner-concept.webp`}
+            alt={t(
+              "Persönlicher Dinner-Service auf der Veranda, Konzeptbild",
+              "Personal dinner service on the veranda, concept",
+            )}
+            concept
+            lang={lang}
+          />
+        </div>
+        <StoryImage
+          src={`${c}residence-concept.webp`}
+          caption={t("Ihr Rückzugsort · die Ranch als Zuhause", "Your retreat · a ranch to call home")}
+          alt={t(
+            "Privater Rückzugsort, Konzeptbild",
+            "Private retreat concept",
+          )}
+          class="service-right"
+          concept
+          lang={lang}
+        />
+      </article>
+      <article
+        class="life-chapter life-privacy"
+        id="sicherheit"
+        data-life-chapter
+      >
+        <StoryImage
+          src={`${c}security-gate-concept.webp`}
+          alt={t(
+            "Kontrollierte Zufahrt, Konzeptbild",
+            "Controlled entrance concept",
+          )}
+          concept
+          lang={lang}
+        />
+        <h3>
+          <em>{t("Privat.", "Private.")}</em>
+          <span>{t("TAG UND NACHT.", "DAY AND NIGHT.")}</span>
+        </h3>
+      </article>
+      <article class="life-chapter life-security-detail" data-life-chapter>
+        <div class="security-copy">
+          <p>{t("Die Landschaft bleibt offen. Der Zugang ist kontrolliert. So ist das Sicherheitskonzept für Bonanza gedacht.", "Open landscapes. Controlled access. That is the approach planned for security at Bonanza.")}</p>
+          <dl class="security-facts">
+            <div><dt>24/7</dt><dd>{t("Besetzte Kontrollzentrale und Sicherheitsteams vor Ort geplant.", "A staffed control centre and on-site security teams are planned.")}</dd></div>
+            <div><dt>{t("Zugang", "Access")}</dt><dd>{t("Kontrollierte Zufahrten und biometrischer Zutritt für Eigentümer, Gäste und Personal vorgesehen.", "Controlled entrances and biometric access for owners, guests and staff are envisaged.")}</dd></div>
+            <div><dt>{t("Technik", "Technology")}</dt><dd>{t("Wärmebildkameras, Zonensensorik und Drohnenpatrouillen im Konzept.", "Thermal cameras, zonal sensors and drone patrols form part of the concept.")}</dd></div>
+          </dl>
+          <p class="security-infrastructure">{t("Auch Solarstrom, Speicher, eigene Wasserversorgung und schnelles Internet sind Teil der Planung.", "Solar power, storage, an independent water supply and high-speed internet are also part of the plans.")}</p>
+        </div>
+        <div class="life-vertical-gallery">
+          <StoryImage
+            src={`${c}security-camera-concept.webp`}
+            caption={t("Diskrete Überwachung der Außengrenzen", "Discreet monitoring of the perimeter")}
+            alt={t(
+              "Kameratechnik, Konzeptbild",
+              "Monitoring technology concept",
+            )}
+            concept
+            lang={lang}
+          />
+          <StoryImage
+            src={`${c}security-gate-concept.webp`}
+            caption={t("Kontrollierte Zufahrt zum Estate", "Controlled access to the estate")}
+            alt={t("Zugangskontrolle, Konzeptbild", "Access control concept")}
+            concept
+            lang={lang}
+          />
+        </div>
+      </article>
+      <article class="life-chapter life-finale">
+        <StoryImage
+          src={`${c}karoo-night-sky.webp`}
+          alt={t(
+            "Nachthimmel über der Klein Karoo, Konzeptbild",
+            "Night sky over the Klein Karoo, concept",
+          )}
+          concept
+          lang={lang}
+        />
+        <h3>
+          <span>{t("Ein Himmel.", "One sky.")}</span>
+          <em>{t("Unendlich weit.", "Beyond the horizon.")}</em>
+        </h3>
+        <p>
+          {t(
+            "Fern vom Licht der Städte. Über Ihnen die Milchstraße, vor Ihnen die Weite der Karoo.",
+            "Far from the city lights. The Milky Way above you, the open Karoo stretching into the night.",
+          )}
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+<section
+  class="bonanza-ring"
+  id="augenblicke"
+  data-nav-theme="light"
+  aria-label={t("Augenblicke auf Bonanza", "Moments at Bonanza")}
+>
+  <div class="ring-stage">
+    <div class="ring-webgl" aria-hidden="true">
+      <div class="ring-fallback">
+        {images.map((name) => (
+          <img
+            src={`${e}${name}.webp`}
+            alt=""
+            width="1440"
+            height="960"
+            loading="lazy"
+          />
+        ))}
+      </div>
+    </div>
+    <div class="ring-title">
+      <h2>
+        <em>{t("Hier bleiben.", "Stay a while.")}</em>
+      </h2>
+      <p>
+        {t(
+          "Ein privater Rückzugsort. In Südafrikas weiter Landschaft.",
+          "A private retreat. In South Africa’s open country.",
+        )}
+      </p>
+    </div>
+  </div>
+  <div class="ring-story">
+    <p class="ring-text-first">
+      {t(
+        "Vielleicht ist es die Weite. Vielleicht die Nähe zur Natur. Vielleicht der Gedanke, wiederzukommen — und zu bleiben.",
+        "Perhaps it is the open space. Perhaps the closeness to nature. Perhaps the thought of returning — and staying.",
+      )}
+    </p>
+    <div></div>
+    <p class="ring-text-last">
+      {t(
+        "BONANZA RANCH. DIE VISION VON EINEM LEBEN IN SÜDAFRIKA.",
+        "BONANZA RANCH. A VISION FOR LIFE IN SOUTH AFRICA.",
+      )}
+    </p>
+  </div>
+</section>

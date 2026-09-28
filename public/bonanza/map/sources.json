@@ -1,0 +1,81 @@
+{
+  "service": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
+  "copyrightText": "Source: Esri, Vantor, Earthstar Geographics, and the GIS User Community",
+  "europeAfrica": {
+    "request": {
+      "bbox": "-75,-43,80,60.3333333333",
+      "bboxSR": 4326,
+      "imageSR": 4326,
+      "size": "2400,1600",
+      "format": "jpg",
+      "dpi": 96,
+      "f": "json"
+    },
+    "response": {
+      "href": "https://server.arcgisonline.com/arcgis/rest/directories/arcgisoutput/World_Imagery_MapServer/_ags_map1630ce5c30414ea48aa6a98ecd5d069b.jpg",
+      "width": 2400,
+      "height": 1600,
+      "extent": {
+        "xmin": -75.00000000000001,
+        "ymin": -43.00000000001664,
+        "xmax": 79.99999999999996,
+        "ymax": 60.33333333331667,
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326
+        }
+      },
+      "scale": 27172419.78569331
+    }
+  },
+  "capeGeorge": {
+    "bbox": [
+      16.7,
+      -35.8,
+      24.5,
+      -31.25
+    ],
+    "width": 1800,
+    "height": 1050,
+    "spatialReference": 4326,
+    "source": "Existing verified Esri export from site/public/media/map/cape-george.jpg"
+  },
+  "points": {
+    "capeTown": [
+      18.42322,
+      -33.92584
+    ],
+    "george": [
+      22.46173,
+      -33.963
+    ]
+  },
+  "route": "Schematic journey; city centres only; no estate point; Europe is a continent area label, not a departure airport",
+  "westernCapeContext": {
+    "request": {
+      "bbox": "12,-38,28,-28",
+      "bboxSR": 4326,
+      "imageSR": 4326,
+      "size": "2400,1500",
+      "format": "jpg",
+      "dpi": 96,
+      "f": "json"
+    },
+    "response": {
+      "href": "https://server.arcgisonline.com/arcgis/rest/directories/arcgisoutput/World_Imagery_MapServer/_ags_mape2d3a0c1d5ba4c0a8c9fde49c2c97137.jpg",
+      "width": 2400,
+      "height": 1500,
+      "extent": {
+        "xmin": 12,
+        "ymin": -38,
+        "xmax": 28,
+        "ymax": -28,
+        "spatialReference": {
+          "wkid": 4326,
+          "latestWkid": 4326
+        }
+      },
+      "scale": 2804894.945619955
+    }
+  }
+}

@@ -1,0 +1,1076 @@
+/* Photographic choreography derived from the supplied Sobha reference recordings. */
+.dream-flight {
+  z-index: 3;
+}
+.flight-arrival-word {
+  font-size: 20vw;
+}
+html[lang="en"] .flight-arrival-word {
+  font-size: 16.5vw;
+}
+/* Source geometry: Sobha three-worlds, expansive card / slider, handpicked ring.
+   The section names and copy are Bonanza; the spatial relationships remain source-derived. */
+.wild-worlds,
+.life-film,
+.bonanza-ring {
+  --gallery-serif: var(--font-display);
+  --gallery-script: var(--font-display);
+  --gallery-h0: 76px;
+  --gallery-h1: 52px;
+  --gallery-script-size: 54px;
+  --gallery-space: 20px;
+}
+.wild-worlds h2,
+.wild-worlds h3,
+.life-film h2,
+.life-film h3,
+.bonanza-ring h2 {
+  font-family: var(--gallery-serif);
+  font-weight: 300;
+  letter-spacing: 0.02em !important;
+  line-height: 1;
+}
+.wild-worlds em,
+.life-film em,
+.bonanza-ring em {
+  font-family: var(--gallery-script);
+  font-style: italic;
+  letter-spacing: 0 !important;
+  font-weight: 400;
+}
+.wild-worlds {
+  --worlds-leadin: clamp(240px, 40svh, 440px);
+  height: calc(600svh + var(--worlds-leadin));
+  margin-top: -1px;
+  position: relative;
+  z-index: 3;
+  background: #000;
+  color: #f5f3ed;
+}
+.worlds-intro {
+  height: var(--worlds-leadin);
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+}
+.worlds-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+.worlds-webgl {
+  position: absolute;
+  inset: 0;
+  height: 100svh;
+}
+.worlds-webgl canvas,
+.ring-webgl canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.worlds-heading {
+  font-size: clamp(44px, 4.5vw, 72px);
+  position: relative;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+  line-height: 1.12;
+}
+.worlds-heading em,
+.worlds-heading > span {
+  display: block;
+}
+.worlds-heading em {
+  font-size: 0.85em;
+  line-height: 1.25;
+}
+.worlds-heading > span {
+  padding-bottom: 8px;
+}
+.worlds-captions {
+  position: absolute;
+  top: 56%;
+  left: 12vw;
+  right: 12vw;
+  bottom: 9svh;
+  text-align: center;
+}
+.worlds-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+}
+.dream-home .worlds-caption h3 {
+  font: 400 clamp(34px, 3.7vw, 62px) / 1.08 var(--font-display);
+  letter-spacing: -0.02em !important;
+}
+.worlds-caption h3 em {
+  display: block;
+}
+.worlds-caption p {
+  font: 400 17px/1.65 var(--font-sans);
+  max-width: 440px;
+  margin-top: 24px;
+  color: #c7c7c2;
+}
+.worlds-fallback {
+  position: absolute;
+  inset: 32% 0 6%;
+  display: flex;
+  gap: 3vw;
+  justify-content: center;
+}
+.worlds-fallback img {
+  width: 45vw;
+  object-fit: cover;
+}
+.webgl-ready > .worlds-fallback,
+.webgl-ready > .ring-fallback {
+  visibility: hidden;
+}
+.life-film {
+  position: relative;
+  z-index: 4;
+  margin-top: -100svh;
+  padding-top: 100svh;
+  pointer-events: none;
+}
+.life-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+.life-track {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+}
+.life-chapter {
+  height: 100svh;
+  flex: 0 0 auto;
+  position: relative;
+  pointer-events: auto;
+  background: #000;
+  color: #f5f3ed;
+}
+.life-chapter h3 {
+  font-size: var(--gallery-h1);
+  line-height: 1.08;
+}
+.life-chapter h3 em {
+  font-size: var(--gallery-script-size);
+  line-height: 1;
+}
+.life-chapter h3 > span,
+.life-chapter h3 > em {
+  display: block;
+  white-space: nowrap;
+}
+.life-chapter p {
+  font: 400 17px/1.55 var(--font-sans);
+  letter-spacing: 0;
+}
+.story-photo {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: #a0a58f;
+}
+.story-photo:has(.photo-caption)::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(transparent, #000b);
+  pointer-events: none;
+}
+.story-photo figcaption.has-story-caption {
+  z-index: 2;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  padding: 0;
+  background: transparent;
+  color: #fff;
+  text-transform: none;
+  max-width: 48ch;
+}
+.photo-caption {
+  display: block;
+  font: 400 15px/1.5 var(--font-sans);
+  letter-spacing: .01em;
+}
+.photo-caption + .photo-concept {
+  display: block;
+  margin-top: 9px;
+  font-size: 10px;
+  letter-spacing: .08em;
+  opacity: .7;
+}
+.story-photo img {
+  display: block;
+  width: 120%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+}
+.story-photo figcaption {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 4px 5px;
+  color: #fff;
+  background: #1b291c85;
+  font: 400 8px/1.2 var(--font-sans);
+  letter-spacing: 0.06em;
+  z-index: 2;
+}
+.life-intro {
+  width: 100vw;
+  background: transparent;
+}
+.life-card {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100vw;
+  aspect-ratio: 0.8;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  transform-origin: center;
+}
+.life-card-title {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  right: 60px;
+  font-size: clamp(90px, 13vw, 210px);
+  text-align: center;
+}
+.life-card-summary {
+  position: absolute;
+  left: 120px;
+  right: 120px;
+  bottom: 60px;
+  text-align: center;
+  font-size: 48px !important;
+  line-height: 1.23 !important;
+}
+.life-card-picture {
+  width: 50vw;
+  aspect-ratio: 720/480;
+  position: relative;
+}
+.life-card-picture > .story-photo {
+  width: 100%;
+  height: 100%;
+}
+.life-card-picture h3 {
+  position: absolute;
+  right: calc(100% + 35px);
+  top: 0;
+}
+.life-card-picture h3 em {
+  margin-top: -0.55em;
+}
+.life-card-picture h3 > span {
+  padding: 20px 0 0 0.7em;
+}
+.life-card-picture > p {
+  position: absolute;
+  bottom: 0;
+  left: calc(100% + 20px);
+  width: 220px;
+}
+.life-full-photo {
+  width: 85.73487svh;
+  overflow: hidden;
+}
+.life-full-photo > .story-photo {
+  width: 100%;
+  height: 100%;
+}
+.life-iconic {
+  width: 66.66667vw;
+  display: flex;
+  align-items: flex-end;
+}
+.iconic-column {
+  margin-left: 16.66667vw;
+  width: 33.33333vw;
+  text-align: center;
+}
+.iconic-column h3 > span {
+  padding: 20px 0 73px;
+}
+.iconic-column > p {
+  max-width: 430px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+.iconic-column > .story-photo {
+  width: 100%;
+  height: 28svh;
+}
+.life-finesse {
+  width: 108.33333vw;
+  display: flex;
+}
+.life-finesse > h3 {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 100vw;
+  z-index: 2;
+}
+.life-finesse > h3 > span {
+  padding-top: 20px;
+}
+.finesse-pictures {
+  margin-left: 25vw;
+  padding-top: 120px;
+  display: flex;
+  gap: 10px;
+  width: 58.33333vw;
+  padding-right: 20px;
+  align-items: flex-start;
+}
+.finesse-pictures > .story-photo {
+  flex: 1;
+  aspect-ratio: 264/360;
+}
+.life-finesse > p {
+  width: 240px;
+  padding-top: 120px;
+}
+.life-amenities {
+  width: 130vw;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+.life-amenities > p {
+  font: 400 18px/1.6 var(--font-sans);
+  letter-spacing: 0;
+  width: 330px;
+  margin-left: 8.33333vw;
+  margin-top: 100px;
+  text-transform: none;
+}
+.amenities-pictures {
+  display: flex;
+  position: relative;
+  gap: 10px;
+  width: 83.33333vw;
+  margin-left: 8.33333vw;
+  margin-top: 100px;
+}
+.amenities-pictures > .story-photo {
+  flex: 1;
+  aspect-ratio: 600/440;
+}
+.amenities-pictures h3 {
+  position: absolute;
+  top: 100%;
+  margin-top: -0.55em;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.amenities-pictures h3 em {
+  padding-bottom: 20px;
+}
+.life-service {
+  width: 108.33333vw;
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+}
+.service-copy {
+  width: 16.66667vw;
+  align-self: flex-end;
+  padding: 0 0 20px 20px;
+}
+.service-copy p {
+  max-width: 220px;
+}
+.service-left {
+  width: 16.66667vw;
+  height: 40svh;
+  margin-top: 120px;
+}
+.service-center {
+  position: relative;
+  width: 16.66667vw;
+  margin-left: 8.33333vw;
+  align-self: flex-end;
+  margin-bottom: 20px;
+}
+.service-center h3 {
+  position: relative;
+  margin-left: 0;
+  text-align: left;
+  margin-bottom: 25px;
+  font-size: clamp(24px, 2.6vw, 44px);
+  z-index: 2;
+}
+.service-center h3 em {
+  padding-bottom: 8px;
+  font-size: 1em;
+}
+.service-center > .story-photo {
+  width: 100%;
+  height: 37svh;
+}
+.service-right {
+  width: 16.66667vw;
+  height: 28svh;
+  margin: 80px 0 0 8.33333vw;
+}
+.life-privacy {
+  width: 151.65877svh;
+  overflow: hidden;
+  color: #fff;
+}
+.life-privacy > .story-photo {
+  height: 100%;
+  width: 125%;
+}
+.life-privacy::after {
+  content: "";
+  position: absolute;
+  inset: 55% 0 0;
+  background: linear-gradient(transparent, #172219b8);
+  pointer-events: none;
+}
+.life-privacy > h3 {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+}
+.life-privacy > h3 em {
+  padding-bottom: 20px;
+}
+.life-security-detail {
+  width: 100vw;
+  display: flex;
+}
+.security-copy {
+  font: 400 16px/1.6 var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
+  width: min(35vw, 500px);
+  margin-left: 8.33333vw;
+  padding-top: clamp(70px, 10svh, 140px);
+}
+.security-copy > p:first-child {
+  font-size: 19px;
+  line-height: 1.5;
+}
+.security-facts {
+  margin: 30px 0;
+}
+.security-facts > div {
+  display: grid;
+  grid-template-columns: 75px 1fr;
+  gap: 18px;
+  border-top: 1px solid #fff3;
+  padding: 16px 0;
+}
+.security-facts dt {
+  font-size: 14px;
+  letter-spacing: .03em;
+}
+.security-facts dd {
+  font-size: 16px;
+  line-height: 1.55;
+  color: #c8c8c4;
+  margin: 0;
+}
+.security-infrastructure {
+  color: #b8b8b3;
+  line-height: 1.6 !important;
+}
+.life-vertical-gallery {
+  width: 41.66667vw;
+  flex: none;
+  margin-left: 8.33333vw;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.life-vertical-gallery > .story-photo {
+  flex: none;
+  width: 100%;
+  height: 55svh;
+}
+.life-finale {
+  width: 100vw;
+  color: #fff;
+  overflow: hidden;
+}
+.life-finale > .story-photo {
+  height: 100%;
+}
+.life-finale::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 12%,
+    #00000040 42%,
+    #000000cc 78%,
+    #000 100%
+  );
+  pointer-events: none;
+}
+.life-finale h3 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  margin: -20px 0 0 -20px;
+}
+.life-finale h3 em {
+  margin-top: -0.27em;
+  padding-left: 1em;
+}
+.life-finale h3 {
+  text-align: center;
+  white-space: nowrap;
+}
+.life-finale h3 em {
+  padding-left: 0;
+  margin-top: 0.1em;
+}
+.life-finale > p {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+}
+.bonanza-ring {
+  height: calc(300svh + 40px);
+  position: relative;
+  z-index: 5;
+  background: #000;
+  color: #f5f3ed;
+  isolation: isolate;
+}
+.ring-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  pointer-events: none;
+}
+.ring-webgl {
+  position: absolute;
+  inset: 0;
+}
+.ring-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 40px;
+  opacity: 0;
+}
+.ring-title h2 {
+  font-size: var(--gallery-script-size);
+  margin-bottom: 15px;
+}
+.ring-title p {
+  font: 400 16px/1.5 var(--font-sans);
+  text-align: center;
+  opacity: 0.75;
+}
+.ring-story {
+  position: relative;
+  margin-top: -100svh;
+  pointer-events: none;
+}
+.ring-story > p,
+.ring-story > div {
+  height: 100svh;
+  display: flex;
+  align-items: center;
+}
+.ring-story p {
+  font: 400 18px/1.6 var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.ring-text-first {
+  margin-left: 16.66667vw;
+  width: 25vw;
+}
+.ring-text-last {
+  margin-left: 66.66667vw;
+  width: 31vw;
+  align-items: flex-end !important;
+  padding-bottom: 40px;
+}
+.ring-fallback {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+}
+.ring-fallback img {
+  width: 38vw;
+  flex: none;
+  aspect-ratio: 1.76;
+  object-fit: cover;
+}
+@media (min-width: 1440px) {
+  .wild-worlds,
+  .life-film,
+  .bonanza-ring {
+    --gallery-h0: 90px;
+    --gallery-h1: 60px;
+    --gallery-script-size: 64px;
+    --gallery-space: 30px;
+  }
+}
+@media (min-width: 1920px) {
+  .wild-worlds,
+  .life-film,
+  .bonanza-ring {
+    --gallery-h0: 116px;
+    --gallery-h1: 72px;
+    --gallery-script-size: 78px;
+  }
+}
+@media (max-width: 767px) {
+  .flight-arrival-word {
+    font-size: 21vw;
+  }
+  html[lang="en"] .flight-arrival-word {
+    font-size: 17.5vw;
+  }
+  .wild-worlds,
+  .life-film,
+  .bonanza-ring {
+    --gallery-h0: 42px;
+    --gallery-h1: 36px;
+    --gallery-script-size: 36px;
+  }
+  .wild-worlds {
+    height: calc(600svh + var(--worlds-leadin));
+  }
+  .worlds-heading {
+    font-size: 12vw;
+  }
+  .worlds-heading > span {
+    font-size: inherit;
+  }
+  .life-film {
+    margin-top: 0;
+    padding-top: 0;
+    height: auto !important;
+    pointer-events: auto;
+    scroll-margin-top: 90px;
+  }
+  .life-stage {
+    height: auto;
+    position: relative;
+  }
+  .life-track {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+  .life-chapter {
+    width: 100%;
+    height: auto;
+    display: block;
+    padding: 60px 20px;
+    overflow: hidden;
+  }
+  .life-chapter p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .life-intro {
+    padding: 0 20px 60px;
+  }
+  .life-card {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    aspect-ratio: auto;
+    min-height: 110svh;
+    display: block;
+    padding: 30px 20px;
+    transform: none !important;
+  }
+  .life-card-title {
+    position: static;
+    font-size: 12.5vw;
+    margin-bottom: 45px;
+  }
+  .life-card-summary {
+    position: static;
+    font-size: 16px !important;
+    margin: 30px 0;
+    transform: none !important;
+  }
+  .life-card-picture {
+    width: 100%;
+    aspect-ratio: auto;
+  }
+  .life-card-picture > .story-photo {
+    height: 38svh;
+  }
+  .life-card-picture h3 {
+    position: static;
+    margin-top: 45px;
+  }
+  .life-card-picture h3 em {
+    margin: 0;
+  }
+  .life-card-picture h3 > span {
+    padding: 10px 0 0 1em;
+  }
+  .life-card-picture > p {
+    position: static;
+    width: 100%;
+    margin-top: 25px;
+  }
+  .life-full-photo {
+    padding: 0;
+    height: 85svh;
+  }
+  .iconic-column {
+    margin: 0;
+    width: 100%;
+  }
+  .iconic-column h3 > span {
+    padding: 15px 0 35px;
+  }
+  .iconic-column > p {
+    padding: 0 15px 30px;
+  }
+  .iconic-column > .story-photo {
+    height: 45svh;
+  }
+  .life-finesse {
+    padding: 60px 0;
+  }
+  .life-finesse > h3 {
+    position: static;
+    width: 100%;
+    padding: 0 20px;
+  }
+  .finesse-pictures {
+    margin: 40px 0 30px;
+    padding: 0 12px;
+    width: 100%;
+    gap: 8px;
+  }
+  .finesse-pictures .story-photo figcaption.has-story-caption {
+    left: 8px;
+    right: 8px;
+    bottom: 10px;
+  }
+  .finesse-pictures .photo-caption {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .finesse-pictures .photo-concept {
+    font-size: 7px;
+    overflow-wrap: anywhere;
+  }
+  .finesse-pictures > .story-photo:nth-child(2) {
+    margin-top: 35px;
+  }
+  .life-finesse > p {
+    width: 100%;
+    padding: 10px 20px 0;
+  }
+  .life-amenities > p {
+    width: auto;
+    margin: 0;
+    font-size: 20px;
+  }
+  .amenities-pictures {
+    width: 100%;
+    margin: 35px 0 110px;
+  }
+  .amenities-pictures h3 {
+    margin-top: -0.4em;
+  }
+  .life-service {
+    padding: 60px 20px;
+  }
+  .service-copy {
+    width: 100%;
+    padding: 0;
+  }
+  .service-copy p {
+    max-width: none;
+  }
+  .service-left {
+    width: 55%;
+    height: 32svh;
+    margin: 35px 0 0;
+  }
+  .service-center {
+    width: 55%;
+    margin: 20px 0 0 auto;
+  }
+  .service-center h3 {
+    margin-left: -50px;
+  }
+  .service-center > .story-photo {
+    height: 35svh;
+  }
+  .service-right {
+    width: 42%;
+    height: 25svh;
+    margin: -8svh 0 0;
+  }
+  .life-privacy {
+    height: 85svh;
+    padding: 0;
+  }
+  .life-privacy > h3 {
+    font-size: 32px;
+    bottom: 45px;
+  }
+  .security-copy {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+  }
+  .security-copy > p:first-child {
+    font-size: 19px;
+  }
+  .life-vertical-gallery {
+    width: 100%;
+    margin: 35px 0 0;
+  }
+  .life-vertical-gallery > .story-photo {
+    height: 45svh;
+  }
+  .life-finale {
+    height: 100svh;
+    padding: 0;
+  }
+  .life-finale > p {
+    padding: 0 20px;
+  }
+  .life-finale h3 {
+    margin-left: 0;
+  }
+  .life-finale h3 em {
+    font-size: clamp(36px, 10vw, 60px);
+  }
+  .bonanza-ring {
+    height: calc(300svh + 40px);
+  }
+  .ring-text-first {
+    width: 75vw;
+    margin-left: 5vw;
+    align-items: flex-start !important;
+    padding-top: 75px;
+  }
+  .ring-story p {
+    font-size: 19px;
+  }
+  .ring-text-last {
+    width: 75vw;
+    margin-left: 20vw;
+  }
+  .ring-title h2 {
+    font-size: 55px;
+  }
+  .ring-title {
+    padding-bottom: 35px;
+  }
+  .story-photo figcaption {
+    font-size: 7px;
+  }
+  }
+@media (prefers-reduced-motion: reduce) {
+  .wild-worlds {
+    height: auto;
+    padding: 60px 20px;
+  }
+  .worlds-stage {
+    height: auto;
+    position: relative;
+    overflow: visible;
+  }
+  .worlds-heading {
+    position: relative;
+    top: auto;
+    font-size: 48px;
+    margin-bottom: 40px;
+  }
+  .worlds-webgl {
+    position: relative;
+    height: auto;
+  }
+  .worlds-fallback {
+    position: static;
+    display: grid;
+  }
+  .worlds-fallback img {
+    width: 100%;
+    height: 50svh;
+  }
+  .worlds-captions {
+    position: relative;
+    inset: auto;
+    margin-top: 40px;
+  }
+  .worlds-caption {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+    margin-bottom: 40px;
+  }
+
+  .life-film {
+    height: auto !important;
+    padding: 0;
+    margin: 0;
+  }
+  .life-stage {
+    height: auto;
+    position: relative;
+  }
+  .life-track {
+    display: block;
+    width: 100%;
+    transform: none !important;
+  }
+  .life-chapter {
+    width: 100%;
+    min-height: 100svh;
+  }
+  .life-intro {
+    display: block;
+    padding: 60px 20px;
+  }
+  .life-card {
+    position: relative;
+    top: auto;
+    left: auto;
+    aspect-ratio: auto;
+    width: 100%;
+    min-height: 100svh;
+    transform: none !important;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+  .life-card-title,
+  .life-card-summary,
+  .life-card-picture h3,
+  .life-card-picture > p {
+    position: static;
+    transform: none !important;
+    margin: 25px 0;
+  }
+  .life-card-picture {
+    width: min(100%, 720px);
+  }
+  .life-card-picture > .story-photo {
+    height: 50svh;
+  }
+  .life-card-picture > p {
+    width: 100%;
+  }
+  .life-vertical-gallery {
+    transform: none !important;
+  }
+  .bonanza-ring {
+    height: auto;
+    padding: 60px 20px;
+  }
+  .ring-stage {
+    height: auto;
+    position: relative;
+  }
+  .ring-webgl {
+    position: relative;
+  }
+  .ring-fallback {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ring-fallback img {
+    width: 100%;
+  }
+  .ring-title {
+    position: relative;
+    opacity: 1;
+    margin: 40px 0;
+  }
+  .ring-story {
+    margin: 0;
+  }
+  .ring-story > div {
+    display: none;
+  }
+  .ring-story > p {
+    height: auto;
+    padding: 20px;
+    width: auto;
+    margin: 0;
+  }
+}
+/* Keep the no-WebGL fallback from pushing the canvas below its viewport. */
+.ring-fallback {
+  position: absolute;
+  inset: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ring-fallback {
+    position: relative;
+    inset: auto;
+  }
+}
+@media (min-width: 768px) {
+  .life-film {
+    overflow: clip;
+    background: linear-gradient(180deg, transparent 0 100svh, #000 100svh);
+  }
+  .life-stage {
+    overflow: visible;
+  }
+}
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .life-film {
+    background: #000;
+  }
+}

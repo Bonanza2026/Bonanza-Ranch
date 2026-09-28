@@ -1,0 +1,157 @@
+@font-face {
+  font-family: "Bonanza Serif";
+  src: url("/fonts/CormorantGaramond-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bonanza Serif";
+  src: url("/fonts/CormorantGaramond-Italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 300 500;
+  font-display: swap;
+}
+:root {
+  --font-display: "Bonanza Serif", Georgia, serif;
+}
+.dream-home h2,
+.dream-home h3 {
+  letter-spacing: -0.025em;
+  font-family: var(--font-condensed) !important;
+  font-weight: 400;
+}
+.dream-home h2 em, .dream-home h3 em {
+  font-family: "Bonanza Serif", Georgia, serif !important;
+  font-style: italic;
+}
+.ring-title em {
+  font-style: italic;
+}
+.reserve-editorial h2 em {
+  line-height: 1.2;
+  margin-top: 20px;
+}
+.life-chapter h3 {
+  line-height: 1.08;
+}
+.life-chapter h3 em {
+  line-height: 1.15;
+}
+.life-card-picture h3 em {
+  margin-top: 0;
+}
+.life-card-picture h3 > span {
+  padding: 8px 0 0;
+}
+.life-card-picture > p {
+  max-width: 25ch;
+}
+.ring-story p {
+  opacity: 0.8;
+}
+
+.bonanza-ring {
+  border: 0;
+}
+.dream-home .reserve-introduction h2,
+.dream-home .wild-worlds h2,
+.dream-home .wild-worlds h3 {
+  color: #f5f3ed;
+}
+.dream-home .life-chapter h2,
+.dream-home .life-chapter h3,
+.dream-home .bonanza-ring h2 {
+  color: #f5f3ed;
+}
+.dream-home .life-finale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  height: 100svh;
+  background: #000;
+  color: #f5f3ed;
+}
+.dream-home .life-finale > .story-photo {
+  width: 100%;
+  height: 100%;
+  flex: none;
+}
+.dream-home .life-finale::after {
+  display: block;
+  background: linear-gradient(
+    180deg,
+    #00000000 50%,
+    #00000018 65%,
+    #000000c9 100%
+  );
+}
+.dream-home .life-finale h3 {
+  position: absolute;
+  left: 50%;
+  top: auto;
+  bottom: 18svh;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+  margin: 0;
+  color: #f5f3ed;
+  font-size: clamp(54px, 7.2vw, 116px);
+}
+.dream-home .life-finale h3 em {
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+}
+.dream-home .life-finale > p {
+  position: absolute;
+  bottom: 7svh;
+  margin: 0;
+  color: #deded5;
+  padding: 0 7vw;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.dream-home .service-center h3 {
+  margin-left: 0;
+  margin-bottom: 25px;
+  text-align: left;
+}
+@media (min-width: 768px) {
+  .life-chapter:not(.life-finale) h3 em {
+    margin-top: 0;
+  }
+  .amenities-pictures h3 {
+    left: 0;
+    margin-top: 24px;
+  }
+}
+@media (max-width: 767px) {
+  .life-card-picture h3 {
+    margin-top: 35px;
+  }
+  .life-card-picture > p {
+    max-width: none;
+  }
+
+  .ring-title h2 {
+    font-size: 48px;
+  }
+  .dream-home .life-finale {
+    padding: 0;
+  }
+  .dream-home .life-finale > .story-photo {
+    height: 100%;
+  }
+  .dream-home .life-finale h3 {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    font-size: 12vw;
+    bottom: 22svh;
+  }
+}

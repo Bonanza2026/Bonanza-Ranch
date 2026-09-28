@@ -1,0 +1,141 @@
+---
+import JourneyMap from "./JourneyMap.astro";
+import BonanzaStory from "./BonanzaStory.astro";
+const { lang = "de" } = Astro.props;
+const en = lang === "en";
+---
+
+<div class="dream-home">
+  <section
+    class="dream-flight"
+    id="anfang"
+    aria-label={en ? "The journey to Bonanza" : "Die Reise nach Bonanza"}
+  >
+    <div class="flight-stage">
+      <div class="flight-film">
+        <video
+          class="hero-banner_video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          poster="/media/hero-poster.webp"
+        >
+          <source src="/media/hero_video-mobile.webm" type="video/webm" media="(max-width: 767px)" />
+          <source src="/media/hero_video.webm" type="video/webm" />
+          <source src="/media/hero_video.mp4" type="video/mp4" />
+        </video>
+        <div class="flight-film-shade"></div>
+      </div>
+      <div class="flight-opening">
+        <div class="flight-opening-line">
+          <p>
+            {en
+              ? "A little further from everyday life."
+              : "Ein bisschen weiter weg vom Alltag."}
+            <br />
+            <em>
+              {en
+                ? "A little closer to yourself."
+                : "Ein bisschen näher bei sich."}
+            </em>
+          </p>
+          <button type="button" data-film class="dream-film-button">
+            {en ? "Watch the film" : "Den Film ansehen"}{" "}
+            <span aria-hidden="true">▷</span>
+          </button>
+        </div>
+        <h1>BONANZA RANCH</h1>
+        <div class="flight-bottom">
+          <p>
+            {en
+              ? "ECO WILDLIFE ESTATE · SOUTH AFRICA"
+              : "ECO WILDLIFE ESTATE · SÜDAFRIKA"}
+          </p>
+          <a href="#traum">
+            {en ? "Let yourself dream" : "Einfach weiterträumen"}{" "}
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </div>
+      <div class="flight-cloud-world" aria-hidden="true">
+        <div class="flight-cloud-base"></div>
+        <img
+          class="flight-cloud flight-cloud-back"
+          src="/images/cloud-2-full.webp"
+          alt=""
+          width="1920"
+          height="1080"
+        />
+        <img
+          class="flight-cloud flight-cloud-side"
+          src="/images/cloud-1-cropped.webp"
+          alt=""
+          width="1920"
+          height="1080"
+        />
+      </div>
+      <div class="flight-thought">
+        <p class="dream-label">
+          {en ? "SOMEWHERE BEYOND THE EVERYDAY" : "IRGENDWO HINTER DEM ALLTAG"}
+        </p>
+        <p class="flight-thought-title">
+          {en ? "What if you simply" : "Was wäre, wenn Sie"}
+          <br />
+          <em>{en ? "left it all behind?" : "einfach loslassen?"}</em>
+        </p>
+        <span class="flight-thought-rule"></span>
+      </div>
+      <div class="flight-arrival" aria-hidden="true">
+        <div class="flight-arrival-copy">
+          <svg class="arrival-flag" viewBox="0 0 90 60" aria-hidden="true">
+            <path fill="#e03c31" d="M0 0h90v30H0z" />
+            <path fill="#001489" d="M0 30h90v30H0z" />
+            <path fill="#fff" d="M0 0l40 22h50v16H40L0 60z" />
+            <path fill="#007749" d="M0 5l39 22h51v6H39L0 55z" />
+            <path fill="#ffb81c" d="M0 6l36 24L0 54z" />
+            <path fill="#000" d="M0 12l27 18L0 48z" />
+          </svg>
+          <p class="dream-label">
+            {en ? "A WHOLE OTHER WORLD" : "EINE GANZ ANDERE WELT"}
+          </p>
+          <p class="flight-arrival-word">{en ? "SOUTH AFRICA" : "SÜDAFRIKA"}</p>
+          <p class="flight-arrival-line">
+            {en
+              ? "A different life begins here."
+              : "Hier beginnt ein anderes Leben."}
+          </p>
+          <span class="flight-arrival-bottom">
+            {en ? "BONANZA RANCH · KLEIN KAROO" : "BONANZA RANCH · KLEIN KAROO"}{" "}
+            <span aria-hidden="true">↓</span>
+          </span>
+        </div>
+      </div>
+      <div class="flight-plane" aria-hidden="true">
+        <div class="flight-plane-inner">
+          <img
+            class="flight-plane-shadow"
+            src="/media/jet.webp"
+            alt=""
+            width="1536"
+            height="1024"
+          />
+          <img
+            class="flight-plane-image"
+            src="/media/jet.webp"
+            alt=""
+            width="1536"
+            height="1024"
+          />
+        </div>
+      </div>
+      <div class="flight-cloud-front" aria-hidden="true">
+        <img src="/images/cloud-2-full.webp" alt="" width="1920" height="1080" />
+      </div>
+    </div>
+  </section>
+
+  <JourneyMap lang={lang} />
+  <BonanzaStory lang={lang} />
+</div>

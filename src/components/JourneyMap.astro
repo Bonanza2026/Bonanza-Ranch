@@ -1,0 +1,132 @@
+---
+import "../styles/journey-map.css";
+const { lang = "de" } = Astro.props;
+const en = lang === "en";
+// One static WGS84 map. The image and the route share this projection.
+const project = (lon: number, lat: number) => ({
+  x: 180 + ((lon + 75) / 155) * 1440,
+  y: 160 + ((60.3333333333 - lat) / 103.3333333333) * 960,
+});
+const europe = project(12, 49);
+const cape = project(18.42322, -33.92584);
+const george = project(22.46173, -33.963);
+const northwest = project(-180, 90),
+  southeast = project(180, -90);
+const route = `M ${europe.x} ${europe.y} C ${europe.x - 88} ${europe.y + 256}, ${cape.x - 116} ${cape.y - 192}, ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${george.x} ${george.y}`;
+---
+
+<section
+  class="journey-map"
+  id="reise"
+  data-journey-map
+  aria-label={en ? "The journey to Bonanza" : "Die Reise nach Bonanza"}
+>
+  <header class="jm-heading" data-nav-theme="light">
+    <p class="jm-departure">
+      {en ? "The departure" : "Der Aufbruch"}
+      <span>{en ? "Europe" : "Europa"}</span>
+    </p>
+    <div>
+      <h2>{en ? "A little further south." : "Ein Stück weiter südlich."}</h2>
+      <p>
+        {en
+          ? "Via Cape Town and George, beyond the Outeniqua Mountains. Into the Klein Karoo. Towards Bonanza."
+          : "Über Kapstadt und George, hinter die Outeniqua-Berge. In die Klein Karoo. Der Vision von Bonanza entgegen."}
+      </p>
+    </div>
+    <p class="jm-destination-label">
+      {en ? "The destination region" : "Die Zielregion"}
+      <span>Klein Karoo</span>
+    </p>
+  </header>
+  <div class="jm-component" data-nav-theme="dark">
+    <div class="jm-map-art" aria-hidden="true">
+      <svg
+        class="jm-world"
+        viewBox="0 0 1800 2150"
+        preserveAspectRatio="xMidYMin slice"
+      >
+        <defs>
+          <filter id="jm-relief-tone" color-interpolation-filters="sRGB">
+            <feColorMatrix type="saturate" values="0" />
+            <feComponentTransfer>
+              <feFuncR type="linear" slope=".72" intercept=".346" />
+              <feFuncG type="linear" slope=".67" intercept=".391" />
+              <feFuncB type="linear" slope=".63" intercept=".414" />
+            </feComponentTransfer>
+          </filter>
+          <linearGradient id="jm-image-edge" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="white" />
+            <stop offset=".62" stop-color="white" />
+            <stop offset=".8" stop-color="black" />
+            <stop offset="1" stop-color="black" />
+          </linearGradient>
+          <mask id="jm-image-mask" maskContentUnits="objectBoundingBox">
+            <rect width="1" height="1" fill="url(#jm-image-edge)" />
+          </mask>
+        </defs>
+        <image
+          href="/bonanza/map/world-relief.webp"
+          x={northwest.x}
+          y={northwest.y}
+          width={southeast.x - northwest.x}
+          height={southeast.y - northwest.y}
+          preserveAspectRatio="none"
+          mask="url(#jm-image-mask)"
+          filter="url(#jm-relief-tone)"
+        />
+        <path class="jm-route-guide" d={route} />
+        <path class="jm-route" d={route} />
+        <g class="jm-city" transform={`translate(${europe.x} ${europe.y})`}>
+          <circle r="4" />
+          <text x="20" y="-12">
+            {en ? "EUROPE" : "EUROPA"}
+          </text>
+        </g>
+        <g class="jm-city" transform={`translate(${cape.x} ${cape.y})`}>
+          <circle r="4" />
+          <text x="-20" y="-12" text-anchor="end">
+            {en ? "CAPE TOWN" : "KAPSTADT"}
+          </text>
+        </g>
+        <g class="jm-city" transform={`translate(${george.x} ${george.y})`}>
+          <circle r="4" />
+          <text x="20" y="-12">
+            GEORGE
+          </text>
+          <text class="jm-region" x="20" y="18">
+            KLEIN KAROO
+          </text>
+        </g>
+        <g class="jm-traveller">
+          <circle class="jm-traveller-ring" r="16" />
+          <circle r="5" />
+        </g>
+      </svg>
+    </div>
+    <div class="jm-soft-edge" aria-hidden="true"></div>
+    <aside class="jm-information">
+      <p class="dream-label">WESTERN CAPE · SÜDAFRIKA</p>
+      <h3>
+        {en ? "THE KLEIN KAROO." : "DIE KLEIN KAROO."}
+        <br />
+        <em>{en ? "Room for a different life." : "Raum für ein anderes Leben."}</em>
+      </h3>
+      <p>
+        {en
+          ? "Beyond the Outeniqua Mountains, near Oudtshoorn: this is the setting envisaged for Bonanza. A private retreat in South Africa’s open country."
+          : "Jenseits der Outeniqua-Berge, nahe Oudtshoorn: Hier soll Bonanza entstehen. Ein privater Rückzugsort in der weiten Landschaft Südafrikas."}
+      </p>
+    </aside>
+    <p class="jm-credit">
+      {en ? "Schematic route · Imagery:" : "Route schematisch · Bilddaten:"}{" "}
+      <a
+        href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Esri
+      </a>
+    </p>
+  </div>
+</section>

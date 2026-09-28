@@ -1,0 +1,60 @@
+---
+const {lang = 'de'} = Astro.props;
+const en = lang === 'en';
+const home = en ? '/en' : '/';
+const leisure = home + '#freizeit';
+const security = home + '#sicherheit';
+---
+<!-- Adapted as an Astro component; reference layout and motion selectors retained. -->
+<footer class="footer-component" id="kontakt" data-nav-theme="dark">
+  <div class="footer">
+    <div class="footer-container container-large">
+      <div class="bonanza-footer-top">
+        <a href={home} aria-label="Bonanza Ranch">
+          <span
+            class="bonanza-logo"
+            role="img"
+            aria-label="Bonanza Ranch · Eco Wildlife Estate"
+          ></span>
+        </a>
+        <div class="footer-contact">
+          <p class="t-title-italic">{en ? 'Discover the vision.' : 'Lernen Sie die Vision kennen.'}</p>
+          <a class="t-body footer-link" href="mailto:info@bonanza-ranch.com">
+            {en ? 'Talk to us about Bonanza ↗' : 'Über Bonanza sprechen ↗'}
+          </a>
+          <a class="footer-email" href="mailto:info@bonanza-ranch.com">info@bonanza-ranch.com</a>
+        </div>
+        <div>
+          <p class="t-title-italic">{en ? 'Life on Bonanza' : 'Das Leben auf Bonanza'}</p>
+          <a class="t-body footer-link" href={leisure}>
+            {en ? 'Leisure' : 'Freizeit'}
+          </a>
+          <a class="t-body footer-link" href={security}>
+            {en ? 'Security' : 'Sicherheit'}
+          </a>
+        </div>
+        <div>
+          <p class="t-title-italic">{en ? 'The vision' : 'Die Vision'}</p>
+          <p class="t-body is-faded">
+            Eco Wildlife Estate
+            <br />
+            {en ? 'South Africa · In development' : 'Südafrika · In Entwicklung'}
+          </p>
+        </div>
+      </div>
+    </div>
+    <p class="footer-planning-note container">{en ? 'Bonanza is a project in development. The facilities and services shown are planned; labelled concept images illustrate a possible setting.' : 'Bonanza ist ein Vorhaben in Entwicklung. Die beschriebenen Anlagen und Services sind geplant; gekennzeichnete Konzeptbilder zeigen eine mögliche Gestaltung.'}</p>
+    <div class="footer-bottom">
+      <div class="bonanza-footer-meta container">
+        <p>© Bonanza Ranch · SKYWIND SOUTH AFRICA (PTY) LTD</p>
+        <a href={en ? '/en/legal' : '/impressum'}>{en ? 'Legal notice' : 'Impressum'}</a>
+        <a href={en ? '/en/privacy' : '/datenschutz'}>{en ? 'Privacy' : 'Datenschutz'}</a>
+        <button type="button" data-cookie-open>{en ? 'Cookie settings' : 'Cookie-Einstellungen'}</button>
+        <a href={home + "#anfang"}>{en ? 'Back to top ↑' : 'Nach oben ↑'}</a>
+      </div>
+      <div class="footer-logo_contain container">
+        <a href={home + "#anfang"} class="bonanza-footer-word" aria-label={en ? 'Bonanza Ranch — back to top' : 'Bonanza Ranch — zurück zum Anfang'}>BONANZA RANCH</a>
+      </div>
+    </div>
+  </div>
+</footer>

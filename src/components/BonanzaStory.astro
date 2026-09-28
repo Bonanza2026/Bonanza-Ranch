@@ -1,0 +1,9 @@
+---
+import ReserveIntroduction from "./ReserveIntroduction.astro";
+import ReferenceStory from "./ReferenceStory.astro";
+import "../styles/bonanza-story.css";
+const { lang = "de" } = Astro.props;
+---
+
+<ReserveIntroduction lang={lang} />
+<ReferenceStory lang={lang} />

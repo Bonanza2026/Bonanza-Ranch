@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.astro/
+qa/
+*.log
+.tools/
+.vercel/
+.env
+.env.*
+!.env.example
+# Local research, reference captures and working backups.
+docs/*
+!docs/JOURNEY-FLOW.md
+!docs/LEGAL-AND-LANGUAGE.md
+!docs/media-optimization.json
+!docs/generated-editorial-images.json
+!docs/map-relief-source.json
+scripts/*
+!scripts/language-routing.test.mjs
+!scripts/optimize-current-media.mjs

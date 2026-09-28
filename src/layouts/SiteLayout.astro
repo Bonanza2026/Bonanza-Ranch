@@ -1,0 +1,65 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import CookieNotice from "../components/CookieNotice.astro";
+import "../styles/reference.css";
+import "../styles/bonanza.css";
+import "../styles/dream.css";
+import "../styles/bonanza-type.css";
+import "../styles/legal.css";
+import "../styles/mobile-polish.css";
+const {
+  title = "Bonanza Ranch · Ein anderes Leben. Mitten in der Natur.",
+  description = "Weite Landschaft, wilde Begegnungen und ein Leben voller Möglichkeiten. Entdecken Sie die Vision von Bonanza Ranch in Südafrika.",
+  lang = "de",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#fafaf8" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/bonanza/logo.webp" />
+  </head>
+  <body>
+    <a href="#inhalt" class="skip-link">
+      {lang === 'en' ? 'Skip to content' : 'Zum Inhalt'}
+    </a>
+    <SiteHeader lang={lang} />
+    <main id="inhalt" class="page-main">
+      <div class="page-content">
+        <slot />
+      </div>
+    </main>
+    <SiteFooter lang={lang} />
+    <CookieNotice lang={lang} />
+    <div class="custom-cursor" aria-hidden="true">
+      <div class="custom-cursor_line-vertical"></div>
+      <div class="custom-cursor_line-horizontal"></div>
+      <div class="custom-cursor_dot"></div>
+      <div class="custom-cursor_label">
+        <span class="custom-cursor_label-text"></span>
+      </div>
+    </div>
+    <dialog class="ranch-film">
+      <button data-film-close aria-label="Film schließen">
+        {lang === 'en' ? 'Close ×' : 'Schließen ×'}
+      </button>
+      <video
+        controls
+        playsinline
+        preload="none"
+      >
+        <source src="/media/hero_film.webm" type="video/webm" />
+        <source src="/media/hero_video.mp4" type="video/mp4" />
+      </video>
+    </dialog>
+    <script>
+      import "../scripts/runtime";
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+---
+const { lang = 'de' } = Astro.props;
+const en = lang === 'en';
+---
+<section class="cookie-notice" data-cookie-notice hidden role="region" aria-labelledby="cookie-title">
+  <p class="cookie-eyebrow">BONANZA RANCH</p>
+  <h2 id="cookie-title">{en ? 'Your privacy.' : 'Ihre Privatsphäre.'}</h2>
+  <p>{en
+    ? 'We use no analytics or advertising cookies. Only your chosen language and the dismissal of this notice are remembered on your device.'
+    : 'Wir nutzen keine Analyse- oder Werbe-Cookies. Gespeichert werden nur Ihre gewählte Sprache und das Schließen dieses Hinweises.'}</p>
+  <details>
+    <summary>{en ? 'Necessary storage' : 'Notwendige Speicherungen'}</summary>
+    <p>{en
+      ? 'Language: bonanza_language cookie. Notice: bonanza_cookie_notice in local storage. Each is remembered for up to 180 days. You can reopen this notice in the footer.'
+      : 'Sprache: Cookie bonanza_language. Hinweis: bonanza_cookie_notice im lokalen Speicher. Jeweils für bis zu 180 Tage. Dieser Hinweis lässt sich im Footer erneut öffnen.'}</p>
+  </details>
+  <div class="cookie-actions">
+    <a href={en ? '/en/privacy' : '/datenschutz'}>{en ? 'Privacy policy' : 'Datenschutz'}</a>
+    <button type="button" data-cookie-dismiss>{en ? 'Understood' : 'Verstanden'} <span aria-hidden="true">↗</span></button>
+  </div>
+</section>
+<script>
+  const notice = document.querySelector<HTMLElement>('[data-cookie-notice]')!;
+  const key = 'bonanza_cookie_notice';
+  const duration = 180 * 24 * 60 * 60 * 1000;
+  let remembered = false;
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || 'null');
+    remembered = saved?.version === 1 && saved?.dismissedAt <= Date.now() && Date.now() - saved.dismissedAt < duration;
+    if (saved && !remembered) localStorage.removeItem(key);
+  } catch { /* Storage may be disabled. The notice still works for this visit. */ }
+  notice.hidden = remembered;
+  let opener: HTMLElement | null = null;
+  document.querySelector('[data-cookie-dismiss]')?.addEventListener('click', () => {
+    try { localStorage.setItem(key, JSON.stringify({version:1, dismissedAt:Date.now()})); } catch {}
+    notice.hidden = true;
+    opener?.focus({preventScroll:true});
+  });
+  document.querySelectorAll<HTMLElement>('[data-cookie-open]').forEach(button => {
+    button.addEventListener('click', () => {
+      opener = button;
+      notice.hidden = false;
+      notice.querySelector<HTMLButtonElement>('[data-cookie-dismiss]')?.focus({preventScroll:true});
+    });
+  });
+  document.querySelectorAll<HTMLAnchorElement>('.language-switch a[lang]').forEach(link => {
+    link.addEventListener('click', () => {
+      const value = link.lang;
+      if (value !== 'de' && value !== 'en') return;
+      document.cookie = `bonanza_language=${value}; Path=/; Max-Age=15552000; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`;
+    });
+  });
+</script>

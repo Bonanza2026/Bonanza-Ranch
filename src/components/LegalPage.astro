@@ -1,0 +1,28 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { imprint, privacy } from '../content/legal';
+const { lang = 'de', type = 'imprint' } = Astro.props;
+const en = lang === 'en';
+const isPrivacy = type === 'privacy';
+const title = isPrivacy ? (en ? 'Privacy policy' : 'Datenschutz') : (en ? 'Legal notice' : 'Impressum');
+const sections = (isPrivacy ? privacy : imprint)[lang];
+---
+<SiteLayout lang={lang} title={`${title} · Bonanza Ranch`}>
+  <article class="legal-page" data-nav-theme="dark">
+    <header class="legal-intro">
+      <a href={en ? '/en' : '/'}>← {en ? 'Back to Bonanza Ranch' : 'Zurück zur Bonanza Ranch'}</a>
+      <h1>{title}</h1>
+      <p>{isPrivacy ? (en ? 'What we process, why we need it and the choices you have.' : 'Welche Daten wir verarbeiten, wofür wir sie benötigen und welche Rechte Sie haben.') : (en ? 'Provider details and information about this project website.' : 'Anbieterangaben und Hinweise zu dieser Projektwebsite.')}</p>
+      <p class="legal-date">{en ? 'Last updated: 28 September 2026' : 'Stand: 28. September 2026'}</p>
+    </header>
+    <div class="legal-grid">
+      <aside class="legal-toc" aria-label={en ? 'Contents' : 'Inhalt'}>
+        <p>{en ? 'Contents' : 'Inhalt'}</p>
+        {sections.map((section, index) => <a href={`#legal-${index+1}`}>{section.title}</a>)}
+      </aside>
+      <div class="legal-copy">
+        {sections.map((section, index) => <section id={`legal-${index+1}`}><h2>{section.title}</h2><div set:html={section.html} /></section>)}
+      </div>
+    </div>
+  </article>
+</SiteLayout>

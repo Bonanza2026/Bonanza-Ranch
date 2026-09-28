@@ -1,0 +1,19 @@
+{
+  "tool": "Built-in image_gen",
+  "images": [
+    {
+      "name": "butler-dinner",
+      "reference": "C:/Users/royin/Documents/bonanza 2/public/bonanza/concepts/clubhouse-concept.webp",
+      "prompt": "Generate a NEW photographic concept image for the same South African Klein Karoo ranch location as the reference. Reference image is style and setting only, not an edit target. Vertical 4:5 composition. Authentic luxury travel editorial photograph, candid scene on a rustic stone-and-timber lodge veranda: a professional middle-aged South African hospitality host in a simple white linen shirt and dark apron quietly setting down dinner for two at a wooden table. Host in center-left, naturally posed, hands physically correct, no looking into camera, understated service. Natural table setting, two glasses and linen napkins, subtle warm evening sunlight, native fynbos and realistic folded Karoo mountains softly behind. Match supplied photography's muted earth tones, natural lens rendering, believable imperfect materials. Looks like an actual full-frame camera photograph at 50mm f/2.8, real skin and hand texture, no CGI, no glossy resort render, no oversaturated colors, no cinematic orange filter, no artificial bokeh shapes, no text, no logos, no watermark. This is an illustrative concept, not a photograph of an existing facility.",
+      "output": "public/bonanza/concepts/butler-dinner-concept.webp",
+      "status": "AI-generated concept visual, labeled in the page"
+    },
+    {
+      "name": "tennis-court",
+      "reference": "C:/Users/royin/Documents/bonanza 2/public/bonanza/concepts/racket-concept.webp",
+      "prompt": "Generate a NEW photographic concept image for the same South African Klein Karoo ranch landscape as the reference. Reference is location/material/color guidance only, NOT an edit target. Vertical 4:5 editorial photograph, a proper regulation outdoor tennis court (NOT padel) in understated faded olive-green acrylic with accurate simple white tennis lines and one straight taut regulation net. View from just behind one baseline corner, net crosses center at proper height, mountains and natural fynbos behind, low stone lodge in far distance. Warm natural late afternoon side light and softly imperfect real court surface. One tennis racket and two balls on a weathered timber bench in the lower foreground. No people. Restrained sophisticated real travel photography with a 35mm lens, physical perspective, no CGI, no 3D render, no surreal proportions, no hyper-HDR, no text, no logos, no watermarks. Match muted natural palette and real optical texture of supplied reference, warm stone / subdued green / pale blue sky. This is an illustrative planned-facility concept.",
+      "output": "public/bonanza/concepts/tennis-court-concept.webp",
+      "status": "AI-generated concept visual, labeled in the page"
+    }
+  ]
+}

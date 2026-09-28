@@ -1,0 +1,38 @@
+[
+  {
+    "source": "images/cloud-2-full.png",
+    "output": "images/cloud-2-full.webp",
+    "before": 609282,
+    "after": 183110
+  },
+  {
+    "source": "images/cloud-1-cropped.png",
+    "output": "images/cloud-1-cropped.webp",
+    "before": 348201,
+    "after": 106118
+  },
+  {
+    "source": "images/cloud-gradient.png",
+    "output": "images/cloud-gradient.webp",
+    "before": 105506,
+    "after": 108878
+  },
+  {
+    "source": "images/mist-gradient.png",
+    "output": "images/mist-gradient.webp",
+    "before": 1336861,
+    "after": 533796
+  },
+  {
+    "source": "bonanza/map/world-relief.jpg",
+    "output": "bonanza/map/world-relief.webp",
+    "before": 489019,
+    "after": 224312
+  },
+  {
+    "source": "bonanza/logo.png",
+    "output": "bonanza/logo.webp",
+    "before": 252795,
+    "after": 186864
+  }
+]

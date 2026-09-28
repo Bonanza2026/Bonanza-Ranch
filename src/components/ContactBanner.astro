@@ -1,0 +1,13 @@
+---
+const { lang = 'de' } = Astro.props;
+const en = lang === 'en';
+---
+<section class="dream-contact" id="kontakt" data-nav-theme="light">
+  <img src="/bonanza/concepts/clubhouse-concept.webp" alt={en ? 'Concept of an evening at Bonanza' : 'Konzept eines Abends auf Bonanza'} width="1920" height="1080" loading="lazy" />
+  <div class="dream-contact-content">
+    <p class="dream-label">{en ? 'SOME DREAMS ARE WORTH PURSUING' : 'MANCHE TRÄUME LASSEN EINEN NICHT LOS'}</p>
+    <h2>{en ? 'Could you' : 'Könnten Sie'}<br /><em>{en ? 'picture yourself here?' : 'sich das vorstellen?'}</em></h2>
+    <a href="mailto:info@bonanza-ranch.com?subject=Bonanza%20Ranch">{en ? 'Let’s talk about Bonanza' : 'Sprechen wir über Bonanza'}<span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="dream-contact-note"><span>{en ? 'BONANZA RANCH · A VISION IN DEVELOPMENT' : 'BONANZA RANCH · EINE VISION IN ENTWICKLUNG'}</span><span>{en ? 'CONCEPT VISUALISATION' : 'KONZEPTVISUALISIERUNG'}</span></div>
+</section>

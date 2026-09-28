@@ -1,0 +1,10 @@
+---
+const { src, alt, caption, concept = false, position = '50% 50%', class: className = '' } = Astro.props;
+---
+<figure class:list={['story-photo',className]}>
+ <img src={src} alt={alt} loading="lazy" decoding="async" style={`object-position:${position}`} width="1600" height="1000" />
+ {(caption || concept) && <figcaption class:list={{'has-story-caption': Boolean(caption)}}>
+  {caption && <span class="photo-caption">{caption}</span>}
+  {concept && <span class="photo-concept">{Astro.props.lang==='en'?'CONCEPT VISUALISATION':'KONZEPTVISUALISIERUNG'}</span>}
+ </figcaption>}
+</figure>

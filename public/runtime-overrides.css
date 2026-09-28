@@ -1,0 +1,14 @@
+/* Only browser-runtime restoration and the explicitly requested aircraft addition. */
+.hero-banner.with-aircraft{height:450svh}
+.with-aircraft .hero-banner_wrapper{overflow:clip}
+.aircraft-pass{position:absolute;inset:0;pointer-events:none;z-index:6;transform:translateX(-120vw)}
+.aircraft-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.aircraft-body,.aircraft-shadow{position:absolute;max-width:none;width:145vw;height:auto;object-fit:contain}
+.aircraft-shadow{filter:brightness(0) blur(22px);opacity:.15}
+.aircraft-cloud-floor{position:absolute;inset:0;background:white;opacity:0;pointer-events:none;z-index:4}
+.with-aircraft .clouds-overlay_wrap{z-index:5}
+.with-aircraft .clouds-overlay_wrap img{mask-image:linear-gradient(#000 0 70%,transparent 100%)}
+.flyout_container:not(.is-sticky):not(.is-active){visibility:hidden!important;pointer-events:none}
+.video-popup[hidden]{display:none!important}
+@media(max-width:767px){.aircraft-body,.aircraft-shadow{width:255vw}}
+@media(prefers-reduced-motion:reduce){.aircraft-pass,.aircraft-cloud-floor{display:none!important}[data-reveal]{opacity:1!important;transform:none!important}}

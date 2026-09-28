@@ -1,0 +1,392 @@
+---
+const {lang = 'de'} = Astro.props;
+const en = lang === 'en';
+const home = en ? '/en' : '/';
+const leisure = home + '#freizeit';
+const security = home + '#sicherheit';
+const paths: Record<string,string> = {'/':'/en','/freizeit':'/en/leisure','/sicherheit':'/en/security','/impressum':'/en/legal','/datenschutz':'/en/privacy'};
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const dePath = en ? Object.keys(paths).find(k => paths[k] === pathname) || '/' : pathname;
+const enPath = paths[dePath] || '/en';
+---
+<!-- Adapted as an Astro component; reference layout and motion selectors retained. -->
+<nav aria-label={en ? "Main navigation" : "Hauptnavigation"}>
+  <div class="language-switch" aria-label={en ? "Language" : "Sprache"}><a href={dePath} lang="de" aria-current={!en ? "page" : undefined}>DE</a><span>/</span><a href={enPath} lang="en" aria-current={en ? "page" : undefined}>EN</a></div>
+  <div class="nav-contain container">
+    <div class="nav-layout u-grid">
+      <div class="nav-col col-4">
+        <ul class="nav-ul nav-left">
+          <li>
+            <svg class="liquid-glass__svg" aria-hidden="true">
+              <defs>
+                <filter
+                  id="_R_5aklb_"
+                  x="0%"
+                  y="0%"
+                  width="100%"
+                  height=" 100%"
+                >
+                  <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.008 0.008"
+                    numOctaves="2"
+                    seed="100"
+                    result="noise"
+                  ></feTurbulence>
+                  <feGaussianBlur
+                    in="noise"
+                    stdDeviation="2"
+                    result="blurred"
+                  ></feGaussianBlur>
+                  <feDisplacementMap
+                    in="SourceGraphic"
+                    in2="blurred"
+                    scale="40"
+                    xChannelSelector="R"
+                    yChannelSelector="G"
+                  ></feDisplacementMap>
+                </filter>
+              </defs>
+            </svg>
+            <div
+              class="liquid-glass__filter"
+              style="filter:url(#_R_5aklb_)"
+            ></div>
+            <div
+              class="liquid-glass__overlay"
+              style="--glass-opacity:0.05"
+            ></div>
+            <div
+              class="liquid-glass__specular"
+              style="--glass-scale:0.35;--glass-depth:0"
+            ></div>
+            <button class="btn btn-tab" type="button">
+              <div class="btn-inner">
+                <span class="btn-text">{en ? 'Menu' : 'Menü'}</span>
+              </div>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="nav-col col-4">
+        <a href={home} aria-label="Bonanza Ranch – Startseite">
+          <span
+            class="bonanza-logo"
+            role="img"
+            aria-label="Bonanza Ranch · Eco Wildlife Estate"
+          ></span>
+        </a>
+      </div>
+      <div class="nav-col col-4">
+        <ul class="nav-ul nav-right">
+          <li>
+            <svg class="liquid-glass__svg" aria-hidden="true">
+              <defs>
+                <filter
+                  id="_R_6qklb_"
+                  x="0%"
+                  y="0%"
+                  width="100%"
+                  height=" 100%"
+                >
+                  <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.008 0.008"
+                    numOctaves="2"
+                    seed="100"
+                    result="noise"
+                  ></feTurbulence>
+                  <feGaussianBlur
+                    in="noise"
+                    stdDeviation="2"
+                    result="blurred"
+                  ></feGaussianBlur>
+                  <feDisplacementMap
+                    in="SourceGraphic"
+                    in2="blurred"
+                    scale="40"
+                    xChannelSelector="R"
+                    yChannelSelector="G"
+                  ></feDisplacementMap>
+                </filter>
+              </defs>
+            </svg>
+            <div
+              class="liquid-glass__filter"
+              style="filter:url(#_R_6qklb_)"
+            ></div>
+            <div
+              class="liquid-glass__overlay"
+              style="--glass-opacity:0.05"
+            ></div>
+            <div
+              class="liquid-glass__specular"
+              style="--glass-scale:0.35;--glass-depth:0"
+            ></div>
+            <a class="btn btn-cta" href="mailto:info@bonanza-ranch.com">
+              <div class="btn-inner">
+                <span class="btn-text">{en ? 'Enquire' : 'Persönlich anfragen'}</span>
+                <div class="btn-icon">
+                  <div
+                    class="icon"
+                    style="width:100%;height:100%;color:currentColor"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 11 11"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-miterlimit="10"
+                        stroke-width="0.5"
+                        d="M5.5 1v9M1 5.502h9"
+                      ></path>
+                      <path
+                        fill="currentColor"
+                        d="m5.45 3.449 1.99 1.99-1.99 1.99-1.991-1.99z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="nav-layout_mobile">
+      <svg class="liquid-glass__svg" aria-hidden="true">
+        <defs>
+          <filter id="_R_cklb_" x="0%" y="0%" width="100%" height=" 100%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.008 0.008"
+              numOctaves="2"
+              seed="100"
+              result="noise"
+            ></feTurbulence>
+            <feGaussianBlur
+              in="noise"
+              stdDeviation="2"
+              result="blurred"
+            ></feGaussianBlur>
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="blurred"
+              scale="40"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            ></feDisplacementMap>
+          </filter>
+        </defs>
+      </svg>
+      <div class="liquid-glass__filter" style="filter:url(#_R_cklb_)"></div>
+      <div class="liquid-glass__overlay" style="--glass-opacity:0.05"></div>
+      <div
+        class="liquid-glass__specular"
+        style="--glass-scale:0.35;--glass-depth:0"
+      ></div>
+      <div class="nav-col">
+        <button class="btn nav-btn menu-toggle" type="button">
+          <div class="btn-inner">
+            <span class="btn-text">{en ? 'Menu' : 'Menü'}</span>
+          </div>
+        </button>
+      </div>
+      <div class="nav-col">
+        <div class="nav-logo">
+          <a href={home} aria-label="Bonanza Ranch – Startseite">
+            <span
+              class="bonanza-logo"
+              role="img"
+              aria-label="Bonanza Ranch · Eco Wildlife Estate"
+            ></span>
+          </a>
+        </div>
+      </div>
+      <div class="nav-col">
+        <a class="btn nav-btn menu-enquire" href="mailto:info@bonanza-ranch.com">
+          <div class="btn-inner">
+            <span class="btn-text">{en ? 'Contact' : 'Kontakt'}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="menu-component">
+    <div class="menu-bg"></div>
+    <div class="menu-wrap">
+      <div class="menu-contain container">
+        <div class="menu-layout u-grid">
+          <div class="menu-col col-4">
+            <div class="menu-el" aria-label={en ? "Main navigation" : "Hauptnavigation"} data-lenis-prevent>
+              <div class="menu-inner is-desktop">
+                <div class="menu-dropdown_wrap">
+                  <a class="nav-link" href={home + "#traum"}>
+                    {en ? 'The vision' : 'Die Vision'}
+                  </a>
+                </div>
+                <a class="nav-link" href={home + "#reise"}>{en ? "The location" : "Die Lage"}</a>
+                <div class="menu-line"></div>
+                <div class="menu-group">
+                  <div class="menu-dropdown_wrap">
+                    <p class="menu-label">{en ? 'Life on Bonanza' : 'Das Leben auf Bonanza'}</p>
+                    <a
+                      class="nav-link"
+                      href={leisure}
+                      data-preview="/bonanza/concepts/clubhouse-concept.webp"
+                    >
+                      {en ? 'Leisure' : 'Freizeit'}{" "}
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                      >
+                        <path
+                          d="M4 16 16 4M4 4h12v12"
+                          stroke="currentColor"
+                          stroke-width="1.2"
+                        ></path>
+                      </svg>
+                    </a>
+                    <a
+                      class="nav-link"
+                      href={security}
+                      data-preview="/bonanza/concepts/security-gate-concept.webp"
+                    >
+                      {en ? 'Security' : 'Sicherheit'}{" "}
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                      >
+                        <path
+                          d="M4 16 16 4M4 4h12v12"
+                          stroke="currentColor"
+                          stroke-width="1.2"
+                        ></path>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-legal is-desktop">
+                <a href="mailto:info@bonanza-ranch.com">{en ? 'Contact' : 'Kontakt'}</a>
+                <a href={en ? '/en/legal' : '/impressum'}>{en ? 'Legal notice' : 'Impressum'}</a>
+                <a href={en ? '/en/privacy' : '/datenschutz'}>{en ? 'Privacy' : 'Datenschutz'}</a>
+              </div>
+              <div class="menu-footer is-desktop">
+                <div class="menu-footer_layout">
+                  <a class="btn btn-standard" href="mailto:info@bonanza-ranch.com">
+                    <div class="btn-inner">
+                      <span class="btn-text">{en ? 'Enquire' : 'Persönlich anfragen'}</span>
+                      <div class="btn-icon">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M4 16 16 4M4 4h12v12"
+                            stroke="currentColor"
+                            stroke-width="1.2"
+                          ></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="mobile-menu">
+                <div class="mobile-menu_top">
+                  <button class="btn btn-large menu-close" type="button">
+                    <div class="btn-inner">
+                      <span class="btn-text">{en ? 'Close' : 'Schließen'}</span>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 11 11"
+                        fill="none"
+                      >
+                        <path
+                          d="M5.5 1v9M1 5.5h9"
+                          stroke="currentColor"
+                          stroke-width=".7"
+                        ></path>
+                        <path
+                          d="m5.5 3.4 2.1 2.1-2.1 2.1-2.1-2.1Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+                <div class="mobile-menu_title-bar">
+                  <a class="mobile-menu_home-link" href={home + "#traum"}>
+                    {en ? 'The vision' : 'Die Vision'}
+                  </a>
+                </div>
+                <div class="mobile-menu_nav">
+                  <a class="mobile-menu_accordion-trigger" href={home + "#reise"}>{en ? "The location" : "Die Lage"}</a>
+                  <a class="mobile-menu_accordion-trigger" href={leisure}>
+                    {en ? 'Leisure' : 'Freizeit'}{" "}
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M4 16 16 4M4 4h12v12"
+                        stroke="currentColor"
+                        stroke-width="1.2"
+                      ></path>
+                    </svg>
+                  </a>
+                  <a class="mobile-menu_accordion-trigger" href={security}>
+                    {en ? 'Security' : 'Sicherheit'}{" "}
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M4 16 16 4M4 4h12v12"
+                        stroke="currentColor"
+                        stroke-width="1.2"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+                <div class="menu-legal">
+                  <a href="mailto:info@bonanza-ranch.com">{en ? 'Contact' : 'Kontakt'}</a>
+                  <a href={en ? '/en/legal' : '/impressum'}>{en ? 'Legal notice' : 'Impressum'}</a>
+                  <a href={en ? '/en/privacy' : '/datenschutz'}>{en ? 'Privacy' : 'Datenschutz'}</a>
+                </div>
+                <div class="mobile-menu_footer">
+                  <a class="btn btn-standard" href="mailto:info@bonanza-ranch.com">
+                    <div class="btn-inner">
+                      <span class="btn-text">{en ? 'Enquire' : 'Persönlich anfragen'}</span>
+                      <div class="btn-icon">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M4 16 16 4M4 4h12v12"
+                            stroke="currentColor"
+                            stroke-width="1.2"
+                          ></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="menu-col col-4 is-desktop">
+            <div class="menu-img_wrap"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

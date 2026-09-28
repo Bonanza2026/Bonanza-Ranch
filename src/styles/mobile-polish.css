@@ -1,0 +1,47 @@
+/* Phone typography is sized for reading, independently of the desktop film. */
+@media (max-width: 767px) {
+  .nav-layout_mobile > .nav-col:has(.nav-logo) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    flex: none;
+  }
+  .nav-layout_mobile .nav-col:last-child { margin-left: auto; }
+  .dream-home .dream-label,
+  .dream-home .flight-thought .dream-label,
+  .dream-home .flight-arrival-copy > .dream-label { font-size: 11px; }
+  .dream-home .flight-bottom > p, .flight-arrival-bottom { font-size: 11px; }
+  .dream-home .reserve-facts > p:last-child,
+  .dream-home .worlds-caption p,
+  .dream-home .life-chapter p { font-size: 16px; line-height: 1.6; }
+  .dream-home .reserve-area small { font-size: 11px; }
+  .dream-home .worlds-captions { left: 6vw; right: 6vw; bottom: 5svh; }
+  .dream-home .security-facts dt { font-size: 13px; }
+  .dream-home .security-facts dd { font-size: 15px; }
+  .dream-home .photo-caption { font-size: 14px; line-height: 1.45; }
+  .dream-home .photo-caption + .photo-concept,
+  .dream-home .story-photo figcaption { font-size: 10px; }
+  .dream-home .photo-concept { overflow-wrap: anywhere; }
+  .dream-home .finesse-pictures {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 20px;
+  }
+  .dream-home .finesse-pictures > .story-photo { aspect-ratio: 4/3; }
+  .dream-home .finesse-pictures > .story-photo:nth-child(2) { margin-top: 0; }
+  .dream-home .finesse-pictures .story-photo figcaption.has-story-caption { inset: auto 18px 18px; }
+  .dream-home .finesse-pictures .photo-caption { font-size: 16px; }
+  .dream-home .finesse-pictures .photo-concept { font-size: 10px; }
+  .footer-component .bonanza-footer-top .t-body { font-size: 16px; }
+  .footer-component .bonanza-footer-top { gap: 28px; padding: 44px 8px 8px; }
+  .footer-component .footer-contact { grid-column: 1 / -1; }
+  .footer-component .footer-contact .t-title-italic { font-size: 26px; margin-bottom: 18px; }
+  .footer-component .footer-email { font-size: 16px; margin-top: 2px; }
+  .footer-component .footer { row-gap: 20px; }
+  .footer-component .bonanza-footer-meta { font-size: 13px; gap: 20px; }
+  .footer-component .footer-planning-note { font-size: 13px; line-height: 1.6; }
+  .dream-home .jm-city text { font-size: 30px; }
+  .dream-home .jm-city .jm-region { font-size: 22px; }
+}

@@ -1,0 +1,260 @@
+/* Plane reveals the arrival title; the stage releases immediately afterwards. */
+.dream-home .dream-flight {
+  height: 473.8svh;
+  z-index: 2;
+  background: #000;
+}
+.dream-home .flight-arrival {
+  color: #fafaf8;
+  background: #000;
+}
+.arrival-flag { width: 60px; height: 40px; margin-bottom: 28px; }
+body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
+.flight-arrival-copy {
+  display: contents;
+}
+.flight-arrival-copy > .dream-label {
+  margin-bottom: 4vh;
+}
+.journey-map {
+  position: relative;
+  z-index: 1;
+  background: #fafaf8;
+}
+.jm-heading {
+  position: relative;
+  z-index: 2;
+  background: #000;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 3vw;
+  padding: 24px 4vw 70px;
+  color: #fafaf8;
+  box-shadow: 0 24px 30px -18px #0008;
+}
+.jm-heading::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 4vw;
+  right: 4vw;
+  border-top: 1px solid #ffffff30;
+}
+.jm-heading > div {
+  text-align: center;
+}
+.dream-home .jm-heading h2 {
+  font-size: clamp(32px, 3.3vw, 54px);
+  line-height: 1.08;
+}
+.jm-heading > div > p {
+  font-size: 0.87rem;
+  line-height: 1.65;
+  max-width: 420px;
+  margin: 24px auto 0;
+  color: #c5c8c3;
+}
+.jm-departure,
+.jm-destination-label {
+  font: italic 400 17px/1.5 var(--font-display);
+  color: #c5c8c3;
+}
+.jm-heading > p > span {
+  display: block;
+  font: 400 11px/1.8 var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.jm-destination-label {
+  text-align: right;
+}
+.jm-component {
+  position: relative;
+  height: max(115svh, 90vw);
+  background: #dde0de;
+  color: #19362d;
+}
+.jm-map-art {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background: #dde0de;
+}
+.jm-map-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #dde0de 0%, #dde0deeb 18%, #dde0de4d 35%, transparent 48%);
+}
+.jm-world {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.jm-route,
+.jm-route-guide {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.jm-route {
+  stroke: #625a4c;
+  stroke-width: 1.5;
+}
+.jm-route-guide {
+  stroke: #59665f;
+  stroke-width: 1;
+  opacity: 0.3;
+}
+.jm-city,
+.jm-traveller {
+  fill: #19362d;
+}
+.jm-city text {
+  font: 600 24px var(--font-sans);
+  letter-spacing: 1px;
+  paint-order: stroke;
+  stroke: #f5f5f099;
+  stroke-width: 2;
+}
+.jm-city .jm-region {
+  font-size: 16px;
+  letter-spacing: 1.5px;
+}
+.jm-traveller {
+  fill: #19362d;
+}
+.jm-traveller-ring {
+  fill: none;
+  stroke: #19362d55;
+  stroke-width: 1;
+}
+.jm-soft-edge {
+  display: none;
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 16svh;
+  pointer-events: none;
+  background: linear-gradient(
+    #fafaf8,
+    #fafaf8cc 12%,
+    #fafaf84d 50%,
+    transparent
+  );
+}
+.jm-information {
+  position: absolute;
+  top: 27%;
+  left: 5vw;
+  width: 29%;
+  z-index: 1;
+}
+.jm-information .dream-label {
+  font-size: 0.55rem;
+  color: #625a4c;
+  margin-bottom: 26px;
+}
+.dream-home .jm-information h3 {
+  color: #19362d;
+  font-size: clamp(32px, 3.6vw, 58px);
+  line-height: 1.08;
+}
+.jm-information > p:last-child {
+  font-size: 18px;
+  line-height: 1.65;
+  max-width: 27ch;
+  margin-top: 24px;
+  color: #4f5c55;
+}
+.jm-credit {
+  position: absolute;
+  right: 4vw;
+  bottom: 28px;
+  font-size: 0.45rem;
+  color: #57615b;
+  z-index: 1;
+}
+.jm-credit a {
+  text-decoration: underline;
+}
+@media (max-width: 767px) {
+  .dream-home .dream-flight {
+    height: 429.3svh;
+  }
+  .flight-arrival-copy > .dream-label {
+    font-size: 0.55rem;
+    margin-bottom: 3rem;
+  }
+  .jm-heading {
+    grid-template-columns: 1fr 1fr;
+    padding: 24px 7vw 55px;
+    gap: 32px 10px;
+  }
+  .jm-heading > div {
+    grid-column: 1/-1;
+    grid-row: 2;
+  }
+  .dream-home .jm-heading h2 {
+    font-size: 9vw;
+  }
+  .jm-heading > div > p {
+    font-size: 16px;
+  }
+  .jm-heading > p {
+    font-size: 15px;
+  }
+  .jm-heading > p > span {
+    font-size: 11px;
+  }
+  .jm-component {
+    height: auto;
+    overflow: hidden;
+  }
+  .jm-map-art {
+    position: relative;
+    height: calc(100vw * 1100 / 730);
+    overflow: hidden;
+  }
+  .jm-soft-edge {
+    height: 10svh;
+  }
+  .jm-map-art::after {
+    display: none;
+  }
+  .jm-city text {
+    font-size: 23px;
+  }
+  .jm-city .jm-region {
+    font-size: 16px;
+  }
+  .jm-information {
+    position: relative;
+    left: auto;
+    width: auto;
+    top: auto;
+    padding: 24px 7vw 64px;
+  }
+  .dream-home .jm-information h3 {
+    font-size: 9vw;
+  }
+  .jm-information > p:last-child {
+    font-size: 16px;
+    max-width: 33ch;
+  }
+  .jm-information .dream-label { font-size: 11px; }
+  .jm-credit {
+    font-size: 10px;
+    right: 7vw;
+    left: 7vw;
+  }
+  .arrival-flag { width: 48px; height: 32px; margin-bottom: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dream-home .dream-flight {
+    height: 100svh;
+  }
+}

@@ -1,0 +1,100 @@
+---
+import "../styles/reserve-introduction.css";
+const { lang = "de" } = Astro.props;
+const en = lang === "en";
+const t = (de: string, english: string) => (en ? english : de);
+const e = "/bonanza/experiences/";
+---
+
+<!-- Sobha luxury-homes: staggered triptych, opening centre and editorial return. -->
+<section class="reserve-introduction" id="traum" data-nav-theme="light">
+  <div class="reserve-parallax-wrapper">
+    <header class="reserve-opening-title">
+      <p class="dream-label">
+        {t("DIE VISION VON BONANZA", "THE BONANZA VISION")}
+      </p>
+      <h2>
+        {t("Afrikas Wildnis.", "African wilderness.")}
+        <br />
+        {t("Ihr privater Rückzugsort.", "Your private retreat.")}
+      </h2>
+    </header>
+    <div class="reserve-triptych-sticky">
+      <div class="reserve-triptych">
+        <figure class="reserve-side reserve-side-left">
+          <div>
+            <img
+              src={`${e}leopard-portrait.webp`}
+              alt={t(
+                "Leopard im südafrikanischen Busch",
+                "Leopard in the South African bush",
+              )}
+              width="1080"
+              height="799"
+              loading="lazy"
+            />
+          </div>
+        </figure>
+        <figure class="reserve-center">
+          <img
+            src={`${e}lioness-portrait.webp`}
+            alt={t(
+              "Löwin im Porträt",
+              "Portrait of a lioness",
+            )}
+            width="1080"
+            height="1401"
+            loading="lazy"
+          />
+        </figure>
+        <figure class="reserve-side reserve-side-right">
+          <div>
+            <img
+              src={`${e}springbok-leap.webp`}
+              alt={t(
+                "Springböcke in der offenen Landschaft",
+                "Springbok in the open landscape",
+              )}
+              width="1080"
+              height="716"
+              loading="lazy"
+            />
+          </div>
+        </figure>
+      </div>
+    </div>
+  </div>
+  <div class="reserve-editorial">
+    <h2>
+      {t("Raum für die Natur.", "Room for nature.")}
+      <br />
+      <em>{t("Freiheit für Ihr Leben.", "Freedom to live.")}</em>
+    </h2>
+    <div class="reserve-editorial-grid">
+      <div class="reserve-facts">
+        <p class="reserve-area">
+          {en ? "6,300" : "6.300"} <em>ha</em>
+          <small>{t("GEPLANTE KERNFLÄCHE", "PLANNED CORE AREA")}</small>
+        </p>
+        <p>
+          {t(
+            "Zwischen den Bergen der Klein Karoo soll ein weitläufiges Wildschutzgebiet entstehen. Die Vision: geschützte Lebensräume für Antilopen, eine reiche Vogelwelt und seltene Arten wie den Leoparden. Eingebettet in diese Landschaft sind private Ranches geplant. Für Menschen, die Afrika nicht nur bereisen, sondern einen Teil ihres Lebens dort verbringen möchten.",
+            "Between the mountains of the Klein Karoo, an extensive wildlife reserve is envisaged. The vision: protected habitats for antelope, abundant birdlife and rare species such as the leopard. Private ranches are planned within this landscape, for people who want Africa to become part of their lives.",
+          )}
+        </p>
+      </div>
+      <figure class="reserve-editorial-image">
+        <img
+          src={`${e}bush-trail.webp`}
+          alt={t(
+            "Ein Weg durch die Weite der Kapregion",
+            "A trail through the open Cape landscape",
+          )}
+          width="1440"
+          height="960"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+  </div>
+</section>
