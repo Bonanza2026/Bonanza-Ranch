@@ -13,13 +13,22 @@
   .dream-home .life-card-picture > .story-photo {
     position: absolute;
     top: var(--chapter-inset);
-    right: 5vw;
+    left: 5vw;
     width: 48.875vw;
     height: calc(100svh - 2 * var(--chapter-inset));
+    background: #000;
+  }
+  .dream-home .life-card-picture > .story-photo img { width: 100%; object-fit: contain; }
+  .dream-home .life-editorial.life-editorial--landscape-pair {
+    width: auto;
+    grid-template-columns: max-content 40.375vw;
+  }
+  .life-editorial--landscape-pair .chapter-media {
+    grid-auto-columns: calc((100svh - 2 * var(--chapter-inset)) * 16 / 9);
   }
   .dream-home .life-card-picture h3 {
     top: var(--chapter-inset);
-    left: 5vw;
+    left: 58.875vw;
     right: auto;
     font-size: var(--chapter-title);
     line-height: 1.1;
@@ -35,29 +44,33 @@
   .dream-home .life-card-picture > p {
     top: calc(var(--chapter-inset) + var(--chapter-title) * 2.2 + 40px);
     bottom: auto;
-    left: 5vw;
+    left: 58.875vw;
     width: 36.125vw;
     max-width: 40ch;
     font-size: var(--chapter-body);
     line-height: 1.6;
   }
-  .life-full-photo { padding: var(--chapter-inset) 0; }
+  .dream-home .life-editorial.life-finale {
+    width: auto;
+    grid-template-columns: 100vw 40.375vw;
+    padding: 0 5vw 0 0;
+  }
+  .life-finale .chapter-media { height: 100svh; }
+  .life-finale .chapter-copy { padding-top: var(--chapter-inset); }
 }
 .dream-home .life-editorial {
   width: 110vw;
   height: 100svh;
   display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
   gap: 5vw;
   padding: var(--chapter-inset) 5vw;
   align-items: start;
 }
-.dream-home .life-editorial--image-first {
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
-}
-.life-editorial--image-first .chapter-media { grid-column: 1; grid-row: 1; }
-.life-editorial--image-first .chapter-copy { grid-column: 2; grid-row: 1; }
 .chapter-copy { min-width: 0; }
+.chapter-image-note { display: block; margin-top: 20px; color: #c8c8c4; font: 400 12px/1.5 var(--font-sans); letter-spacing: .06em; text-transform: uppercase; }
+.dream-home .life-finale::after { display: none; }
+.dream-home .life-finale h3 { transform: none; display: block; }
 .dream-home .chapter-copy h3 {
   position: static;
   margin: 0 0 28px;
@@ -92,13 +105,8 @@
   overflow: hidden;
 }
 .chapter-media > .story-photo { width: 100%; height: 100%; min-width: 0; }
-.chapter-media > .life-vertical-gallery { width: 100%; margin: 0; gap: 0; }
-.chapter-media .life-vertical-gallery > .story-photo {
-  height: calc(100svh - 2 * var(--chapter-inset));
-  margin: 0 0 20px;
-}
-.chapter-media .life-vertical-gallery > .story-photo:last-child { margin-bottom: 0; }
-.chapter-copy .security-facts { margin-top: 24px; }
+.life-editorial--landscape-pair .story-photo img { width: 100%; object-fit: contain; }
+.chapter-copy .security-facts { margin: 16px 0 20px; }
 .dream-home .life-editorial .chapter-copy .security-facts dd { margin-bottom: 0; }
 .chapter-copy .security-facts > div { padding: 12px 0; }
 @media (max-width: 767px), (prefers-reduced-motion: reduce) {
@@ -114,7 +122,6 @@
   .life-film { --chapter-title: 38px; --chapter-body: 18px; }
   .chapter-copy, .chapter-media { width: 100%; }
   .chapter-media { height: auto; grid-auto-flow: row; grid-auto-columns: auto; }
-  .chapter-media > .story-photo,
-  .chapter-media .life-vertical-gallery > .story-photo { height: 55svh; }
-  .chapter-media > .life-vertical-gallery { transform: none !important; }
+  .chapter-media > .story-photo { height: 55svh; }
+  .life-editorial--landscape-pair .chapter-media > .story-photo { height: auto; aspect-ratio: 16 / 9; }
 }

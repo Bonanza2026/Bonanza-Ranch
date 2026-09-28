@@ -1,0 +1,51 @@
+---
+import { operator } from '../content/legal';
+const { lang = 'de' } = Astro.props;
+const en = lang === 'en';
+const mailto = `mailto:${operator.email}?subject=Bonanza%20Ranch`;
+---
+<dialog class="contact-options" aria-labelledby="contact-options-title" data-lenis-prevent>
+  <button class="contact-close" type="button" data-contact-close aria-label={en ? 'Close' : 'Schließen'}>×</button>
+  <h2 id="contact-options-title">{en ? 'Let’s talk about Bonanza.' : 'Sprechen wir über Bonanza.'}</h2>
+  <a class="contact-address" href={mailto} data-direct-mail>{operator.email}</a>
+  <p>{en ? 'No email app opened? Copy our address into your preferred email service.' : 'Kein E-Mail-Programm geöffnet? Kopieren Sie unsere Adresse in Ihren bevorzugten E-Mail-Dienst.'}</p>
+  <div class="contact-actions">
+    <a href={mailto} data-direct-mail>{en ? 'Open email app ↗' : 'E-Mail-Programm öffnen ↗'}</a>
+    <button type="button" data-copy-email data-email={operator.email}>{en ? 'Copy address' : 'Adresse kopieren'}</button>
+  </div>
+  <span class="contact-status" role="status" aria-live="polite"></span>
+</dialog>
+<style>
+  .contact-options { width: min(560px, calc(100vw - 40px)); max-height: calc(100svh - 40px); margin: auto; padding: clamp(28px, 5vw, 48px); border: 1px solid #bfc5bb; background: #fafaf8; color: #17362d; box-shadow: 0 24px 90px #0005; }
+  .contact-options::backdrop { background: #0008; }
+  .contact-options h2 { margin: 0 28px 24px 0; font: 400 38px/1.1 var(--font-display); }
+  .contact-address { font: 400 clamp(18px, 4vw, 24px)/1.4 var(--font-sans); border-bottom: 1px solid currentColor; overflow-wrap: anywhere; }
+  .contact-options p { margin: 24px 0; font: 400 16px/1.6 var(--font-sans); }
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 16px 24px; font: 400 15px/1.5 var(--font-sans); }
+  .contact-actions a, .contact-actions button { border: 0; border-bottom: 1px solid #17362d66; padding: 0 0 5px; background: transparent; color: inherit; cursor: pointer; }
+  .contact-close { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border: 0; background: none; color: inherit; font-size: 28px; cursor: pointer; }
+  .contact-status { display: block; margin-top: 16px; min-height: 1.5em; font: 400 14px/1.5 var(--font-sans); }
+</style>
+<script>
+  const contact = document.querySelector<HTMLDialogElement>('.contact-options')!;
+  const status = contact.querySelector<HTMLElement>('.contact-status')!;
+  const en = document.documentElement.lang === 'en';
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element).closest<HTMLAnchorElement>('a[href^="mailto:info@bonanza-ranch.com"]');
+    if (!link || link.hasAttribute('data-direct-mail')) return;
+    // Keep the native mailto action. The dialog provides a fallback without a mail handler.
+    status.textContent = '';
+    if (!contact.open) contact.showModal();
+  });
+  contact.querySelector('[data-contact-close]')!.addEventListener('click', () => contact.close());
+  contact.addEventListener('click', (event) => { if (event.target === contact) contact.close(); });
+  contact.querySelector<HTMLButtonElement>('[data-copy-email]')!.addEventListener('click', async (event) => {
+    const button = event.currentTarget as HTMLButtonElement;
+    try {
+      await navigator.clipboard.writeText(button.dataset.email!);
+      status.textContent = en ? 'Email address copied.' : 'E-Mail-Adresse kopiert.';
+    } catch {
+      status.textContent = en ? 'Please select and copy the email address above.' : 'Bitte die E-Mail-Adresse oben markieren und kopieren.';
+    }
+  });
+</script>

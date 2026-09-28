@@ -142,22 +142,22 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       )
       .fromTo(".life-card", { scale: 480 / 1440 }, { scale: 1, duration: 1 }, 0)
       .fromTo(
-        ".life-card-summary",
-        { scale: 1 },
-        { scale: 480 / 1440, duration: 1 },
+        ".life-card-title",
+        { opacity: 1 },
+        { opacity: 0, duration: 0.4, ease: "none" },
         0,
       )
       .fromTo(
         ".life-card-picture>.story-photo",
-        { clipPath: "inset(0% 26.66% 0% 26.66%)", scale: 1.25 },
-        { clipPath: "inset(0% 0% 0% 0%)", scale: 1, duration: 1 },
+        { x: () => w() * 0.205625, scale: 1.5 },
+        { x: 0, scale: 1, duration: 1 },
         0,
       )
       .fromTo(
         ".life-card-picture>h3,.life-card-picture>p",
         { opacity: 0 },
-        { opacity: 1, duration: 0.5, ease: "none" },
-        0.5,
+        { opacity: 1, duration: 0.4, ease: "none" },
+        0.35,
       );
     const slider = gsap.to(track, {
       x: () => -travel(),
@@ -172,6 +172,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       },
     });
     track.querySelectorAll<HTMLElement>(".story-photo").forEach((figure) => {
+      if (figure.closest(".life-intro, .life-editorial--landscape-pair")) return;
       const img = figure.querySelector("img")!;
       gsap.fromTo(
         img,
@@ -190,23 +191,6 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
         },
       );
     });
-    const column = root.querySelector<HTMLElement>(".life-vertical-gallery")!;
-    gsap.fromTo(
-      column,
-      { y: 0 },
-      {
-        y: () => Math.min(0, column.parentElement!.clientHeight - column.scrollHeight),
-        ease: "none",
-        scrollTrigger: {
-          trigger: column,
-          containerAnimation: slider,
-          start: "left right",
-          end: "right left",
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      },
-    );
     track
       .querySelectorAll<HTMLElement>("article:not(.life-intro) h3")
       .forEach((title) => {

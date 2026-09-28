@@ -3,19 +3,21 @@ interface Props {
   lead: string;
   title: string;
   id?: string;
-  imageFirst?: boolean;
+  landscapePair?: boolean;
+  imageNote?: string;
 }
-const { lead, title, id, imageFirst = false } = Astro.props;
+const { lead, title, id, landscapePair = false, imageNote } = Astro.props;
 ---
 
 <article
-  class:list={["life-chapter", "life-editorial", { "life-editorial--image-first": imageFirst }]}
+  class:list={["life-chapter", "life-editorial", { "life-editorial--landscape-pair": landscapePair }]}
   id={id}
   data-life-chapter
 >
+  <div class="chapter-media"><slot /></div>
   <div class="chapter-copy">
     <h3><em>{lead}</em><span>{title}</span></h3>
     <slot name="copy" />
+    {imageNote && <small class="chapter-image-note">{imageNote}</small>}
   </div>
-  <div class="chapter-media"><slot /></div>
 </article>
