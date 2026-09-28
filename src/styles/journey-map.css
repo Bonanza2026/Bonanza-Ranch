@@ -9,6 +9,16 @@
   background: #000;
 }
 .arrival-flag { width: 60px; height: 40px; margin-bottom: 28px; }
+/* Specificity keeps Astro's production CSS ordering from restoring the old 27vw size. */
+.dream-home .flight-arrival .flight-arrival-word {
+  font-size: min(20vw, 42svh, 360px);
+  white-space: nowrap;
+  max-width: 92vw;
+  margin-inline: 0;
+}
+html[lang="en"] .dream-home .flight-arrival .flight-arrival-word {
+  font-size: min(16.5vw, 36svh, 300px);
+}
 body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
 .flight-arrival-copy {
   display: contents;

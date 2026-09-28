@@ -108,6 +108,7 @@ function stage(element: HTMLElement) {
           (1 - tex.repeat.y) * (url.includes("horse") ? 0.82 : 0.5);
       }
       tex.needsUpdate = true;
+      renderer.initTexture(tex);
     });
     if (color) tex.colorSpace = SRGBColorSpace;
     tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
@@ -159,7 +160,14 @@ function stage(element: HTMLElement) {
     camera,
     card,
     texture,
-    render: (fn: (dt: number) => void) => (renderFrame = fn),
+    render: (fn: (dt: number) => void) => {
+      renderFrame = fn;
+      fn(16);
+      // Compile/upload before the gallery is visible, avoiding a first-scroll GPU stall.
+      void renderer.compileAsync(scene, camera).then(() => {
+        if (!disposed) renderer.render(scene, camera);
+      }).catch(() => {});
+    },
     dispose: () => {
       disposed = true;
       gsap.ticker.remove(tick);

@@ -18,6 +18,13 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
         if (!entries.some((entry) => entry.isIntersecting)) return;
         observer.disconnect();
         try {
+          if (mount === "mountImageRing") {
+            const night = root.querySelector<HTMLImageElement>(".life-finale img");
+            if (night) {
+              night.loading = "eager";
+              void night.decode().catch(() => {});
+            }
+          }
           const galleries = await import("./reference-galleries");
           if (!disposed) cleanups.push(galleries[mount](section));
         } catch (error) {
@@ -26,7 +33,8 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       },
       { rootMargin: "1200px" },
     );
-    observer.observe(section);
+    // Prepare the ring during the long experiences sequence, not as the night sky enters.
+    observer.observe(mount === "mountImageRing" ? root.querySelector<HTMLElement>(".life-film")! : section);
     cleanups.push(() => observer.disconnect());
   }
   // Sobha landingLuxuryTitle / MoveSide / ScaleCenter and ScaleSide patterns.
