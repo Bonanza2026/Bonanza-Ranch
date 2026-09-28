@@ -13,18 +13,19 @@ const en = lang === "en";
   >
     <div class="flight-stage">
       <div class="flight-film">
+        <picture class="hero-poster">
+          <source srcset="/media/hero-poster-mobile.webp" media="(max-width: 767px)" />
+          <img src="/media/hero-poster-fast.webp" alt="" width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async" />
+        </picture>
         <video
           class="hero-banner_video"
           autoplay
           muted
           loop
           playsinline
-          preload="auto"
-          poster="/media/hero-poster-fast.webp"
+          preload="none"
+          aria-hidden="true"
         >
-          <source src="/media/hero_video-mobile.webm" type="video/webm" media="(max-width: 767px)" />
-          <source src="/media/hero_video.webm" type="video/webm" />
-          <source src="/media/hero_video.mp4" type="video/mp4" />
         </video>
         <div class="flight-film-shade"></div>
       </div>
@@ -136,3 +137,8 @@ const en = lang === "en";
   <JourneyMap lang={lang} />
   <BonanzaStory lang={lang} />
 </div>
+
+<script>
+  import { initializeHeroVideo } from '../scripts/hero-video.mjs';
+  initializeHeroVideo();
+</script>

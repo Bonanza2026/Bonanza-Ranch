@@ -89,6 +89,13 @@ export function initializeBonanzaUI(lenis: any) {
     b.addEventListener("click", () => {
       film.showModal();
       lenis.stop();
+      if (!video.dataset.loaded) {
+        video.querySelectorAll<HTMLSourceElement>('source[data-src]').forEach((source) => {
+          source.src = source.dataset.src!;
+        });
+        video.dataset.loaded = 'true';
+        video.load();
+      }
       video.currentTime = 0;
       video.play().catch(() => {});
     }),
@@ -102,27 +109,6 @@ export function initializeBonanzaUI(lenis: any) {
     video.pause();
     if (!open) lenis.start();
   });
-  const heroVideo =
-    document.querySelector<HTMLVideoElement>(".hero-banner_video");
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) heroVideo?.pause();
-    else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
-      heroVideo?.play().catch(() => {});
-  });
-  if (heroVideo) {
-    new IntersectionObserver(
-      ([entry]) => {
-        if (
-          entry.isIntersecting &&
-          !document.hidden &&
-          !matchMedia("(prefers-reduced-motion: reduce)").matches
-        )
-          heroVideo.play().catch(() => {});
-        else heroVideo.pause();
-      },
-      { threshold: 0 },
-    ).observe(heroVideo);
-  }
   const page = JSON.parse(
     document.getElementById("bonanza-page-data")?.textContent || "{}",
   );

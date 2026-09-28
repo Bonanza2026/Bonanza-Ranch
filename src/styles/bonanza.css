@@ -61,7 +61,7 @@ body.flight-is-cloudy nav {
   height: 4.2em;
   max-width: 100%;
   background: currentColor;
-  mask: url("/bonanza/logo-display.webp") center/contain no-repeat;
+  mask: url("/bonanza/logo-mask.webp") center/contain no-repeat;
 }
 .nav-layout .nav-col:nth-child(2) a {
   display: block;

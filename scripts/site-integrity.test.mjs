@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { load } from 'cheerio';
 import { languagePages, siteUrl } from '../site.config.mjs';
+import { heroSources } from '../src/scripts/hero-video.mjs';
 
 const read = (path) => readFileSync(new URL('../dist/' + path, import.meta.url), 'utf8');
 const page = (path) => load(read(path.replace(/^\//, '') + '/index.html'));
@@ -66,13 +67,39 @@ test('built pages can run with self-only scripts and contain no inline event han
   }
 });
 
-test('hero preload matches the video poster and manual German choice has a stable URL', () => {
+test('responsive hero posters match their preloads and language choices are stable', () => {
   for (const path of ['/de', '/en']) {
     const html = page(path);
-    const poster = html('.hero-banner_video').attr('poster');
-    assert.equal(html('link[rel="preload"][as="image"]').attr('href'), poster);
-    assert.ok(existsSync(new URL('../dist' + poster, import.meta.url)));
+    const mobilePoster = html('.hero-poster source').attr('srcset');
+    const desktopPoster = html('.hero-poster img').attr('src');
+    assert.equal(html('link[rel="preload"][as="image"][media="(max-width: 767px)"]').attr('href'), mobilePoster);
+    assert.equal(html('link[rel="preload"][as="image"][media="(min-width: 768px)"]').attr('href'), desktopPoster);
+    for (const poster of [mobilePoster, desktopPoster]) assert.ok(existsSync(new URL('../dist' + poster, import.meta.url)));
     assert.equal(html('.language-switch a[lang="de"]').attr('href'), '/de');
     assert.equal(html('.language-switch a[lang="en"]').attr('href'), '/en');
+  }
+});
+
+test('HTML does not eagerly load several video formats or the unopened film', () => {
+  for (const path of ['/de', '/en']) {
+    const html = page(path);
+    assert.equal(html('video[src], video source[src]').length, 0);
+    assert.equal(html('.ranch-film source[data-src]').length, 2);
+    assert.equal(html('.hero-poster img').attr('fetchpriority'), 'high');
+    assert.equal(html('link[rel="stylesheet"]').length, 0, 'Production CSS should not add render-blocking round trips');
+  }
+});
+
+test('video selection stays at the selected viewport size, with a compatible fallback', () => {
+  for (const mobile of [true, false]) {
+    const selected = heroSources(mobile, true);
+    assert.equal(selected.length, 2);
+    assert.ok(selected[0].endsWith('.webm'));
+    assert.ok(selected[1].endsWith('.mp4'));
+    assert.deepEqual(heroSources(mobile, false), [selected[1]]);
+    for (const path of selected) {
+      assert.ok(path.includes(mobile ? 'mobile' : 'desktop'));
+      assert.ok(existsSync(new URL('../public' + path, import.meta.url)));
+    }
   }
 });

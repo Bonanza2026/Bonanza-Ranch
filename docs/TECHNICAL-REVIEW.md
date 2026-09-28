@@ -47,3 +47,15 @@ Validation: production build and eight tests pass, covering routing, public disc
 The supplied Lighthouse numbers are the baseline, not a new measurement. No improved Lighthouse score or load time is claimed from asset sizes alone.
 
 References: [Astro endpoints](https://docs.astro.build/en/guides/endpoints/), [robots.txt guidance](https://developers.google.com/crawling/docs/robots-txt/create-robots-txt), [llms.txt format](https://llmstxt.org/), [Vercel security headers](https://vercel.com/docs/cdn-security/security-headers). The script externalization option was verified in the installed Astro/Vite build implementation.
+
+## Mobile follow-up, 29 September 2026
+
+The subsequent user report measured 79 performance, FCP 1.7 s and LCP 5.3 s. An independent PageSpeed Insights mobile run at 00:24 CEST reproduced the issue: 81 performance, FCP 1.5 s, LCP 5.1 s, 10 ms TBT and 0.001 CLS. Both reports recorded about 35 MB of transfers including multiple video formats. Baseline report: https://pagespeed.web.dev/analysis/https-bonanza-gamma-vercel-app-en/gfwbaxy4kw?form_factor=mobile
+
+The original MP4 was HEVC, not a broadly compatible H.264 fallback. The hero now chooses one size and supported format. It only tries the fallback after a decode or format error, not after a slow request or rejected autoplay. The separate film has no active source until the visitor opens it, and retains its audio. Reduced-motion users receive the still image without a video download.
+
+The first image is a responsive picture, preloaded at the matching viewport size. Video starts after that image is decoded and has a paint opportunity. This loading order applies to all visitors; there is no Lighthouse or user-agent detection. The mobile poster is 36,412 bytes instead of 132,976. The CSS logo mask retains alpha but removes unused colour information, reducing it to 23,444 bytes.
+
+New silent hero encodes retain the full 16.9-second sequence at 24 fps: 960 × 540 for mobile and 1600 × 900 for desktop. VP9 uses CRF 36/34 and H.264 uses CRF 26/25 with faststart. Mobile WebM is 1,598,875 bytes instead of 3,039,821. Original sources remain available for cached pages. CSS is inlined by Astro to remove the two stylesheet round trips; the tradeoff is a larger HTML document and no separate CSS cache on repeat navigations.
+
+Ten build/routing/media tests pass. A production-header preview confirmed mobile VP9 autoplay, one selected video request, the matching mobile poster, no unloaded-dialog media request and no console errors. The PageSpeed score after this change must be measured on the deployed version.
