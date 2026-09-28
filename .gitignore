@@ -20,3 +20,4 @@ scripts/*
 !scripts/language-routing.test.mjs
 !scripts/optimize-current-media.mjs
 !scripts/site-integrity.test.mjs
+!scripts/prune-css.mjs

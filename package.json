@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --host 127.0.0.1 --port 4323",
-    "build": "astro build",
+    "build": "astro build && node scripts/prune-css.mjs",
     "preview": "astro preview --host 127.0.0.1 --port 4323",
     "qa": "npm run build && npm test",
     "test": "node --test scripts/*.test.mjs"
@@ -21,6 +21,7 @@
     "cheerio": "1.2.0",
     "playwright-core": "1.58.0",
     "prettier": "3.6.2",
-    "prettier-plugin-astro": "^1.1.0"
+    "prettier-plugin-astro": "^1.1.0",
+    "purgecss": "8.0.0"
   }
 }

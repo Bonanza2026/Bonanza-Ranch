@@ -61,7 +61,7 @@ export function createDreamMotion() {
       },
     });
     flightTimeline
-      .to(".flight-film", { scale: 1.08, yPercent: -6, duration: 0.3 }, 0)
+      .to(".flight-film", { scale: innerWidth < 768 ? 1.04 : 1.08, yPercent: innerWidth < 768 ? 0 : -6, duration: 0.3 }, 0)
       .to(
         ".flight-opening",
         { yPercent: -18, opacity: 0, duration: 0.19 },

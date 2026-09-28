@@ -298,7 +298,10 @@ export function mountWildWorlds(root: HTMLElement) {
     app.dispose();
     canvas.style.removeProperty("transform");
     canvas.style.removeProperty("clip-path");
-    captions.forEach((caption) => caption.removeAttribute("style"));
+    captions.forEach((caption) => {
+      caption.removeAttribute("style");
+      caption.removeAttribute("aria-hidden");
+    });
   };
 }
 export function mountImageRing(root: HTMLElement) {

@@ -65,3 +65,15 @@ Further measurements identified the hero H1 as the LCP element. Its exact Oswald
 Scroll-scene initialization now starts after the browser's first contentful paint, with a two-frame fallback for browsers without paint observation. A local diagnostic confirmed that the H1 was painted before scroll initialization, and scrolling still advanced through the flight sequence. The deployed mobile measurement at 00:45 CEST improved to 85 performance, FCP 1.4 s, LCP 4.2 s, TBT 10 ms, CLS 0 and Speed Index 3.6 s. Report: https://pagespeed.web.dev/analysis/https-bonanza-gamma-vercel-app-en/et8u2wzc2h?form_factor=mobile
 
 Inter Tight and Oswald have additionally been subset for the site's German and English characters, retaining all characters currently used in the source, Latin-1, punctuation, arrows, font axes and layout features. Regular Inter Tight drops from 85,736 to 55,252 bytes, italic from 91,120 to 59,468 bytes, and Oswald from 34,920 to 26,432 bytes. Original files remain available for cached documents. Glyph coverage was checked against the input fonts.
+
+## Mobile layout and CSS cleanup, 29 September 2026
+
+Phone layouts below 768 px now use sequential photographs instead of both WebGL galleries. Images enter with a short horizontal/vertical slide, without scroll pinning. The experience chapters share centred 38 px headings, 18 px body copy, 32 px image-to-copy spacing and 80 px chapter spacing. The night sky stays full-screen with its caption over the image. The final ring is replaced with the closing heading and paragraph before the footer. Desktop gallery and horizontal motion are retained.
+
+The phone hero runs over 360 svh rather than 429.3 svh. Its video no longer translates upward and exposes the arrival background. Short screens receive smaller opening text. WebM remains primary, with H.264 only as a format/decode fallback.
+
+Build-time PurgeCSS removes unused selectors from the generated inline styles while retaining animation state selectors, keyframes, font faces and variables. Three unique style blocks fall from 375,263 to 190,195 bytes. Before the mobile redesign, a browser comparison of 503 elements and 20 computed style properties found no differences between the original and pruned CSS.
+
+Validation: production build and all ten tests pass. Browser checks at 320 x 568, 390 x 844 and 1440 x 900 covered the hero, arrival, wildlife sequence, experience headings and closing section. Mobile has no WebGL canvases or horizontal overflow; desktop still renders the curved gallery. Desktop-to-phone resize clears caption accessibility states. The browser reported no console errors. These checks use viewport emulation, not physical devices.
+
+The measurement after font subsetting was 82 performance (FCP 1.4 s, LCP 4.2 s, TBT 0 ms, CLS 0, Speed Index 4.9 s). This shows run-to-run variation from the preceding 85 result; the final deployed mobile layout and CSS cleanup require a fresh measurement.

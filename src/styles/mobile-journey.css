@@ -1,0 +1,359 @@
+.worlds-mobile-photo {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .dream-home {
+    --mobile-gutter: 24px;
+    --mobile-section-gap: 80px;
+    --mobile-image-copy-gap: 32px;
+  }
+  .dream-home h1,
+  .dream-home h2,
+  .dream-home h3 {
+    text-align: center;
+    text-wrap: balance;
+  }
+  .dream-home .dream-flight {
+    height: 360svh;
+    background: #000;
+  }
+  .dream-home .flight-stage {
+    height: 100dvh;
+    min-height: 100svh;
+    background: #000;
+  }
+  .dream-home .flight-film {
+    transform-origin: 50% 50%;
+  }
+  .dream-home .flight-opening {
+    padding: 0 24px max(28px, env(safe-area-inset-bottom));
+  }
+  .dream-home .flight-opening h1 {
+    font-size: clamp(64px, 22vw, 148px);
+    text-align: center;
+  }
+  .dream-home .flight-opening-line {
+    top: 28%;
+    left: 24px;
+    right: 24px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    text-align: center;
+  }
+  .dream-home .flight-opening-line > p {
+    font-size: 22px;
+    max-width: 28ch;
+  }
+  .dream-home .dream-film-button {
+    width: 46px;
+    height: 46px;
+    justify-content: center;
+  }
+  .dream-home .flight-bottom {
+    gap: 16px;
+    align-items: center;
+    margin-top: 24px;
+  }
+  .dream-home .flight-bottom > p {
+    max-width: 25ch;
+    font-size: 10px;
+  }
+  .dream-home .flight-thought {
+    padding-inline: 24px;
+    gap: 24px;
+  }
+  .dream-home .flight-thought-title {
+    font-size: clamp(36px, 10vw, 56px);
+  }
+
+  .dream-home .reserve-introduction {
+    padding: var(--mobile-section-gap) 0;
+    overflow: clip;
+  }
+  .dream-home .reserve-opening-title {
+    padding-inline: var(--mobile-gutter);
+    margin-bottom: 40px;
+  }
+  .dream-home .reserve-opening-title .dream-label {
+    margin-bottom: 24px;
+  }
+  .dream-home .reserve-opening-title h2 {
+    font-size: 36px;
+    line-height: 1.12;
+  }
+  .dream-home .reserve-triptych-sticky {
+    position: static;
+    height: auto;
+  }
+  .dream-home .reserve-triptych {
+    position: static;
+    height: auto;
+    display: grid;
+    gap: 24px;
+    padding: 0 var(--mobile-gutter);
+    align-items: stretch;
+  }
+  .dream-home .reserve-triptych figure {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .dream-home .reserve-side > div {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+  .dream-home .reserve-center img {
+    object-position: 50% 35%;
+  }
+  .dream-home .reserve-editorial {
+    padding: var(--mobile-section-gap) var(--mobile-gutter) 0;
+    margin: 0;
+    box-shadow: none;
+  }
+  .dream-home .reserve-editorial h2 {
+    font-size: 36px;
+    line-height: 1.15;
+    margin-bottom: 32px;
+  }
+  .dream-home .reserve-editorial h2 em {
+    padding: 0;
+    margin-top: 8px;
+    font-size: inherit;
+  }
+  .dream-home .reserve-editorial-image {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .dream-home .reserve-areas {
+    text-align: center;
+  }
+  .dream-home .reserve-facts > p:last-child {
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .dream-home .wild-worlds {
+    height: auto;
+    padding: 0 var(--mobile-gutter);
+  }
+  .dream-home .worlds-intro {
+    height: auto;
+    padding: 0 0 40px;
+  }
+  .dream-home .worlds-heading {
+    font-size: 44px;
+  }
+  .dream-home .worlds-stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  .dream-home .worlds-webgl {
+    display: none;
+  }
+  .dream-home .worlds-captions {
+    position: static;
+    display: grid;
+    gap: var(--mobile-section-gap);
+  }
+  .dream-home .worlds-caption {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    display: block;
+  }
+  .dream-home .worlds-mobile-photo {
+    display: block;
+    margin: 0 0 var(--mobile-image-copy-gap);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+  .worlds-mobile-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .dream-home .worlds-caption h3 {
+    font-size: 36px;
+    line-height: 1.12;
+  }
+  .dream-home .worlds-caption h3 em {
+    margin-top: 8px;
+  }
+  .dream-home .worlds-caption p {
+    margin: 24px auto 0;
+    max-width: 36ch;
+    color: #f5f3ed;
+    font-size: 18px;
+    line-height: 1.65;
+    text-align: left;
+  }
+
+  .dream-home .life-film {
+    margin: 0;
+    padding: var(--mobile-section-gap) 0 0;
+    scroll-margin-top: 0;
+  }
+  .dream-home .life-track {
+    will-change: auto;
+  }
+  .dream-home .life-intro,
+  .dream-home .life-editorial {
+    padding: 0 var(--mobile-gutter) var(--mobile-section-gap);
+    gap: var(--mobile-image-copy-gap);
+    min-height: 0;
+  }
+  .dream-home .life-card {
+    min-height: 0;
+    padding: 0;
+    width: 100%;
+  }
+  .dream-home .life-card-title {
+    font-size: 44px;
+    line-height: 1.1;
+    margin: 0 0 40px;
+  }
+  .dream-home .life-card-picture {
+    width: 100%;
+  }
+  .dream-home .life-card-picture > .story-photo {
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+  .dream-home .life-card-picture > .story-photo img {
+    width: 100%;
+    object-fit: contain;
+    background: #000;
+  }
+  .dream-home .life-card-picture h3,
+  .dream-home .chapter-copy h3 {
+    font-size: 38px;
+    line-height: 1.1;
+    margin: 0 0 24px;
+    text-align: center;
+  }
+  .dream-home .life-card-picture h3 {
+    margin-top: var(--mobile-image-copy-gap);
+  }
+  .dream-home .life-card-picture h3 > em,
+  .dream-home .life-card-picture h3 > span,
+  .dream-home .chapter-copy h3 > em,
+  .dream-home .chapter-copy h3 > span {
+    font-size: inherit;
+    line-height: 1.1;
+    padding: 0;
+    margin: 0;
+    white-space: normal;
+  }
+  .dream-home .life-card-picture h3 > em,
+  .dream-home .chapter-copy h3 > em {
+    margin-bottom: 12px;
+  }
+  .dream-home .life-card-picture > p,
+  .dream-home .life-editorial .chapter-copy p {
+    max-width: 36ch;
+    margin: 0 auto 24px;
+    font-size: 18px;
+    line-height: 1.65;
+  }
+  .dream-home .life-card-picture > p:last-child,
+  .dream-home .chapter-copy p:last-child {
+    margin-bottom: 0;
+  }
+  .dream-home .chapter-media {
+    gap: 16px;
+  }
+  .dream-home .chapter-media > .story-photo {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .dream-home .chapter-media .story-photo img {
+    width: 100%;
+    object-fit: cover;
+  }
+  .dream-home .life-editorial--landscape-pair .chapter-media > .story-photo {
+    aspect-ratio: 16 / 9;
+  }
+  .dream-home .life-editorial--landscape-pair .story-photo img {
+    object-fit: contain;
+  }
+  .dream-home .chapter-image-note {
+    text-align: center;
+  }
+  .dream-home .life-finale {
+    height: 100svh;
+    min-height: 620px;
+    padding: 0;
+  }
+  .dream-home .life-finale > .story-photo img {
+    width: 100%;
+  }
+  .dream-home .life-finale-copy {
+    padding: 80px 24px;
+  }
+  .dream-home .life-finale h3 {
+    font-size: 38px;
+  }
+  .dream-home .life-finale-copy p {
+    font-size: 18px;
+  }
+
+  .dream-home .bonanza-ring {
+    height: auto;
+    padding: 88px var(--mobile-gutter) 96px;
+  }
+  .dream-home .ring-stage {
+    position: static;
+    height: auto;
+  }
+  .dream-home .ring-webgl {
+    display: none;
+  }
+  .dream-home .ring-title {
+    position: static;
+    opacity: 1;
+    padding: 0;
+    display: block;
+  }
+  .dream-home .ring-title h2 {
+    font-size: 52px;
+    margin-bottom: 28px;
+  }
+  .dream-home .ring-title > p,
+  .dream-home .ring-story > div,
+  .dream-home .ring-story .ring-text-last {
+    display: none;
+  }
+  .dream-home .ring-story {
+    margin: 0;
+  }
+  .dream-home .ring-story .ring-text-first {
+    height: auto;
+    width: 100%;
+    max-width: 34ch;
+    margin: 0 auto;
+    padding: 0;
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.65;
+    opacity: 1;
+  }
+}
+@media (max-width: 767px) and (max-height: 700px) {
+  .dream-home .flight-opening-line { top: 24%; gap: 16px; }
+  .dream-home .flight-opening-line > p { font-size: 20px; }
+  .dream-home .flight-opening h1 { font-size: clamp(54px, 18vw, 100px); }
+  .dream-home .dream-film-button { width: 40px; height: 40px; }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .dream-home .dream-flight {
+    height: 100dvh;
+  }
+}

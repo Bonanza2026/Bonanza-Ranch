@@ -7,11 +7,13 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
     small = innerWidth < 768;
   const cleanups: Array<() => void> = [];
   let disposed = false;
-  // WebGL is only fetched as the first gallery approaches; the hero stays lightweight.
-  for (const [selector, mount] of [
-    [".wild-worlds", "mountWildWorlds"],
-    [".bonanza-ring", "mountImageRing"],
-  ] as const) {
+  // Desktop keeps the 3D galleries; phones use the photographic reading sequence.
+  for (const [selector, mount] of small
+    ? []
+    : ([
+        [".wild-worlds", "mountWildWorlds"],
+        [".bonanza-ring", "mountImageRing"],
+      ] as const)) {
     const section = root.querySelector<HTMLElement>(selector)!;
     const observer = new IntersectionObserver(
       async (entries) => {
@@ -19,7 +21,8 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
         observer.disconnect();
         try {
           if (mount === "mountImageRing") {
-            const night = root.querySelector<HTMLImageElement>(".life-finale img");
+            const night =
+              root.querySelector<HTMLImageElement>(".life-finale img");
             if (night) {
               night.loading = "eager";
               void night.decode().catch(() => {});
@@ -34,7 +37,11 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       { rootMargin: "1200px" },
     );
     // Prepare the ring during the long experiences sequence, not as the night sky enters.
-    observer.observe(mount === "mountImageRing" ? root.querySelector<HTMLElement>(".life-film")! : section);
+    observer.observe(
+      mount === "mountImageRing"
+        ? root.querySelector<HTMLElement>(".life-film")!
+        : section,
+    );
     cleanups.push(() => observer.disconnect());
   }
   // Sobha landingLuxuryTitle / MoveSide / ScaleCenter and ScaleSide patterns.
@@ -59,42 +66,42 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       { y: -200 },
       { y: 0, ease: "none", scrollTrigger: entrance },
     );
+    const opening = {
+      trigger: wrapper,
+      start: "top 65%",
+      end: "bottom top",
+      scrub: true,
+      invalidateOnRefresh: true,
+    };
+    gsap.fromTo(
+      ".reserve-center",
+      { scale: 1, clipPath: "inset(0% 0% 0% 0%)" },
+      {
+        scale: 1.4,
+        clipPath: "inset(10% 0% 10% 0%)",
+        ease: "power1.inOut",
+        scrollTrigger: opening,
+      },
+    );
+    gsap.fromTo(
+      ".reserve-side-left",
+      { x: 0 },
+      {
+        x: () => -w() / 12,
+        ease: "power1.inOut",
+        scrollTrigger: opening,
+      },
+    );
+    gsap.fromTo(
+      ".reserve-side-right",
+      { x: 0 },
+      {
+        x: () => w() / 12,
+        ease: "power1.inOut",
+        scrollTrigger: opening,
+      },
+    );
   }
-  const opening = {
-    trigger: small ? ".reserve-triptych-sticky" : wrapper,
-    start: small ? "top 38.8889%" : "top 65%",
-    end: small ? "top top" : "bottom top",
-    scrub: true,
-    invalidateOnRefresh: true,
-  };
-  gsap.fromTo(
-    ".reserve-center",
-    { scale: 1, clipPath: "inset(0% 0% 0% 0%)" },
-    {
-      scale: small ? 360 / 220 : 1.4,
-      clipPath: small ? "inset(0% 0% 0% 0%)" : "inset(10% 0% 10% 0%)",
-      ease: "power1.inOut",
-      scrollTrigger: opening,
-    },
-  );
-  gsap.fromTo(
-    ".reserve-side-left",
-    { x: 0 },
-    {
-      x: () => -w() * (small ? 0.19444444 : 1 / 12),
-      ease: "power1.inOut",
-      scrollTrigger: opening,
-    },
-  );
-  gsap.fromTo(
-    ".reserve-side-right",
-    { x: 0 },
-    {
-      x: () => w() * (small ? 0.19444444 : 1 / 12),
-      ease: "power1.inOut",
-      scrollTrigger: opening,
-    },
-  );
   gsap.fromTo(
     ".reserve-editorial-image img",
     { yPercent: -8 },
@@ -111,7 +118,50 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
   );
   const film = root.querySelector<HTMLElement>(".life-film")!,
     track = root.querySelector<HTMLElement>(".life-track")!;
-  if (!small) {
+  if (small) {
+    const photos = root.querySelectorAll<HTMLElement>(
+      ".reserve-triptych figure, .worlds-mobile-photo, .life-chapter:not(.life-finale) .story-photo",
+    );
+    photos.forEach((photo, index) => {
+      gsap.fromTo(
+        photo,
+        { x: index % 2 ? 28 : -28, y: 36, autoAlpha: 0 },
+        {
+          x: 0,
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.95,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: photo,
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+    });
+    root
+      .querySelectorAll<HTMLElement>(
+        ".worlds-caption h3, .life-chapter h3, .ring-title h2",
+      )
+      .forEach((title) => {
+        gsap.fromTo(
+          title,
+          { y: 18, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.7,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: title,
+              start: "top 92%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
+      });
+  } else {
     const travel = () => track.scrollWidth - w();
     const measure = () => {
       film.style.height = `${travel() + 2 * h()}px`;
@@ -172,7 +222,8 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       },
     });
     track.querySelectorAll<HTMLElement>(".story-photo").forEach((figure) => {
-      if (figure.closest(".life-intro, .life-editorial--landscape-pair")) return;
+      if (figure.closest(".life-intro, .life-editorial--landscape-pair"))
+        return;
       const img = figure.querySelector("img")!;
       gsap.fromTo(
         img,

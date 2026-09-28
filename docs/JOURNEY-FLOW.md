@@ -40,3 +40,11 @@ Headings use the condensed South Africa typeface, italic accents use Cormorant G
 The light footer ends with a single-line BONANZA RANCH wordmark. Contact, legal links and the text-style cookie control are above it. Header logos are centred on both viewport sizes. All enquiry links use info@bonanza-ranch.com. See LEGAL-AND-LANGUAGE.md for legal/source and deployment notes.
 
 Desktop 1440×900 and mobile 390×844 browser checks covered map-label separation, navigation, the cookie notice and footer. Desktop also covered the aircraft arrival, experiences entry, security copy and night-sky finale. Production build generates ten routes. All four language-routing tests pass. Country routing on Vercel has not yet been deployed or verified live.
+
+## Mobile revision, 29 September 2026
+
+Brief: self-authored within the user's explicit mobile design direction. The existing Bonanza audience, photography, palette, fonts, contact action and desktop choreography remain. The user requests centred headings, consistent spacing, stronger image entrances, no early green edge in the hero, sequential pictures instead of the phone's 3D gallery, and a text close instead of the final 3D ring. WebM remains the preferred video format; H.264 is a compatibility fallback only.
+
+Journey and feeling: wildlife footage invites the visit; clouds and the plane carry the departure; South Africa and the map establish place; photographs and the two land-area figures establish the setting; vertical photo-and-copy chapters show the possibilities; the full-screen night sky is the emotional peak; “Hier bleiben” resolves into the contact footer. The remembered moment remains the aircraft uncovering South Africa. No new assets, claims, fonts or desktop redesign are needed.
+
+Mobile uses normal vertical reading flow, a shorter flight, viewport-filling video, alternating short photo slides, consistent 80px chapter spacing and 32px image-to-copy spacing. The two WebGL galleries do not mount below 768px. Their content is preserved as readable photographs or closing text. Reduced motion retains the static composition. This is a revision of an existing Astro/GSAP site, not a new Scroll-Craft engine build.
