@@ -445,13 +445,9 @@ body.flight-is-cloudy nav {
   line-height: 1.15;
   white-space: nowrap;
 }
-.footer-planning-note {
-  max-width: 760px;
-  padding-block: 10px 24px;
-  font: 400 13px/1.6 var(--font-sans);
-  color: #637069;
-}
 .bonanza-footer-meta {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -460,6 +456,12 @@ body.flight-is-cloudy nav {
   border-top: 1px solid #19362d33;
   padding-top: 2em;
   padding-bottom: 2em;
+}
+.bonanza-footer-meta a,
+.bonanza-footer-meta button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 .bonanza-footer-meta button {
   appearance: none;

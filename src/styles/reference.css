@@ -281,14 +281,23 @@ body {
 }
 * {
   box-sizing: border-box;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
   margin: 0;
   padding: 0;
 }
-::-webkit-scrollbar {
-  display: none;
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  scrollbar-width: auto;
+  scrollbar-color: #a89571 #181d19;
 }
+html::-webkit-scrollbar { width: 12px; }
+html::-webkit-scrollbar-track { background: #181d19; }
+html::-webkit-scrollbar-thumb {
+  background: #a89571;
+  border: 3px solid #181d19;
+  border-radius: 8px;
+}
+html::-webkit-scrollbar-thumb:hover { background: #d1bf9c; }
 a {
   color: inherit;
   text-decoration: none;

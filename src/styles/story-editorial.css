@@ -50,13 +50,6 @@
     font-size: var(--chapter-body);
     line-height: 1.6;
   }
-  .dream-home .life-editorial.life-finale {
-    width: auto;
-    grid-template-columns: 100vw 40.375vw;
-    padding: 0 5vw 0 0;
-  }
-  .life-finale .chapter-media { height: 100svh; }
-  .life-finale .chapter-copy { padding-top: var(--chapter-inset); }
 }
 .dream-home .life-editorial {
   width: 110vw;
@@ -69,8 +62,6 @@
 }
 .chapter-copy { min-width: 0; }
 .chapter-image-note { display: block; margin-top: 20px; color: #c8c8c4; font: 400 12px/1.5 var(--font-sans); letter-spacing: .06em; text-transform: uppercase; }
-.dream-home .life-finale::after { display: none; }
-.dream-home .life-finale h3 { transform: none; display: block; }
 .dream-home .chapter-copy h3 {
   position: static;
   margin: 0 0 28px;
@@ -109,6 +100,68 @@
 .chapter-copy .security-facts { margin: 16px 0 20px; }
 .dream-home .life-editorial .chapter-copy .security-facts dd { margin-bottom: 0; }
 .chapter-copy .security-facts > div { padding: 12px 0; }
+/* The night sky closes the horizontal sequence as one full-screen scene. */
+.dream-home .life-finale {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+.dream-home .life-finale > .story-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.dream-home .life-finale::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 20%);
+  pointer-events: none;
+  z-index: 1;
+}
+.life-finale-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 96px 7vw 48px;
+  color: #fafaf8;
+  text-align: center;
+  text-shadow: 0 2px 24px #000, 0 1px 3px #000;
+}
+.dream-home .life-finale h3 {
+  position: static;
+  transform: none;
+  display: block;
+  padding: 0;
+  margin: 0 0 28px;
+  font-size: clamp(40px, 5vw, 80px);
+  line-height: 1.1;
+  text-align: center;
+}
+.dream-home .life-finale h3 > em,
+.dream-home .life-finale h3 > span {
+  font-size: inherit;
+  line-height: 1.1;
+  white-space: normal;
+  margin: 0;
+  padding: 0;
+}
+.dream-home .life-finale h3 > em { margin-bottom: 12px; }
+.dream-home .life-finale-copy p {
+  max-width: 40ch;
+  margin: 0;
+  font: 400 var(--chapter-body)/1.6 var(--font-sans);
+  color: inherit;
+}
+.life-finale-copy .chapter-image-note { color: inherit; }
 @media (max-width: 767px), (prefers-reduced-motion: reduce) {
   .dream-home .life-editorial {
     width: 100%;

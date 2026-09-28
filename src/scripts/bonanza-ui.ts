@@ -144,9 +144,17 @@ export function initializeBonanzaUI(lenis: any) {
     }
   });
   document.addEventListener("click", (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const a = (e.target as Element)?.closest<HTMLAnchorElement>("a[href]");
-    if (!a) return;
+    if (!a || a.hasAttribute("download") || (a.target && a.target !== "_self")) return;
     const url = new URL(a.href);
+    // Legal documents always navigate to a page; never enter the scroll journey.
+    if (url.origin === location.origin && /^\/(?:impressum|datenschutz|en\/(?:legal|privacy))\/?$/.test(url.pathname) && url.pathname !== location.pathname) {
+      e.preventDefault();
+      lenis.stop();
+      location.assign(url.href);
+      return;
+    }
     if (
       url.origin === location.origin &&
       url.pathname === location.pathname &&
