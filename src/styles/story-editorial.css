@@ -1,0 +1,120 @@
+/* One shared composition for every chapter in the horizontal story. */
+.life-film {
+  --chapter-inset: clamp(96px, 12svh, 140px);
+  --chapter-title: clamp(40px, min(3.2vw, 6.5svh), 64px);
+  --chapter-body: clamp(18px, 1.5vw, 24px);
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .dream-home .life-card-picture {
+    width: 100vw;
+    height: 100svh;
+    aspect-ratio: auto;
+  }
+  .dream-home .life-card-picture > .story-photo {
+    position: absolute;
+    top: var(--chapter-inset);
+    right: 5vw;
+    width: 48.875vw;
+    height: calc(100svh - 2 * var(--chapter-inset));
+  }
+  .dream-home .life-card-picture h3 {
+    top: var(--chapter-inset);
+    left: 5vw;
+    right: auto;
+    font-size: var(--chapter-title);
+    line-height: 1.1;
+  }
+  .dream-home .life-card-picture h3 > em,
+  .dream-home .life-card-picture h3 > span {
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    line-height: 1.1;
+  }
+  .dream-home .life-card-picture h3 > em { margin-bottom: 12px; }
+  .dream-home .life-card-picture > p {
+    top: calc(var(--chapter-inset) + var(--chapter-title) * 2.2 + 40px);
+    bottom: auto;
+    left: 5vw;
+    width: 36.125vw;
+    max-width: 40ch;
+    font-size: var(--chapter-body);
+    line-height: 1.6;
+  }
+  .life-full-photo { padding: var(--chapter-inset) 0; }
+}
+.dream-home .life-editorial {
+  width: 110vw;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: 5vw;
+  padding: var(--chapter-inset) 5vw;
+  align-items: start;
+}
+.dream-home .life-editorial--image-first {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+}
+.life-editorial--image-first .chapter-media { grid-column: 1; grid-row: 1; }
+.life-editorial--image-first .chapter-copy { grid-column: 2; grid-row: 1; }
+.chapter-copy { min-width: 0; }
+.dream-home .chapter-copy h3 {
+  position: static;
+  margin: 0 0 28px;
+  padding: 0;
+  font-size: var(--chapter-title);
+  line-height: 1.1;
+  text-align: left;
+}
+.dream-home .chapter-copy h3 > em,
+.dream-home .chapter-copy h3 > span {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  line-height: 1.1;
+  white-space: normal;
+}
+.dream-home .chapter-copy h3 > em { margin-bottom: 12px; }
+.dream-home .life-editorial .chapter-copy p,
+.dream-home .life-editorial .chapter-copy .security-facts dd {
+  max-width: 40ch;
+  margin: 0 0 24px;
+  font: 400 var(--chapter-body)/1.6 var(--font-sans);
+  color: #f5f3ed;
+}
+.chapter-media {
+  min-width: 0;
+  height: calc(100svh - 2 * var(--chapter-inset));
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 20px;
+  overflow: hidden;
+}
+.chapter-media > .story-photo { width: 100%; height: 100%; min-width: 0; }
+.chapter-media > .life-vertical-gallery { width: 100%; margin: 0; gap: 0; }
+.chapter-media .life-vertical-gallery > .story-photo {
+  height: calc(100svh - 2 * var(--chapter-inset));
+  margin: 0 0 20px;
+}
+.chapter-media .life-vertical-gallery > .story-photo:last-child { margin-bottom: 0; }
+.chapter-copy .security-facts { margin-top: 24px; }
+.dream-home .life-editorial .chapter-copy .security-facts dd { margin-bottom: 0; }
+.chapter-copy .security-facts > div { padding: 12px 0; }
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .dream-home .life-editorial {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 56px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .life-film { --chapter-title: 38px; --chapter-body: 18px; }
+  .chapter-copy, .chapter-media { width: 100%; }
+  .chapter-media { height: auto; grid-auto-flow: row; grid-auto-columns: auto; }
+  .chapter-media > .story-photo,
+  .chapter-media .life-vertical-gallery > .story-photo { height: 55svh; }
+  .chapter-media > .life-vertical-gallery { transform: none !important; }
+}

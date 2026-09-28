@@ -1,0 +1,21 @@
+---
+interface Props {
+  lead: string;
+  title: string;
+  id?: string;
+  imageFirst?: boolean;
+}
+const { lead, title, id, imageFirst = false } = Astro.props;
+---
+
+<article
+  class:list={["life-chapter", "life-editorial", { "life-editorial--image-first": imageFirst }]}
+  id={id}
+  data-life-chapter
+>
+  <div class="chapter-copy">
+    <h3><em>{lead}</em><span>{title}</span></h3>
+    <slot name="copy" />
+  </div>
+  <div class="chapter-media"><slot /></div>
+</article>

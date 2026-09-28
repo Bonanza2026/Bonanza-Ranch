@@ -195,7 +195,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       column,
       { y: 0 },
       {
-        y: () => h() - column.scrollHeight,
+        y: () => Math.min(0, column.parentElement!.clientHeight - column.scrollHeight),
         ease: "none",
         scrollTrigger: {
           trigger: column,
