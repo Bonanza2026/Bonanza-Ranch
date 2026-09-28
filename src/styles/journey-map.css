@@ -2,11 +2,11 @@
 .dream-home .dream-flight {
   height: 473.8svh;
   z-index: 2;
-  background: #000;
+  background: #19362d;
 }
 .dream-home .flight-arrival {
   color: #fafaf8;
-  background: #000;
+  background: #19362d;
 }
 .arrival-flag { width: 60px; height: 40px; margin-bottom: 28px; }
 /* Specificity keeps Astro's production CSS ordering from restoring the old 27vw size. */
@@ -34,7 +34,7 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
 .jm-heading {
   position: relative;
   z-index: 2;
-  background: #000;
+  background: #19362d;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   gap: 3vw;
