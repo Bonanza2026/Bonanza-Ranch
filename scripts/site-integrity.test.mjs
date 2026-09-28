@@ -87,6 +87,7 @@ test('HTML does not eagerly load several video formats or the unopened film', ()
     assert.equal(html('.ranch-film source[data-src]').length, 2);
     assert.equal(html('.hero-poster img').attr('fetchpriority'), 'high');
     assert.equal(html('link[rel="stylesheet"]').length, 0, 'Production CSS should not add render-blocking round trips');
+    assert.match(html('head').html(), /font-family:\s*"Bonanza Hero";src:url\("data:font\/woff2;base64,/);
   }
 });
 

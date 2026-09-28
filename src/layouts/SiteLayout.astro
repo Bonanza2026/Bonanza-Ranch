@@ -3,6 +3,7 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CookieNotice from "../components/CookieNotice.astro";
 import ContactOptions from "../components/ContactOptions.astro";
+import heroFont from '../assets/Oswald-hero.woff2?inline';
 import { languagePages, siteUrl } from '../../site.config.mjs';
 import "../styles/reference.css";
 import "../styles/bonanza.css";
@@ -30,6 +31,7 @@ const isHome = ['/', '/de', '/en'].includes(pathname);
     <meta name="theme-color" content="#fafaf8" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {isHome && <style is:inline set:html={`@font-face{font-family:"Bonanza Hero";src:url("${heroFont}") format("woff2");font-style:normal;font-weight:400;font-display:swap}`} />}
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="de" href={siteUrl + pages.de} />
     <link rel="alternate" hreflang="en" href={siteUrl + pages.en} />
