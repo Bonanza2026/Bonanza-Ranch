@@ -117,8 +117,19 @@ addEventListener("resize", () => {
   }, 220);
 });
 reduced.addEventListener("change", setupMotion);
-addEventListener("pagehide", () => {
+addEventListener("pagehide", (event) => {
+  // Safari can retain this document in its back/forward cache. Its JS does not
+  // run again on restore, so keep the scroll instance and animations alive.
+  if (event.persisted) return;
   lenis.destroy();
   gsap.ticker.remove(tick);
   cleanups.forEach((fn) => fn());
+});
+addEventListener("pageshow", (event) => {
+  if (!event.persisted) return;
+  lenis.resize();
+  if (document.body.dataset.menuOpen !== "true" && !document.querySelector("dialog[open]")) {
+    lenis.start();
+  }
+  ScrollTrigger.refresh();
 });

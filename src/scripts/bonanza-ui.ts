@@ -91,6 +91,10 @@ export function initializeBonanzaUI(lenis: any) {
     if (e.target === film) closeFilm();
   });
   film.addEventListener("cancel", closeFilm);
+  film.addEventListener("close", () => {
+    video.pause();
+    if (!open) lenis.start();
+  });
   const heroVideo =
     document.querySelector<HTMLVideoElement>(".hero-banner_video");
   document.addEventListener("visibilitychange", () => {

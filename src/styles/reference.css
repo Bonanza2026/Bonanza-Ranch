@@ -241,7 +241,15 @@ html,
 body {
   opacity: 1;
   max-width: 100vw;
-  overflow: clip;
+}
+/* Keep the document natively scrollable, including WebKit and failed/blocked JS. */
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+body {
+  overflow-x: clip;
+  overflow-y: visible;
 }
 @media (hover: none) and (pointer: coarse) {
   html,
