@@ -17,14 +17,14 @@ html.is-transitioning body {
 }
 @font-face {
   font-family: Inter Tight;
-  src: url(/fonts/InterTight-latin.woff2) format("woff2");
+  src: url(/fonts/InterTight-de-en.woff2) format("woff2");
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
 }
 @font-face {
   font-family: Inter Tight;
-  src: url(/fonts/InterTight-Italic-latin.woff2) format("woff2");
+  src: url(/fonts/InterTight-Italic-de-en.woff2) format("woff2");
   font-style: italic;
   font-weight: 100 900;
   font-display: swap;
@@ -88,7 +88,7 @@ html.is-transitioning body {
 }
 @font-face {
   font-family: Oswald;
-  src: url(/fonts/Oswald-latin.woff2) format("woff2");
+  src: url(/fonts/Oswald-de-en.woff2) format("woff2");
   font-style: normal;
   font-display: swap;
 }

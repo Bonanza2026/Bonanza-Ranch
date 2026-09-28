@@ -48,8 +48,8 @@ const isHome = ['/', '/de', '/en'].includes(pathname);
     <meta property="og:image:alt" content={lang === 'en' ? 'The landscape of Bonanza Ranch in South Africa' : 'Die Landschaft der Bonanza Ranch in Südafrika'} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="/bonanza/favicon.png" />
-    <link rel="preload" href="/fonts/InterTight-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/Oswald-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/InterTight-de-en.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Oswald-de-en.woff2" as="font" type="font/woff2" crossorigin />
     {isHome && <>
       <link rel="preload" href="/media/hero-poster-mobile.webp" as="image" media="(max-width: 767px)" fetchpriority="high" />
       <link rel="preload" href="/media/hero-poster-fast.webp" as="image" media="(min-width: 768px)" fetchpriority="high" />
