@@ -72,18 +72,20 @@ const e = "/bonanza/experiences/";
     </h2>
     <div class="reserve-editorial-grid">
       <div class="reserve-facts">
-        <p class="reserve-area">
-          {en ? "6,300" : "6.300"} <em>ha</em>
-          <small>{t("BONANZA RANCH · NATUR PUR", "BONANZA RANCH · PURE NATURE")}</small>
-        </p>
-        <p class="reserve-area">
-          {en ? "36,000" : "36.000"} <em>ha</em>
-          <small>{t("WILDSCHUTZGEBIET RUNDHERUM", "SURROUNDING WILDLIFE RESERVE")}</small>
-        </p>
+        <div class="reserve-areas">
+          <p class="reserve-area">
+            <span class="reserve-area-value">{en ? "6,300" : "6.300"} <em>ha</em></span>
+            <small>BONANZA RANCH<span>{t("Natur pur", "Pure nature")}</span></small>
+          </p>
+          <p class="reserve-area">
+            <span class="reserve-area-value">{en ? "36,000" : "36.000"} <em>ha</em></span>
+            <small>{t("WILDSCHUTZGEBIET", "WILDLIFE RESERVE")}<span>{t("Rund um unsere Ranch", "Surrounding our ranch")}</span></small>
+          </p>
+        </div>
         <p>
           {t(
-            "Der Wind rauscht durch das Gras. In der Ferne ein Vogelruf. Dazwischen: Stille. Unsere Bonanza Ranch liegt in der Klein Karoo, umgeben von weiteren 36.000 Hektar bestehendem Wildschutzgebiet. Landschaft bis zum Horizont. Hier planen wir einen privaten Rückzugsort für Menschen, die Afrika nicht nur bereisen, sondern künftig einen Teil ihres Lebens hier verbringen möchten.",
-            "Wind rustles through the grass. A bird calls in the distance. Then, stillness. Our Bonanza Ranch lies in the Klein Karoo, surrounded by a further 36,000 hectares of existing wildlife reserve. Open country stretches to the horizon. Here, we are planning a private retreat for people who want more than a visit to Africa: a place to spend part of their future.",
+            "Der Wind rauscht durch das Gras. In der Ferne ein Vogelruf. Dazwischen: Stille. Unsere Bonanza Ranch liegt in der Klein Karoo, umgeben von einem weitläufigen Wildschutzgebiet. Landschaft bis zum Horizont. Hier planen wir einen privaten Rückzugsort für Menschen, die Afrika nicht nur bereisen, sondern künftig einen Teil ihres Lebens hier verbringen möchten.",
+            "Wind rustles through the grass. A bird calls in the distance. Then, stillness. Our Bonanza Ranch lies in the Klein Karoo, surrounded by an extensive wildlife reserve. Open country stretches to the horizon. Here, we are planning a private retreat for people who want more than a visit to Africa: a place to spend part of their future.",
           )}
         </p>
       </div>

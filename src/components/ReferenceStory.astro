@@ -99,8 +99,8 @@ const images = [
           <h2 class="life-card-title">{t("ERLEBNISSE", "EXPERIENCES")}</h2>
           <p class="life-card-summary">
             {t(
-              "Ein Ausritt am Morgen. Ein langer Abend am Feuer. Dazwischen entscheiden Sie. Das ist die Freizeitvision für Bonanza.",
-              "A morning in the saddle. A long evening by the fire. What happens in between is up to you. This is the life envisaged at Bonanza.",
+              "Morgens mit den Pferden aufbrechen. Durch die weite Landschaft ziehen. Abends dem Knistern des Feuers lauschen. So stellen wir uns die Tage auf Bonanza vor.",
+              "Set out with the horses in the morning. Ride into the open landscape. Listen to the fire crackle as evening falls. This is how we imagine the days at Bonanza.",
             )}
           </p>
           <div class="life-card-picture">
@@ -115,8 +115,8 @@ const images = [
             </h3>
             <p>
               {t(
-                "Mit einem Ranger aufbrechen, bevor der Tag heiß wird. Geplant sind eine eigene Reitanlage mit 30 Pferden und geführte Ausritte durch das Reservat.",
-                "Set out with a ranger before the heat of the day. Private stables with 30 horses and guided rides through the reserve are planned.",
+                "Mit einem Pferdeflüsterer in den Tag starten. Vertrauen fassen, aufsitzen, der endlosen Weite entgegenreiten. Eine eigene Reitanlage und persönlich begleitete Ausritte gehören zur Vision für Bonanza.",
+                "Begin the day with a horse whisperer. Build trust, settle into the saddle and ride towards the open horizon. Private stables and personally guided rides are part of the Bonanza vision.",
               )}
             </p>
           </div>
@@ -128,12 +128,37 @@ const images = [
       >
         <StoryImage
           src={`${e}safari-drive.webp`}
-          caption={t("Private Ausfahrten mit Rangern · 50 km Offroad-Strecken im Konzept", "Private ranger-led drives · 50 km of off-road trails envisaged")}
+          caption={t("Mit Ihrem Ranger den Spuren der Wildnis folgen · private Ausfahrten geplant", "Follow the tracks of wildlife with your ranger · private drives planned")}
           alt={t(
             "Safari-Ausfahrt in Südafrika",
             "Safari drive in South Africa",
           )}
         />
+      </article>
+      <article class="life-chapter life-wildlife" id="tierwelt" data-life-chapter>
+        <StoryImage
+          src={`${e}giraffes.webp`}
+          alt={t("Giraffen zwischen den Büschen der Klein Karoo", "Giraffes among the bushes of the Klein Karoo")}
+          position="58% 50%"
+        />
+        <div class="wildlife-copy">
+          <h3>
+            <em>{t("Südafrikas", "South Africa’s")}</em>
+            <span>{t("TIERWELT.", "WILDLIFE.")}</span>
+          </h3>
+          <p>
+            {t(
+              "Majestätische Giraffen zwischen den Bäumen. Zebraherden in der weiten Ebene. Springböcke, die mit einem Satz die Stille durchbrechen. Bonanza ist Heimat einer reichen Tierwelt.",
+              "Majestic giraffes among the trees. Herds of zebras on the open plains. Springbok breaking the stillness with a single leap. Bonanza is home to an abundance of wildlife.",
+            )}
+          </p>
+          <p>
+            {t(
+              "Auch Kudus, Eland- und Oryx-Antilopen ziehen durch diese Landschaft. Wer sich Zeit nimmt, entdeckt immer mehr: ein leises Rascheln, ein Blick aus dem Busch, eine Herde am Horizont.",
+              "Kudu, eland and oryx also roam this landscape. Take your time and more comes into view: a soft rustle, a watchful gaze from the bush, a herd on the horizon.",
+            )}
+          </p>
+        </div>
       </article>
       <article class="life-chapter life-iconic" data-life-chapter>
         <div class="iconic-column">
@@ -143,8 +168,8 @@ const images = [
           </h3>
           <p>
             {t(
-              "Früh die Angel auswerfen. Später mit dem Kajak hinaus. Angeln, Kajakfahren und Jetski sind im Freizeitkonzept vorgesehen.",
-              "Cast a line early. Take a kayak out later. Fishing, kayaking and jet skiing are envisaged in the leisure programme.",
+              "Glitzerndes Wasser, schattige Ufer, ein weiter Himmel. Die Angel auswerfen. Im Kajak die Stille suchen. Mit dem Jetski die Freiheit spüren. Hier soll Wassersport so vielseitig werden wie Ihre Wünsche.",
+              "Shimmering water, shady shores, an open sky. Cast a line. Find stillness in a kayak. Feel the freedom of a jet ski. The water sports envisaged here leave room for every mood.",
             )}
           </p>
           <StoryImage
@@ -159,7 +184,7 @@ const images = [
       <article class="life-chapter life-full-photo">
         <StoryImage
           src={`${e}bush-trail.webp`}
-          caption={t("150 km Wege geplant · fürs Mountainbike, Gravelbike und den langen Weg nach Hause", "150 km of trails planned · for mountain bikes, gravel bikes and the long way home")}
+          caption={t("Durch wilden Busch wandern. Mit Mountainbike oder Gravelbike der Weite entgegenfahren. Auf staubigen Offroad-Pfaden Neues entdecken · geplante Erlebnisse", "Walk through untamed bush. Ride towards the open horizon on a mountain or gravel bike. Explore dusty off-road trails · planned experiences")}
           alt={t(
             "Wege durch die südafrikanische Landschaft",
             "Trails through South African countryside",
@@ -174,14 +199,14 @@ const images = [
         <div class="finesse-pictures">
           <StoryImage
             src={`${c}racket-concept.webp`}
-            caption={t("2 beleuchtete Padel-Courts geplant", "2 floodlit padel courts planned")}
+            caption={t("Padel bis in den Abend · beleuchtete Courts geplant", "Padel into the evening · floodlit courts planned")}
             alt={t("Padel und Tennis, Konzeptbild", "Padel and tennis concept")}
             concept
             lang={lang}
           />
           <StoryImage
             src={`${c}golf-concept.webp`}
-            caption={t("18-Loch-Golf als Ausflug in die Umgebung", "18-hole golf outings in the surrounding area")}
+            caption={t("Weite Fairways, großer Himmel · Golf in der Umgebung", "Open fairways, wide skies · golf in the surrounding area")}
             alt={t(
               "Golfausflug, Symbolbild",
               "Golf outing, illustrative image",
@@ -192,23 +217,23 @@ const images = [
           <StoryImage
             src={`${c}tennis-court-concept.webp`}
             alt={t("Tennisplatz in der Klein Karoo, Konzeptbild", "Tennis court in the Klein Karoo, concept")}
-            caption={t("2 Allwetter-Tennisplätze geplant", "2 all-weather tennis courts planned")}
+            caption={t("Ein Match unter freiem Himmel · Tennisplätze geplant", "A match beneath open skies · tennis courts planned")}
             concept
             lang={lang}
           />
         </div>
         <p>
           {t(
-            "Ein Doppel am Haupthaus, danach auf die Terrasse. Padel, Tennis und Indoor-Tischtennis gehören zur Planung. Draußen sollen Bogenschießen und zwei Shooting Ranges das Angebot ergänzen. Für Golf ist ein 18-Loch-Platz in der Umgebung vorgesehen.",
-            "Doubles by the main lodge, then a seat on the terrace. Padel, tennis and indoor table tennis are planned. Archery and two shooting ranges would add to the outdoor programme. Golf is envisaged at an 18-hole course in the surrounding area.",
+            "Ein Doppel am Haupthaus, danach auf die Terrasse. Noch warm von der Sonne, den Abend vor sich. Padel, Tennis und Tischtennis sind geplant, ebenso Bogenschießen und Shooting Ranges. Für eine Runde Golf geht es in die Umgebung.",
+            "Doubles by the main lodge, then a seat on the terrace. Still warm from the sun, with the evening ahead. Plans include padel, tennis, table tennis, archery and shooting ranges, with golf outings in the surrounding area.",
           )}
         </p>
       </article>
       <article class="life-chapter life-amenities" data-life-chapter>
         <p>
           {t(
-            "Vom Pool an den gedeckten Tisch. Später rückt man am Feuer zusammen. Geplant sind Pool, Spa und Sauna sowie ein Clubhaus für Braai-Abende, Weinverkostungen und private Feiern.",
-            "From the pool to a table set for dinner. Later, everyone gathers around the fire. Plans include a pool, spa and sauna, plus a clubhouse for braais, wine tastings and private celebrations.",
+            "Warmes Wasser auf der Haut. Der Duft von Holzfeuer in der Abendluft. Ein guter Wein, ein langer Tisch, vertraute Gesichter. Mit Pool, Spa, Sauna und einem Clubhaus für gesellige Braai-Abende soll auch das Genießen seinen festen Platz bekommen.",
+            "Warm water on your skin. The scent of a wood fire on the evening air. Fine wine, a long table, familiar faces. Plans for a pool, spa, sauna and clubhouse with convivial braai evenings make room for these pleasures, too.",
           )}
         </p>
         <div class="amenities-pictures">
@@ -242,8 +267,8 @@ const images = [
         <div class="service-copy">
           <p>
             {t(
-              "Gäste erwarten, ohne den ganzen Tag vorzubereiten. Im Konzept: ein persönlicher Butler rund um die Uhr, ein Privatkoch und organisierte Transfers. Ein eigener Helikopter-Landeplatz ist ebenfalls geplant.",
-              "Welcome guests without spending the day preparing. The concept includes a personal butler around the clock, a private chef and organised transfers. A private helicopter landing area is also planned.",
+            "Der Tisch ist gedeckt. Ihr Lieblingswein steht bereit. Sie haben Zeit für Ihre Gäste. Persönlicher Butler-Service, ein Privatkoch und organisierte Transfers sind vorgesehen – bis hin zur Anreise am geplanten Helikopter-Landeplatz.",
+            "The table is set. Your favourite wine is ready. You have time for your guests. Plans include a personal butler, a private chef and arranged transfers, with a helicopter landing area envisaged for your arrival.",
             )}
           </p>
         </div>
