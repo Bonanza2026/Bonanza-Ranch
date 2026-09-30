@@ -118,7 +118,16 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
   );
   const film = root.querySelector<HTMLElement>(".life-film")!,
     track = root.querySelector<HTMLElement>(".life-track")!;
+  const nightScene = root.querySelector<HTMLElement>(".life-finale")!;
+  const setNightNavigation = (active: boolean) => document.body.classList.toggle("night-scene", active);
+  cleanups.push(() => setNightNavigation(false));
   if (small) {
+    ScrollTrigger.create({
+      trigger: nightScene,
+      start: "top 40px",
+      end: "bottom 40px",
+      onToggle: self => setNightNavigation(self.isActive),
+    });
     const photos = root.querySelectorAll<HTMLElement>(
       ".worlds-mobile-photo, .life-chapter:not(.life-finale) .story-photo",
     );
@@ -220,6 +229,13 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
         scrub: true,
         invalidateOnRefresh: true,
       },
+    });
+    ScrollTrigger.create({
+      trigger: nightScene,
+      containerAnimation: slider,
+      start: "left 40px",
+      end: "right 40px",
+      onToggle: self => setNightNavigation(self.isActive),
     });
     track.querySelectorAll<HTMLElement>(".story-photo").forEach((figure) => {
       if (figure.closest(".life-intro, .life-editorial--landscape-pair"))

@@ -1,0 +1,56 @@
+/* Coffee-cream study. ?theme=dark keeps the previous black photographic story. */
+html[data-color-theme="cream"] {
+  --story-paper: #eee3d3;
+  --story-ink: #332b24;
+  --story-muted: #625446;
+  --dream-paper: var(--story-paper);
+  background: var(--story-paper);
+}
+html[data-color-theme="cream"] body,
+html[data-color-theme="cream"] .dream-home,
+html[data-color-theme="cream"] .footer-component {
+  background: var(--story-paper);
+  color: var(--story-ink);
+}
+html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .bonanza-ring, .life-card),
+html[data-color-theme="cream"] .dream-home .life-chapter:not(.life-finale):not(.life-intro) {
+  background: var(--story-paper);
+  color: var(--story-ink);
+}
+html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .life-chapter:not(.life-finale), .bonanza-ring) :is(h2, h3, p, dd),
+html[data-color-theme="cream"] .dream-home .life-card-title {
+  color: var(--story-ink);
+}
+html[data-color-theme="cream"] .dream-home :is(.chapter-media, .life-card-picture) .story-photo,
+html[data-color-theme="cream"] .dream-home .life-card-picture > .story-photo img {
+  background: var(--story-paper);
+}
+html[data-color-theme="cream"] :is(.reserve-area small span, .chapter-image-note) {
+  color: var(--story-muted);
+}
+html[data-color-theme="cream"] :is(.reserve-areas, .security-facts > div) {
+  border-color: #332b2433;
+}
+html[data-color-theme="cream"] :is(.bonanza-footer-word, .footer-credit a) {
+  color: var(--story-ink);
+}
+html[data-color-theme="cream"] body[data-nav-theme="story"] nav {
+  color: var(--story-ink);
+}
+html[data-color-theme="cream"] body.night-scene nav {
+  color: #fafaf8;
+}
+html[data-color-theme="cream"] :is(.cookie-notice, .contact-options) {
+  background: var(--story-paper);
+  color: var(--story-ink);
+}
+@media (min-width: 768px) {
+  html[data-color-theme="cream"] .dream-home .life-film {
+    background: linear-gradient(180deg, transparent 0 100svh, var(--story-paper) 100svh);
+  }
+}
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  html[data-color-theme="cream"] .dream-home .life-film {
+    background: var(--story-paper);
+  }
+}

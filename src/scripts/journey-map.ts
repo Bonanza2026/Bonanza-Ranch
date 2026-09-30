@@ -12,22 +12,36 @@ export function bindJourneyMap({ gsap }: JourneyDependencies) {
   const component = root.querySelector<HTMLElement>(".jm-component")!;
   const artwork = root.querySelector<HTMLElement>(".jm-map-art")!;
   const svg = root.querySelector<SVGSVGElement>(".jm-world")!;
-  const route = root.querySelector<SVGPathElement>(".jm-route")!;
-  const traveller = root.querySelector<SVGGElement>(".jm-traveller")!;
+  const flights = Array.from(root.querySelectorAll<SVGPathElement>("[data-flight-route]")).map(route => ({
+    route,
+    length: route.getTotalLength(),
+    traveller: root.querySelector<SVGGElement>(`[data-traveller="${route.dataset.flightRoute}"]`)!,
+  }));
+  const onward = root.querySelector<SVGPathElement>("[data-onward-route]")!;
+  const onwardLength = onward.getTotalLength();
   const small = innerWidth < 768;
-  svg.setAttribute("viewBox", small ? "725 100 730 1100" : "0 0 1800 2150");
-  const length = route.getTotalLength();
+  svg.setAttribute("viewBox", small ? "820 120 1040 1140" : "0 0 1800 2150");
   const state = { progress: 0 };
-  route.style.strokeDasharray = String(length);
+  for (const {route, length} of flights) route.style.strokeDasharray = String(length);
+  onward.style.strokeDasharray = String(onwardLength);
   const paint = () => {
-    route.style.strokeDashoffset = String(length * (1 - state.progress));
-    const point = route.getPointAtLength(length * state.progress);
-    traveller.setAttribute("transform", `translate(${point.x} ${point.y})`);
+    // Both flights reach Cape Town together, then share the short George leg.
+    const flightProgress = Math.min(1, state.progress / 0.88);
+    const onwardProgress = Math.max(0, (state.progress - 0.88) / 0.12);
+    onward.style.strokeDashoffset = String(onwardLength * (1 - onwardProgress));
+    flights.forEach(({route, length, traveller}, index) => {
+      route.style.strokeDashoffset = String(length * (1 - flightProgress));
+      const point = onwardProgress > 0
+        ? onward.getPointAtLength(onwardLength * onwardProgress)
+        : route.getPointAtLength(length * flightProgress);
+      traveller.setAttribute("transform", `translate(${point.x} ${point.y})`);
+      traveller.style.visibility = index > 0 && flightProgress === 1 ? "hidden" : "visible";
+    });
   };
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
     state.progress = 1;
     paint();
-    return () => {};
+    return () => resetRoutes();
   }
   const context = gsap.context(() => {
     paint();
@@ -89,7 +103,16 @@ export function bindJourneyMap({ gsap }: JourneyDependencies) {
   }, root);
   return () => {
     context.revert();
-    route.style.removeProperty("stroke-dasharray");
-    route.style.removeProperty("stroke-dashoffset");
+    resetRoutes();
   };
+  function resetRoutes() {
+    for (const route of [...flights.map(flight => flight.route), onward]) {
+      route.style.removeProperty("stroke-dasharray");
+      route.style.removeProperty("stroke-dashoffset");
+    }
+    for (const {traveller} of flights) {
+      traveller.removeAttribute("transform");
+      traveller.style.removeProperty("visibility");
+    }
+  }
 }

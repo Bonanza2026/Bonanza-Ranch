@@ -8,11 +8,14 @@ const project = (lon: number, lat: number) => ({
   y: 160 + ((60.3333333333 - lat) / 103.3333333333) * 960,
 });
 const europe = project(12, 49);
+const asia = project(90, 34);
 const cape = project(18.42322, -33.92584);
 const george = project(22.46173, -33.963);
 const northwest = project(-180, 90),
   southeast = project(180, -90);
-const route = `M ${europe.x} ${europe.y} C ${europe.x - 88} ${europe.y + 256}, ${cape.x - 116} ${cape.y - 192}, ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${george.x} ${george.y}`;
+const europeRoute = `M ${europe.x} ${europe.y} C ${europe.x - 88} ${europe.y + 256}, ${cape.x - 116} ${cape.y - 192}, ${cape.x} ${cape.y}`;
+const asiaRoute = `M ${asia.x} ${asia.y} C ${asia.x - 70} ${asia.y + 350}, ${cape.x + 190} ${cape.y - 150}, ${cape.x} ${cape.y}`;
+const onwardRoute = `M ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${george.x} ${george.y}`;
 ---
 
 <section
@@ -24,7 +27,7 @@ const route = `M ${europe.x} ${europe.y} C ${europe.x - 88} ${europe.y + 256}, $
   <header class="jm-heading" data-nav-theme="light">
     <p class="jm-departure">
       {en ? "The departure" : "Der Aufbruch"}
-      <span>{en ? "Europe" : "Europa"}</span>
+      <span>{en ? "Europe · Asia" : "Europa · Asien"}</span>
     </p>
     <div>
       <h2>{en ? "A little further south." : "Ein Stück weiter südlich."}</h2>
@@ -39,7 +42,7 @@ const route = `M ${europe.x} ${europe.y} C ${europe.x - 88} ${europe.y + 256}, $
       <span>Klein Karoo</span>
     </p>
   </header>
-  <div class="jm-component" data-nav-theme="dark">
+  <div class="jm-component" data-nav-theme="light">
     <div class="jm-map-art" aria-hidden="true">
       <svg
         class="jm-world"
@@ -50,9 +53,9 @@ const route = `M ${europe.x} ${europe.y} C ${europe.x - 88} ${europe.y + 256}, $
           <filter id="jm-relief-tone" color-interpolation-filters="sRGB">
             <feColorMatrix type="saturate" values="0" />
             <feComponentTransfer>
-              <feFuncR type="linear" slope=".72" intercept=".346" />
-              <feFuncG type="linear" slope=".67" intercept=".391" />
-              <feFuncB type="linear" slope=".63" intercept=".414" />
+              <feFuncR type="linear" slope=".44" intercept=".045" />
+              <feFuncG type="linear" slope=".45" intercept=".052" />
+              <feFuncB type="linear" slope=".43" intercept=".048" />
             </feComponentTransfer>
           </filter>
           <linearGradient id="jm-image-edge" x1="0" y1="0" x2="0" y2="1">
@@ -75,13 +78,21 @@ const route = `M ${europe.x} ${europe.y} C ${europe.x - 88} ${europe.y + 256}, $
           mask="url(#jm-image-mask)"
           filter="url(#jm-relief-tone)"
         />
-        <path class="jm-route-guide" d={route} />
-        <path class="jm-route" d={route} />
+        <path class="jm-route-guide" d={europeRoute} />
+        <path class="jm-route-guide" d={asiaRoute} />
+        <path class="jm-route-guide" d={onwardRoute} />
+        <path class="jm-route" data-flight-route="europe" d={europeRoute} />
+        <path class="jm-route" data-flight-route="asia" d={asiaRoute} />
+        <path class="jm-route" data-onward-route d={onwardRoute} />
         <g class="jm-city" transform={`translate(${europe.x} ${europe.y})`}>
           <circle r="4" />
           <text x="20" y="-12">
             {en ? "EUROPE" : "EUROPA"}
           </text>
+        </g>
+        <g class="jm-city" transform={`translate(${asia.x} ${asia.y})`}>
+          <circle r="4" />
+          <text x="-20" y="-12" text-anchor="end">{en ? "ASIA" : "ASIEN"}</text>
         </g>
         <g class="jm-city" transform={`translate(${cape.x} ${cape.y})`}>
           <circle r="4" />
@@ -98,7 +109,11 @@ const route = `M ${europe.x} ${europe.y} C ${europe.x - 88} ${europe.y + 256}, $
             KLEIN KAROO
           </text>
         </g>
-        <g class="jm-traveller">
+        <g class="jm-traveller" data-traveller="europe">
+          <circle class="jm-traveller-ring" r="16" />
+          <circle r="5" />
+        </g>
+        <g class="jm-traveller" data-traveller="asia">
           <circle class="jm-traveller-ring" r="16" />
           <circle r="5" />
         </g>

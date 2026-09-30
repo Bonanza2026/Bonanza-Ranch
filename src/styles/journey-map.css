@@ -81,22 +81,22 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
 .jm-component {
   position: relative;
   height: max(115svh, 90vw);
-  background: #dde0de;
-  color: #19362d;
+  background: #171b19;
+  color: #eee6d8;
 }
 .jm-map-art {
   position: absolute;
   inset: 0;
   height: 100%;
   width: 100%;
-  background: #dde0de;
+  background: #171b19;
 }
 .jm-map-art::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(90deg, #dde0de 0%, #dde0deeb 18%, #dde0de4d 35%, transparent 48%);
+  background: linear-gradient(90deg, #171b19 0%, #171b19eb 18%, #171b194d 35%, transparent 48%);
 }
 .jm-world {
   display: block;
@@ -110,23 +110,23 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
   vector-effect: non-scaling-stroke;
 }
 .jm-route {
-  stroke: #625a4c;
+  stroke: #ddc396;
   stroke-width: 1.5;
 }
 .jm-route-guide {
-  stroke: #59665f;
+  stroke: #c3b699;
   stroke-width: 1;
   opacity: 0.3;
 }
 .jm-city,
 .jm-traveller {
-  fill: #19362d;
+  fill: #eee6d8;
 }
 .jm-city text {
   font: 600 24px var(--font-sans);
   letter-spacing: 1px;
   paint-order: stroke;
-  stroke: #f5f5f099;
+  stroke: #171b19;
   stroke-width: 2;
 }
 .jm-city .jm-region {
@@ -134,11 +134,11 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
   letter-spacing: 1.5px;
 }
 .jm-traveller {
-  fill: #19362d;
+  fill: #f4d5a0;
 }
 .jm-traveller-ring {
   fill: none;
-  stroke: #19362d55;
+  stroke: #f4d5a077;
   stroke-width: 1;
 }
 .jm-soft-edge {
@@ -165,11 +165,11 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
 }
 .jm-information .dream-label {
   font-size: 0.55rem;
-  color: #625a4c;
+  color: #ddc396;
   margin-bottom: 26px;
 }
 .dream-home .jm-information h3 {
-  color: #19362d;
+  color: #eee6d8;
   font-size: clamp(32px, 3.6vw, 58px);
   line-height: 1.08;
 }
@@ -178,14 +178,14 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
   line-height: 1.65;
   max-width: 27ch;
   margin-top: 24px;
-  color: #4f5c55;
+  color: #d7d2c9;
 }
 .jm-credit {
   position: absolute;
   right: 4vw;
   bottom: 28px;
   font-size: 0.45rem;
-  color: #57615b;
+  color: #c5c4bc;
   z-index: 1;
 }
 .jm-credit a {
@@ -226,7 +226,7 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
   }
   .jm-map-art {
     position: relative;
-    height: calc(100vw * 1100 / 730);
+    height: calc(100vw * 1140 / 1040);
     overflow: hidden;
   }
   .jm-soft-edge {
@@ -236,10 +236,10 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
     display: none;
   }
   .jm-city text {
-    font-size: 23px;
+    font-size: 36px;
   }
   .jm-city .jm-region {
-    font-size: 16px;
+    font-size: 28px;
   }
   .jm-information {
     position: relative;
