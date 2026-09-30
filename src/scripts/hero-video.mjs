@@ -15,7 +15,7 @@ export function initializeHeroVideo() {
   let posterReady = false;
 
   const play = () => {
-    if (!posterReady || reduced.matches || document.hidden || !visible) {
+    if (!posterReady || reduced.matches || document.hidden || !visible || video.dataset.scrollCovered === 'true') {
       video.pause();
       return;
     }
@@ -39,6 +39,7 @@ export function initializeHeroVideo() {
     play();
   }).observe(video);
   document.addEventListener('visibilitychange', play);
+  video.addEventListener('bonanza:hero-visibility', play);
   document.addEventListener('pointerdown', play, { once: true });
   document.addEventListener('keydown', play, { once: true });
   reduced.addEventListener('change', play);

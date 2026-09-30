@@ -32,6 +32,7 @@ body{font-weight:400;background:var(--dream-paper)}
 .flight-thought{z-index:4;color:#3c4b46;display:flex;justify-content:center;align-items:center;flex-direction:column;gap:2rem;text-align:center;visibility:hidden;padding:7vw}
 .flight-thought-title{font:400 clamp(3rem,6.7vw,7.8rem)/1.02 var(--font-display);letter-spacing:-.045em}
 .flight-thought-rule{width:1px;height:9vh;background:#5f6e6555;margin-top:1rem}
+.flight-arrival-window{display:contents}
 .flight-arrival{z-index:6;background:var(--dream-paper);display:flex;flex-direction:column;justify-content:center;align-items:center;color:#19362d;visibility:hidden;overflow:hidden}
 .flight-arrival>.dream-label{margin-bottom:4vh}
 .flight-arrival-word{font:400 27vw/.98 var(--font-condensed);letter-spacing:-.035em;margin-left:-.035em}

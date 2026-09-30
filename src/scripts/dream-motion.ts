@@ -11,8 +11,15 @@ export function createDreamMotion() {
     const plane = root.querySelector<HTMLElement>(".flight-plane")!;
     const planeInner = root.querySelector<HTMLElement>(".flight-plane-inner")!;
     const arrival = root.querySelector<HTMLElement>(".flight-arrival")!;
+    const arrivalWindow = root.querySelector<HTMLElement>(".flight-arrival-window")!;
     const stage = root.querySelector<HTMLElement>(".flight-stage")!;
     const mobile = innerWidth < 768;
+    const video = root.querySelector<HTMLVideoElement>(".hero-banner_video");
+    const coverFilm = (covered: boolean) => {
+      if (!video || video.dataset.scrollCovered === String(covered)) return;
+      video.dataset.scrollCovered = String(covered);
+      video.dispatchEvent(new Event("bonanza:hero-visibility"));
+    };
     // Freeze the mobile scene while browser chrome changes the visible height.
     // Only a real width/orientation change rebuilds these measurements.
     if (mobile) {
@@ -26,33 +33,45 @@ export function createDreamMotion() {
       height = stage.clientHeight,
       baseImageWidth = planeInner.querySelector<HTMLImageElement>(".flight-plane-image")!.clientWidth;
     gsap.set(planeInner, { rotation: mobile ? -90 : 0 });
+    const mobileTravel = height / 2 + baseImageWidth * 0.62;
+    const movePlane = gsap.quickSetter(plane, "y", "px");
+    const moveWindow = gsap.quickSetter(arrivalWindow, "y", "px");
+    const holdLandscape = gsap.quickSetter(arrival, "y", "px");
+    if (mobile) {
+      // The wing outline is fixed. Translate its layer and counter-translate the
+      // landscape, rather than rebuilding a large polygon on every scroll frame.
+      const imageHeight = baseImageWidth * 1024 / 1536;
+      const edge = Array.from({ length: 17 }, (_, i) => {
+        const x = width * i / 16;
+        const imageY = 0.5 + (x - width / 2) / imageHeight;
+        const wingX = 0.61 - 0.57 * Math.max(0, Math.abs(imageY - 0.49) - 0.075);
+        return `${x}px ${height / 2 - (wingX - 0.5) * baseImageWidth}px`;
+      });
+      gsap.set(arrivalWindow, {
+        height: height + mobileTravel,
+        clipPath: `polygon(0 100%,${edge.join(",")},100% 100%)`,
+        force3D: true,
+      });
+      gsap.set(arrival, { visibility: "visible", force3D: true });
+      gsap.set(plane, { autoAlpha: 1, force3D: true });
+    }
+    let arrived = false;
     const paintPlane = () => {
       const p = state.progress;
+      if (arrived !== (p > 0.59)) {
+        arrived = p > 0.59;
+        document.body.classList.toggle("flight-arrived", arrived);
+      }
+      if (mobile) {
+        const y = (1 - 2 * p) * mobileTravel;
+        movePlane(y);
+        moveWindow(y);
+        holdLandscape(-y);
+        return;
+      }
       const scale = 1 + 0.1 * p;
       const imageWidth = baseImageWidth * scale;
       const imageHeight = (imageWidth * 1024) / 1536;
-      document.body.classList.toggle("flight-arrived", p > 0.59);
-      if (mobile) {
-        // Rotate the aircraft and its wing-shaped reveal together. The landscape
-        // appears behind the wings as the jet travels from below to above the screen.
-        const travel = height / 2 + baseImageWidth * 0.62;
-        const y = (1 - 2 * p) * travel;
-        const edge = Array.from({ length: 17 }, (_, i) => {
-          const x = (width * i) / 16;
-          const imageY = 0.5 + (x - width / 2) / imageHeight;
-          const wingX = 0.61 - 0.57 * Math.max(0, Math.abs(imageY - 0.49) - 0.075);
-          return [x, height / 2 + y - (wingX - 0.5) * imageWidth];
-        });
-        gsap.set(plane, { x: 0, y, autoAlpha: p > 0.001 && p < 0.999 ? 1 : 0 });
-        gsap.set(planeInner, { scale });
-        gsap.set(arrival, {
-          visibility: Math.min(...edge.map(([, y]) => y)) < height ? "visible" : "hidden",
-          clipPath: Math.max(...edge.map(([, y]) => y)) <= 0
-            ? "none"
-            : `polygon(0 100%,${edge.map(([x, y]) => `${x}px ${y}px`).join(",")},100% 100%)`,
-        });
-        return;
-      }
       const x = (-2.6 + 5.2 * p) * width;
       const edge = Array.from({ length: 17 }, (_, i) => {
         const y = (height * i) / 16;
@@ -77,28 +96,39 @@ export function createDreamMotion() {
     ScrollTrigger.create({
       trigger: flight,
       start: () =>
-        `top+=${(flight.offsetHeight - stage.clientHeight) * 0.19} top`,
+        `top+=${(flight.offsetHeight - stage.clientHeight) * (mobile ? 0.12 : 0.19)} top`,
       end: "bottom 80px",
       toggleClass: { targets: document.body, className: "flight-is-cloudy" },
       invalidateOnRefresh: true,
     });
-    const flightTimeline = gsap.timeline({
+    const flightTimeline: gsap.core.Timeline = gsap.timeline({
       defaults: { ease: "none" },
       scrollTrigger: {
         trigger: flight,
         start: "top top",
         end: () => `+=${flight.offsetHeight - height}`,
-        // Native touch already supplies momentum; a second scrub delay causes
-        // the scene to catch up after the gesture and visibly jump at its exit.
-        scrub: mobile ? true : 0.35,
+        // A short catch-up softens coarse input without the long delayed exit.
+        scrub: mobile ? 0.12 : 0.35,
         invalidateOnRefresh: true,
       },
+      onUpdate: mobile ? () => coverFilm(flightTimeline.progress() >= 0.18) : undefined,
     });
+    if (mobile) {
+      // First gesture: the question. Second gesture: the flyover and arrival.
+      flightTimeline
+        .to(".flight-opening", { opacity: 0, duration: 0.12 }, 0.01)
+        .to(".flight-cloud-world", { autoAlpha: 1, duration: 0.16 }, 0)
+        .to(".flight-cloud-base", { opacity: 1, duration: 0.16 }, 0)
+        .fromTo(".flight-cloud-back", { scale: 1.08, yPercent: 2 }, { scale: 1.08, yPercent: -2, duration: 1 }, 0)
+        .fromTo(".flight-thought", { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.08 }, 0.1)
+        .to(".flight-thought", { autoAlpha: 0, y: -12, duration: 0.1 }, 0.4)
+        .to(state, { progress: 1, duration: 0.54, onUpdate: paintPlane }, 0.34);
+    } else {
     flightTimeline
-      .to(".flight-film", { scale: mobile ? 1 : 1.08, yPercent: mobile ? 0 : -6, duration: 0.3 }, 0)
+      .to(".flight-film", { scale: 1.08, yPercent: -6, duration: 0.3 }, 0)
       .to(
         ".flight-opening",
-        { yPercent: mobile ? 0 : -18, opacity: 0, duration: 0.19 },
+        { yPercent: -18, opacity: 0, duration: 0.19 },
         0.06,
       )
       .to(".flight-cloud-world", { autoAlpha: 1, duration: 0.1 }, 0.08)
@@ -135,7 +165,12 @@ export function createDreamMotion() {
       )
       .to(".flight-cloud-front", { autoAlpha: 0, duration: 0.17 }, 0.66)
       .to(state, { progress: 1, duration: 0.39, onUpdate: paintPlane }, 0.5);
-    return createBonanzaStoryMotion(root);
+    }
+    const cleanupStory = createBonanzaStoryMotion(root);
+    return () => {
+      cleanupStory();
+      coverFilm(false);
+    };
   }, root);
   return () => {
     context.revert();

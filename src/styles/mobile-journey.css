@@ -21,7 +21,7 @@
     text-wrap: balance;
   }
   .dream-home .dream-flight {
-    height: calc(var(--flight-height, 100lvh) * 3.6);
+    height: calc(var(--flight-height, 100lvh) * 2.65);
     background: #000;
   }
   .dream-home .flight-stage {
@@ -31,6 +31,30 @@
   .dream-home .flight-film {
     transform-origin: 50% 50%;
   }
+  .dream-home .flight-arrival-window {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    will-change: transform;
+  }
+  .dream-home .flight-arrival {
+    bottom: auto;
+    height: var(--flight-height, 100lvh);
+    will-change: transform;
+  }
+  .dream-home .flight-plane { will-change: transform; }
+  /* One composited cloud texture; no oversized filtered layers on touch devices. */
+  .dream-home .flight-cloud-back {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    filter: none;
+    mask-image: none;
+  }
+  .dream-home .flight-cloud-side,
+  .dream-home .flight-cloud-front,
+  .dream-home .flight-plane-shadow { display: none; }
   .dream-home .flight-opening {
     height: var(--flight-opening-height, 100svh);
     bottom: auto;
@@ -240,6 +264,9 @@
   }
   .dream-home .life-editorial--landscape-pair .story-photo img {
     object-fit: contain;
+  }
+  .dream-home .life-editorial--landscape-pair .story-photo--giraffes img {
+    object-fit: cover;
   }
   .dream-home .chapter-image-note {
     text-align: center;
