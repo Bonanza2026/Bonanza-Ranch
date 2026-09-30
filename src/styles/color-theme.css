@@ -12,7 +12,7 @@ html[data-color-theme="cream"] .footer-component {
   background: var(--story-paper);
   color: var(--story-ink);
 }
-html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .bonanza-ring, .life-card),
+html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .life-card),
 html[data-color-theme="cream"] .dream-home .life-chapter:not(.life-finale):not(.life-intro) {
   background: var(--story-paper);
   color: var(--story-ink);
@@ -31,7 +31,7 @@ html[data-color-theme="cream"] .jm-heading::before {
 html[data-color-theme="cream"] body.flight-is-cloudy.flight-arrived nav {
   color: var(--story-ink);
 }
-html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .life-chapter:not(.life-finale), .bonanza-ring) :is(h2, h3, p, dd),
+html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .life-chapter:not(.life-finale)) :is(h2, h3, p, dd),
 html[data-color-theme="cream"] .dream-home .life-card-title {
   color: var(--story-ink);
 }
