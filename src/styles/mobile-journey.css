@@ -15,22 +15,27 @@
     text-wrap: balance;
   }
   .dream-home .dream-flight {
-    height: 360svh;
+    height: calc(var(--flight-height, 100lvh) * 3.6);
     background: #000;
   }
   .dream-home .flight-stage {
-    height: 100dvh;
-    min-height: 100svh;
+    height: var(--flight-height, 100lvh);
     background: #000;
   }
   .dream-home .flight-film {
     transform-origin: 50% 50%;
   }
   .dream-home .flight-opening {
+    height: var(--flight-opening-height, 100svh);
+    bottom: auto;
     padding: 0 24px max(28px, env(safe-area-inset-bottom));
   }
+  .dream-home .flight-plane-image,
+  .dream-home .flight-plane-shadow {
+    width: max(255vw, calc(var(--flight-height, 100lvh) * 1.7));
+  }
   .dream-home .flight-opening h1 {
-    font-size: clamp(64px, 22vw, 148px);
+    font-size: clamp(54px, min(22vw, calc(var(--flight-opening-height, 100svh) * .12)), 148px);
     text-align: center;
   }
   .dream-home .flight-opening-line {
@@ -300,14 +305,8 @@
     opacity: 1;
   }
 }
-@media (max-width: 767px) and (max-height: 700px) {
-  .dream-home .flight-opening-line { top: 24%; gap: 16px; }
-  .dream-home .flight-opening-line > p { font-size: 20px; }
-  .dream-home .flight-opening h1 { font-size: clamp(54px, 18vw, 100px); }
-  .dream-home .dream-film-button { width: 40px; height: 40px; }
-}
 @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
   .dream-home .dream-flight {
-    height: 100dvh;
+    height: 100svh;
   }
 }

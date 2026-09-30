@@ -16,7 +16,12 @@ import {
 import { bindJourneyMap } from "./journey-map";
 import { createDreamMotion } from "./dream-motion";
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MotionPathPlugin, CustomEase);
-ScrollTrigger.config({ ignoreMobileResize: true });
+// Height-only resizes from mobile browser bars must not refresh scrubbed scenes.
+// Width/orientation changes are handled explicitly below.
+ScrollTrigger.config({
+  ignoreMobileResize: true,
+  autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+});
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 const nativeScroll = new URLSearchParams(location.search).get("scroll") === "native";
 const lenis = new Lenis({
@@ -108,18 +113,27 @@ function setupMotion() {
 // pinned without its flight timeline; only measurements need a later refresh.
 setupMotion();
 document.fonts.ready.then(() => {
-  lenis.resize();
-  ScrollTrigger.refresh();
+  const refreshFonts = () => {
+    ScrollTrigger.removeEventListener("scrollEnd", refreshFonts);
+    lenis.resize();
+    ScrollTrigger.refresh();
+  };
+  // A late font must not reset the flight while a finger is moving the page.
+  if (ScrollTrigger.isScrolling()) ScrollTrigger.addEventListener("scrollEnd", refreshFonts);
+  else refreshFonts();
 });
 let width = innerWidth,
   resizeTimer: ReturnType<typeof setTimeout>;
 addEventListener("resize", () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
-    lenis.resize();
     if (width !== innerWidth) {
       width = innerWidth;
+      lenis.resize();
       setupMotion();
+    } else if (innerWidth >= 768) {
+      lenis.resize();
+      ScrollTrigger.refresh();
     }
   }, 220);
 });

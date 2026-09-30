@@ -12,13 +12,22 @@ export function createDreamMotion() {
     const planeInner = root.querySelector<HTMLElement>(".flight-plane-inner")!;
     const arrival = root.querySelector<HTMLElement>(".flight-arrival")!;
     const stage = root.querySelector<HTMLElement>(".flight-stage")!;
+    // Freeze the mobile scene while browser chrome changes the visible height.
+    // Only a real width/orientation change rebuilds these measurements.
+    if (innerWidth < 768) {
+      const opening = root.querySelector<HTMLElement>(".flight-opening")!;
+      gsap.set(flight, {
+        "--flight-height": `${stage.clientHeight}px`,
+        "--flight-opening-height": `${opening.clientHeight}px`,
+      });
+    }
+    const width = stage.clientWidth,
+      height = stage.clientHeight,
+      baseImageWidth = planeInner.querySelector<HTMLImageElement>(".flight-plane-image")!.clientWidth;
     const paintPlane = () => {
-      const p = state.progress,
-        width = innerWidth,
-        height = stage.clientHeight;
+      const p = state.progress;
       const scale = 1 + 0.1 * p;
-      const imageWidth =
-        Math.max(width * (width < 768 ? 2.55 : 1.45), height * 1.7) * scale;
+      const imageWidth = baseImageWidth * scale;
       const imageHeight = (imageWidth * 1024) / 1536;
       const x = (-2.6 + 5.2 * p) * width;
       const edge = Array.from({ length: 17 }, (_, i) => {
@@ -55,7 +64,7 @@ export function createDreamMotion() {
       scrollTrigger: {
         trigger: flight,
         start: "top top",
-        end: "bottom bottom",
+        end: () => `+=${flight.offsetHeight - height}`,
         scrub: 0.35,
         invalidateOnRefresh: true,
       },
