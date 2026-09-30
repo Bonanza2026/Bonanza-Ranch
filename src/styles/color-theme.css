@@ -17,6 +17,20 @@ html[data-color-theme="cream"] .dream-home .life-chapter:not(.life-finale):not(.
   background: var(--story-paper);
   color: var(--story-ink);
 }
+html[data-color-theme="cream"] .dream-home :is(.dream-flight, .flight-arrival, .jm-heading) {
+  background: var(--story-paper);
+  color: var(--story-ink);
+}
+html[data-color-theme="cream"] .jm-heading :is(.jm-departure, .jm-destination-label),
+html[data-color-theme="cream"] .jm-heading > div > p {
+  color: var(--story-muted);
+}
+html[data-color-theme="cream"] .jm-heading::before {
+  border-color: #332b2433;
+}
+html[data-color-theme="cream"] body.flight-is-cloudy.flight-arrived nav {
+  color: var(--story-ink);
+}
 html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .life-chapter:not(.life-finale), .bonanza-ring) :is(h2, h3, p, dd),
 html[data-color-theme="cream"] .dream-home .life-card-title {
   color: var(--story-ink);
