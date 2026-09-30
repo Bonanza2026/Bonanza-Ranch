@@ -79,6 +79,9 @@ body.flight-is-cloudy nav {
   background: transparent !important;
   backdrop-filter: none !important;
 }
+body nav .nav-layout_mobile :is(.nav-col, .menu-toggle, .nav-logo, .nav-logo a) {
+  color: inherit !important;
+}
 .nav-layout_mobile > .liquid-glass__filter,
 .nav-layout_mobile > .liquid-glass__overlay,
 .nav-layout_mobile > .liquid-glass__specular {

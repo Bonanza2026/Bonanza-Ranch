@@ -34,5 +34,473 @@
     "output": "bonanza/logo.webp",
     "before": 252795,
     "after": 186864
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\landschaft.png",
+    "output": "public/bonanza/current/water-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 241710
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\landschaft.png",
+    "output": "public/bonanza/current/water-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 533754
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\landschaft.png",
+    "output": "public/bonanza/current/water.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1527392
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_49-8.png",
+    "output": "public/bonanza/current/horses-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 287164
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_49-8.png",
+    "output": "public/bonanza/current/horses-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 611654
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_49-8.png",
+    "output": "public/bonanza/current/horses.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1676514
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_47-7.png",
+    "output": "public/bonanza/current/tennis-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 223834
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_47-7.png",
+    "output": "public/bonanza/current/tennis-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 518084
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_47-7.png",
+    "output": "public/bonanza/current/tennis.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1518200
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_39-2.png",
+    "output": "public/bonanza/current/rhino-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 317444
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_39-2.png",
+    "output": "public/bonanza/current/rhino-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 680962
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_39-2.png",
+    "output": "public/bonanza/current/rhino.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1902758
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_55-13.png",
+    "output": "public/bonanza/current/oryx-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 315022
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_55-13.png",
+    "output": "public/bonanza/current/oryx-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 697078
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_55-13.png",
+    "output": "public/bonanza/current/oryx.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1982488
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\zebra.png",
+    "output": "public/bonanza/current/zebra-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 269256
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\zebra.png",
+    "output": "public/bonanza/current/zebra-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 610670
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\zebra.png",
+    "output": "public/bonanza/current/zebra.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1769238
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_46-5.png",
+    "output": "public/bonanza/current/antelope-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 231416
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_46-5.png",
+    "output": "public/bonanza/current/antelope-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 495332
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_46-5.png",
+    "output": "public/bonanza/current/antelope.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1346034
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_47-6.png",
+    "output": "public/bonanza/current/buffalo-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 226048
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_47-6.png",
+    "output": "public/bonanza/current/buffalo-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 487142
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_47-6.png",
+    "output": "public/bonanza/current/buffalo.webp",
+    "width": 1672,
+    "height": 940,
+    "encoding": "lossless WebP",
+    "bytes": 1367176
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\vogel 2.png",
+    "output": "public/bonanza/current/bird-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 174570
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\vogel 2.png",
+    "output": "public/bonanza/current/bird-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 427834
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\vogel 2.png",
+    "output": "public/bonanza/current/bird.webp",
+    "width": 1672,
+    "height": 940,
+    "encoding": "lossless WebP",
+    "bytes": 1377006
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\vogel_1.png",
+    "output": "public/bonanza/current/cormorant-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 203462
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\vogel_1.png",
+    "output": "public/bonanza/current/cormorant-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 447240
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\vogel_1.png",
+    "output": "public/bonanza/current/cormorant.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1293810
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_52-11.png",
+    "output": "public/bonanza/current/sunset-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 316536
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_52-11.png",
+    "output": "public/bonanza/current/sunset-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 696492
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_52-11.png",
+    "output": "public/bonanza/current/sunset.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1943570
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_53-12.png",
+    "output": "public/bonanza/current/trail-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 322008
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_53-12.png",
+    "output": "public/bonanza/current/trail-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 736162
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_53-12.png",
+    "output": "public/bonanza/current/trail.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 2143194
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\landschaftsbild.png",
+    "output": "public/bonanza/current/mountains-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 368262
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\landschaftsbild.png",
+    "output": "public/bonanza/current/mountains-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 809018
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\landschaftsbild.png",
+    "output": "public/bonanza/current/mountains.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 2319122
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\heli.png",
+    "output": "public/bonanza/current/helicopter-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 280184
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\heli.png",
+    "output": "public/bonanza/current/helicopter-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 622992
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\heli.png",
+    "output": "public/bonanza/current/helicopter.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1800280
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\winegut.png",
+    "output": "public/bonanza/current/vineyard-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 171834
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\winegut.png",
+    "output": "public/bonanza/current/vineyard-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 383810
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\winegut.png",
+    "output": "public/bonanza/current/vineyard.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1075298
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\sicherheit.png",
+    "output": "public/bonanza/current/security-camera-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 310198
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\sicherheit.png",
+    "output": "public/bonanza/current/security-camera-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 651716
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\sicherheit.png",
+    "output": "public/bonanza/current/security-camera.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1773036
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\sicherheit 2.png",
+    "output": "public/bonanza/current/security-gate-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 336318
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\sicherheit 2.png",
+    "output": "public/bonanza/current/security-gate-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 755066
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\sicherheit 2.png",
+    "output": "public/bonanza/current/security-gate.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 2201184
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_40-3.png",
+    "output": "public/bonanza/current/meerkat-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 204704
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_40-3.png",
+    "output": "public/bonanza/current/meerkat-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 467400
+  },
+  {
+    "source": "C:\\Users\\royin\\Documents\\bonanza\\bilder\\neu\\ChatGPT-Bild 30. Sept. 2026, 20_47_40-3.png",
+    "output": "public/bonanza/current/meerkat.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1329528
+  },
+  {
+    "source": "C:/Users/royin/Documents/bonanza/bilder/neu/hero_video_neu.mp4",
+    "output": "public/media/hero-desktop-v3.webm",
+    "bytes": 4154215,
+    "note": "New 14.72-second hero; 24 fps, muted; VP9 preferred and H.264 compatibility fallback"
+  },
+  {
+    "source": "C:/Users/royin/Documents/bonanza/bilder/neu/hero_video_neu.mp4",
+    "output": "public/media/hero-desktop-v3.mp4",
+    "bytes": 4680371,
+    "note": "New 14.72-second hero; 24 fps, muted; VP9 preferred and H.264 compatibility fallback"
+  },
+  {
+    "source": "C:/Users/royin/Documents/bonanza/bilder/neu/hero_video_neu.mp4",
+    "output": "public/media/hero-mobile-v3.webm",
+    "bytes": 1865331,
+    "note": "New 14.72-second hero; 24 fps, muted; VP9 preferred and H.264 compatibility fallback"
+  },
+  {
+    "source": "C:/Users/royin/Documents/bonanza/bilder/neu/hero_video_neu.mp4",
+    "output": "public/media/hero-mobile-v3.mp4",
+    "bytes": 1853587,
+    "note": "New 14.72-second hero; 24 fps, muted; VP9 preferred and H.264 compatibility fallback"
+  },
+  {
+    "source": "C:/Users/royin/Documents/bonanza/bilder/neu/hero_video_neu.mp4",
+    "output": "public/media/hero-poster-v3.webp",
+    "bytes": 126800,
+    "note": "New 14.72-second hero; 24 fps, muted; VP9 preferred and H.264 compatibility fallback"
+  },
+  {
+    "source": "C:/Users/royin/Documents/bonanza/bilder/neu/hero_video_neu.mp4",
+    "output": "public/media/hero-poster-mobile-v3.webp",
+    "bytes": 41286,
+    "note": "New 14.72-second hero; 24 fps, muted; VP9 preferred and H.264 compatibility fallback"
   }
 ]

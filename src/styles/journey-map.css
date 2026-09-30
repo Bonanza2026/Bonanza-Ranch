@@ -81,22 +81,22 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
 .jm-component {
   position: relative;
   height: max(115svh, 90vw);
-  background: #171b19;
-  color: #eee6d8;
+  background: #dde0de;
+  color: #19362d;
 }
 .jm-map-art {
   position: absolute;
   inset: 0;
   height: 100%;
   width: 100%;
-  background: #171b19;
+  background: #dde0de;
 }
 .jm-map-art::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(90deg, #171b19 0%, #171b19eb 18%, #171b194d 35%, transparent 48%);
+  background: linear-gradient(90deg, #dde0de 0%, #dde0deeb 18%, #dde0de4d 35%, transparent 48%);
 }
 .jm-world {
   display: block;
@@ -110,23 +110,23 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
   vector-effect: non-scaling-stroke;
 }
 .jm-route {
-  stroke: #ddc396;
+  stroke: #625a4c;
   stroke-width: 1.5;
 }
 .jm-route-guide {
-  stroke: #c3b699;
+  stroke: #59665f;
   stroke-width: 1;
   opacity: 0.3;
 }
 .jm-city,
 .jm-traveller {
-  fill: #eee6d8;
+  fill: #19362d;
 }
 .jm-city text {
   font: 600 24px var(--font-sans);
   letter-spacing: 1px;
   paint-order: stroke;
-  stroke: #171b19;
+  stroke: #f5f5f099;
   stroke-width: 2;
 }
 .jm-city .jm-region {
@@ -134,11 +134,11 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
   letter-spacing: 1.5px;
 }
 .jm-traveller {
-  fill: #f4d5a0;
+  fill: #19362d;
 }
 .jm-traveller-ring {
   fill: none;
-  stroke: #f4d5a077;
+  stroke: #19362d77;
   stroke-width: 1;
 }
 .jm-soft-edge {
@@ -165,11 +165,11 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
 }
 .jm-information .dream-label {
   font-size: 0.55rem;
-  color: #ddc396;
+  color: #625a4c;
   margin-bottom: 26px;
 }
 .dream-home .jm-information h3 {
-  color: #eee6d8;
+  color: #19362d;
   font-size: clamp(32px, 3.6vw, 58px);
   line-height: 1.08;
 }
@@ -178,14 +178,14 @@ body.flight-is-cloudy.flight-arrived nav { color: #fafaf8; }
   line-height: 1.65;
   max-width: 27ch;
   margin-top: 24px;
-  color: #d7d2c9;
+  color: #4f5c55;
 }
 .jm-credit {
   position: absolute;
   right: 4vw;
   bottom: 28px;
   font-size: 0.45rem;
-  color: #c5c4bc;
+  color: #4f5c55;
   z-index: 1;
 }
 .jm-credit a {

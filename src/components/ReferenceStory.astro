@@ -6,20 +6,20 @@ const en = lang === "en";
 const t = (de: string, english: string) => (en ? english : de);
 const e = "/bonanza/experiences/",
   c = "/bonanza/concepts/";
+const current = "/bonanza/current/";
+const photo = (name: string) => ({
+  src: current + name + ".webp",
+  srcset: current + name + "-640.webp 640w, " + current + name + "-960.webp 960w, " + current + name + ".webp 1672w",
+  sizes: "(min-width: 768px) 100vw, calc(100vw - 48px)",
+  width: 1672,
+  height: name === "buffalo" ? 940 : 941,
+});
 const images = [
-  "horse",
-  "giraffes",
-  "elephant",
-  "lake",
-  "kudu",
-  "safari-drive",
-  "mountain-lake",
-  "protea",
-  "bird",
-  "bush-trail",
-  "rhino",
-  "cheetahs",
-  "wildflowers",
+  current + "horses-960.webp", e + "giraffes.webp", current + "antelope-960.webp",
+  current + "water-960.webp", current + "oryx-960.webp", e + "safari-drive.webp",
+  current + "sunset-960.webp", current + "bird-960.webp", current + "cormorant-960.webp",
+  current + "trail-960.webp", current + "rhino-960.webp", current + "zebra-960.webp",
+  current + "buffalo-960.webp", current + "meerkat-960.webp",
 ];
 ---
 
@@ -33,9 +33,9 @@ const images = [
   <div class="worlds-stage">
     <div class="worlds-webgl" aria-hidden="true">
       <div class="worlds-fallback">
-        {["kudu", "giraffes", "elephant"].map((name) => (
+        {["cormorant", "zebra", "oryx"].map((name) => (
           <img
-            src={`${e}${name}.webp`}
+            src={`${current}${name}-960.webp`}
             alt=""
             width="1440"
             height="960"
@@ -46,7 +46,7 @@ const images = [
     </div>
     <div class="worlds-captions">
       <div class="worlds-caption">
-        <figure class="worlds-mobile-photo"><img src={`${e}kudu.webp`} alt={t("Kudu in der Wildnis", "Kudu in the wild")} width="1440" height="960" loading="lazy" decoding="async" /></figure>
+        <figure class="worlds-mobile-photo"><img src={`${current}cormorant.webp`} alt={t("Kormoran auf einem Ast", "Cormorant on a branch")} width="1440" height="960" loading="lazy" decoding="async" /></figure>
         <h3>
           {t("Natur erleben.", "Explore.")}{" "}
           <em>{t("Ganz privat.", "In private.")}</em>
@@ -59,7 +59,7 @@ const images = [
         </p>
       </div>
       <div class="worlds-caption">
-        <figure class="worlds-mobile-photo"><img src={`${e}giraffes.webp`} alt={t("Giraffen im Buschland", "Giraffes in the bush")} width="1440" height="960" loading="lazy" decoding="async" /></figure>
+        <figure class="worlds-mobile-photo"><img src={`${current}zebra.webp`} alt={t("Zebra im Buschland", "Zebra in the bush")} width="1440" height="960" loading="lazy" decoding="async" /></figure>
         <h3>
           {t("Beobachten.", "Watch.")}{" "}
           <em>{t("Zeit vergessen.", "Forget the time.")}</em>
@@ -72,7 +72,7 @@ const images = [
         </p>
       </div>
       <div class="worlds-caption">
-        <figure class="worlds-mobile-photo"><img src={`${e}elephant.webp`} alt={t("Elefant in Südafrika", "Elephant in South Africa")} width="1440" height="960" loading="lazy" decoding="async" /></figure>
+        <figure class="worlds-mobile-photo"><img src={`${current}oryx.webp`} alt={t("Oryx-Antilope in Südafrika", "Oryx antelope in South Africa")} width="1440" height="960" loading="lazy" decoding="async" /></figure>
         <h3>
           {t("Wildnis braucht", "Wildlife needs")}{" "}
           <em>{t("Freiraum.", "room to roam.")}</em>
@@ -98,13 +98,13 @@ const images = [
 >
   <div class="life-stage">
     <div class="life-track">
-      <article class="life-chapter life-intro" data-life-chapter>
+      <article class="life-chapter life-intro life-intro--landscape" data-life-chapter>
         <div class="life-card">
           <h2 class="life-card-title">{t("ERLEBNISSE", "EXPERIENCES")}</h2>
           <div class="life-card-picture">
             <StoryImage
-              src={`${e}horse.webp`}
-              alt={t("Pferd im hohen Gras", "Horse in tall grass")}
+              {...photo("horses")}
+              alt={t("Tiere auf unserer Weide", "Animals in our pasture")}
               position="50% 15%"
             />
             <h3>
@@ -120,7 +120,7 @@ const images = [
           </div>
         </div>
       </article>
-      <StoryChapter lead={t("Mit Ihrem", "With your")} title="RANGER" id="ranger">
+      <StoryChapter lead={t("Mit Ihrem", "With your")} title="RANGER" id="ranger" landscapePair>
         <p slot="copy">{t("Im 4×4-Jeep mit Ihrem Ranger den Spuren der Wildnis folgen. Anhalten, staunen, die Stille wirken lassen. Ein Erlebnis!", "Follow the tracks of wildlife in a 4×4 jeep with your ranger. Stop, take it in and listen to the stillness. What an experience!")}</p>
         <StoryImage
           src={`${e}safari-drive.webp`}
@@ -130,40 +130,40 @@ const images = [
           )}
         />
       </StoryChapter>
-      <StoryChapter lead={t("Südafrikas", "South Africa’s")} title={t("TIERWELT.", "WILDLIFE.")} id="tierwelt">
+      <StoryChapter lead={t("Südafrikas", "South Africa’s")} title={t("TIERWELT.", "WILDLIFE.")} id="tierwelt" landscapePair>
         <Fragment slot="copy">
           <p>{t("Majestätische Giraffen zwischen den Bäumen. Zebraherden in der weiten Ebene. Springböcke, die mit einem Satz die Stille durchbrechen. Bonanza ist Heimat einer reichen Tierwelt.", "Majestic giraffes among the trees. Herds of zebras on the open plains. Springbok breaking the stillness with a single leap. Bonanza is home to an abundance of wildlife.")}</p>
           <p>{t("Auch Kudus, Eland- und Oryx-Antilopen ziehen durch diese Landschaft. Wer sich Zeit nimmt, entdeckt immer mehr: ein leises Rascheln, ein Blick aus dem Busch, eine Herde am Horizont.", "Kudu, eland and oryx also roam this landscape. Take your time and more comes into view: a soft rustle, a watchful gaze from the bush, a herd on the horizon.")}</p>
         </Fragment>
-        <StoryImage src={`${e}giraffes.webp`} alt={t("Giraffen zwischen den Büschen der Klein Karoo", "Giraffes among the bushes of the Klein Karoo")} position="58% 50%" />
+        <StoryImage src={`${e}giraffes.webp`} alt={t("Giraffen zwischen den Büschen der Klein Karoo", "Giraffes among the bushes of the Klein Karoo")} position="58% 50%" aspect="square" />
+        <StoryImage {...photo("buffalo")} alt={t("Büffel am Wasser", "Buffalo at the water")} />
+        <StoryImage {...photo("antelope")} alt={t("Antilopen auf sandigem Boden", "Antelope on sandy ground")} />
+        <StoryImage {...photo("meerkat")} aspect="square" alt={t("Erdmännchen im warmen Licht", "Meerkat in warm light")} />
       </StoryChapter>
-      <StoryChapter lead={t("Ans", "By the")} title={t("WASSER", "WATER")} id="wasser">
+      <StoryChapter lead={t("Ans", "By the")} title={t("WASSER", "WATER")} id="wasser" landscapePair>
         <p slot="copy">{t("Glitzerndes Wasser, schattige Ufer, ein weiter Himmel. Unsere Vision: morgens auf Forellenbarsch (Largemouth Bass) angeln, im Kajak stille Buchten entdecken, mit dem Jetski die Freiheit spüren. Hier soll Wassersport so vielseitig werden wie Ihre Wünsche.", "Shimmering water, shady shores, an open sky. Our vision: mornings fishing for largemouth bass, quiet coves explored by kayak, the freedom of a jet ski. The water sports envisaged here leave room for every mood.")}</p>
-        <StoryImage src={`${e}lake.webp`} alt={t("See in weiter Berglandschaft", "Lake in open mountain scenery")} />
+        <StoryImage {...photo("water")} alt={t("See in weiter Berglandschaft", "Lake in open mountain scenery")} />
       </StoryChapter>
-      <StoryChapter lead={t("Draußen", "Out in the")} title={t("UNTERWEGS", "OPEN")} id="entdecken">
+      <StoryChapter lead={t("Draußen", "Out in the")} title={t("UNTERWEGS", "OPEN")} id="entdecken" landscapePair>
         <p slot="copy">{t("Durch wilden Busch wandern. Kleine Höhlen mit Felsmalereien der San entdecken. Auf ausgedehnten Bike-Touren mit Mountainbike oder Gravelbike den Wind im Gesicht spüren.", "Walk through untamed bush. Discover small caves with San rock paintings. Feel the wind on long mountain or gravel bike tours.")}</p>
-        <StoryImage src={`${e}bush-trail.webp`} alt={t("Wege durch die südafrikanische Landschaft", "Trails through South African countryside")} />
+        <StoryImage {...photo("trail")} alt={t("Wege durch die südafrikanische Landschaft", "Trails through South African countryside")} />
       </StoryChapter>
-      <StoryChapter lead={t("Lust auf", "Time for")} title={t("EIN MATCH?", "A MATCH?")} id="sport" imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
+      <StoryChapter lead={t("Lust auf", "Time for")} title={t("EIN MATCH?", "A MATCH?")} id="sport" landscapePair imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
         <Fragment slot="copy">
           <p>{t("Ein beherzter Aufschlag. Ein langer Ballwechsel. Danach auf die Terrasse, noch warm von der Sonne, den Abend vor sich. Padel, Tennis und Tischtennis für die Freude am Spiel.", "A confident serve. A long rally. Then a seat on the terrace, still warm from the sun, with the evening ahead. Padel, tennis and table tennis for the pleasure of the game.")}</p>
           <p>{t("Konzentration beim Bogenschießen. Ein gutes Auge beim Tontaubenschießen und auf der Shooting Range. Oder hinaus auf die weiten Fairways der Umgebung.", "Focus at the archery range. A keen eye for clay pigeons and target shooting. Or head out to the open fairways of the surrounding countryside.")}</p>
         </Fragment>
-        <StoryImage src={`${c}racket-concept.webp`} alt={t("Padel und Tennis, Konzeptbild", "Padel and tennis concept")} />
-        <StoryImage src={`${c}golf-concept.webp`} alt={t("Golfausflug, Symbolbild", "Golf outing, illustrative image")} />
-        <StoryImage src={`${c}tennis-court-concept.webp`} alt={t("Tennisplatz, Konzeptbild", "Tennis court concept")} />
+        <StoryImage {...photo("tennis")} aspect="square" alt={t("Tennisplatz, Konzeptbild", "Tennis court concept")} />
       </StoryChapter>
-      <StoryChapter lead={t("Lange", "Long")} title={t("ABENDE", "EVENINGS")} id="geniessen" imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
+      <StoryChapter lead={t("Lange", "Long")} title={t("ABENDE", "EVENINGS")} id="geniessen" landscapePair imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
         <p slot="copy">{t("Warmes Wasser auf der Haut. Wohlige Ruhe in Spa und Sauna. Später zieht der Duft von Holzfeuer durch die Abendluft. Ein vollmundiger Wein, ein liebevoll gedeckter Tisch, vertraute Gesichter. Am Boma-Feuer verweilen, bis über dem Sternen-Deck die Nacht aufzieht.", "Warm water on your skin. Deep relaxation in the spa and sauna. Later, the scent of a wood fire drifts through the evening air. A full-bodied wine, a beautifully laid table, familiar faces. Linger by the boma fire as night settles over the stargazing deck.")}</p>
         <StoryImage src={`${c}wellbeing-concept.webp`} alt={t("Wellnessbereich, Konzeptbild", "Wellness area concept")} />
         <StoryImage src={`${c}clubhouse-concept.webp`} alt={t("Clubhaus im Abendlicht, Konzeptbild", "Clubhouse at dusk, concept")} />
       </StoryChapter>
-      <StoryChapter lead={t("Butler &", "Butler &")} title={t("PRIVATKOCH", "PRIVATE CHEF")} id="service" imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
+      <StoryChapter lead={t("Butler &", "Butler &")} title={t("PRIVATKOCH", "PRIVATE CHEF")} id="service" landscapePair imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
         <p slot="copy">{t("Vom Flughafen direkt in die Ruhe der Ranch. Persönlich organisierte Airport-Transfers oder die Anreise per Helikopter lassen Sie entspannt ankommen. Ihr Butler kümmert sich um die kleinen Wünsche, Ihr Privatkoch um einen genussvollen Abend. Dazu ein charaktervoller Wein vom eigenen Weingut. Ihnen bleibt das Schönste: Zeit für Ihre Gäste.", "From the airport straight to the quiet of the ranch. Personally arranged airport transfers or arrival by helicopter make the journey effortless. Your butler attends to the little wishes, your private chef prepares an evening to savour. Add a characterful wine from our own vineyard. You have the best part: time for your guests.")}</p>
-        <StoryImage src={`${c}helipad-concept.webp`} alt={t("Helikopter-Anreise, Konzeptbild", "Helicopter arrival concept")} />
-        <StoryImage src={`${c}butler-dinner-concept.webp`} alt={t("Persönlicher Dinner-Service auf der Veranda, Konzeptbild", "Personal dinner service on the veranda, concept")} />
-        <StoryImage src={`${c}residence-concept.webp`} alt={t("Privater Rückzugsort, Konzeptbild", "Private retreat concept")} />
+        <StoryImage {...photo("helicopter")} alt={t("Helikopter auf dem Landeplatz", "Helicopter at the landing pad")} />
+        <StoryImage {...photo("vineyard")} alt={t("Mit Wein im Abendlicht anstoßen", "A toast with wine in the evening light")} />
       </StoryChapter>
       <StoryChapter lead={t("Privat.", "Private.")} title={t("TAG UND NACHT.", "DAY AND NIGHT.")} id="sicherheit" landscapePair imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
         <Fragment slot="copy">
@@ -175,8 +175,8 @@ const images = [
           </dl>
           <p>{t("Eigener Solarstrom, starke Speicher und eigene Wasserversorgung. Unabhängig leben. Dank schnellem Internet mit der Welt verbunden bleiben.", "Your own solar power, powerful battery storage and an independent water supply. Live independently. Stay connected through fast internet.")}</p>
         </Fragment>
-        <StoryImage src={`${c}security-camera-concept.webp`} alt={t("Kameratechnik, Konzeptbild", "Monitoring technology concept")} />
-        <StoryImage src={`${c}security-gate-concept.webp`} alt={t("Zugangskontrolle, Konzeptbild", "Access control concept")} />
+        <StoryImage {...photo("security-camera")} alt={t("Diskrete Kameratechnik am Gebäude", "Discreet monitoring camera on the building")} />
+        <StoryImage {...photo("security-gate")} alt={t("Kontrollierte Zufahrt zur Ranch", "Controlled entry to the ranch")} />
       </StoryChapter>
       <article class="life-chapter life-finale">
         <StoryImage
@@ -212,9 +212,9 @@ const images = [
   <div class="ring-stage">
     <div class="ring-webgl" aria-hidden="true">
       <div class="ring-fallback">
-        {images.map((name) => (
+        {images.map((src) => (
           <img
-            src={`${e}${name}.webp`}
+            src={src}
             alt=""
             width="1440"
             height="960"

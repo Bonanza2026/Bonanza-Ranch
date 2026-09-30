@@ -86,7 +86,7 @@
   }
   .dream-home .reserve-editorial-image {
     height: auto;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1;
   }
   .dream-home .reserve-areas {
     text-align: center;
@@ -183,7 +183,7 @@
   }
   .dream-home .life-card-picture > .story-photo {
     height: auto;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1672 / 941;
   }
   .dream-home .life-card-picture > .story-photo img {
     width: 100%;

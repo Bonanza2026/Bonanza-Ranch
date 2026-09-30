@@ -24,7 +24,7 @@ const onwardRoute = `M ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${geo
   data-journey-map
   aria-label={en ? "The journey to Bonanza" : "Die Reise nach Bonanza"}
 >
-  <header class="jm-heading" data-nav-theme="story">
+  <header class="jm-heading" data-nav-theme="light">
     <p class="jm-departure">
       {en ? "The departure" : "Der Aufbruch"}
       <span>{en ? "Europe · Asia" : "Europa · Asien"}</span>
@@ -42,7 +42,7 @@ const onwardRoute = `M ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${geo
       <span>Klein Karoo</span>
     </p>
   </header>
-  <div class="jm-component" data-nav-theme="light">
+  <div class="jm-component" data-nav-theme="story">
     <div class="jm-map-art" aria-hidden="true">
       <svg
         class="jm-world"
@@ -53,9 +53,9 @@ const onwardRoute = `M ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${geo
           <filter id="jm-relief-tone" color-interpolation-filters="sRGB">
             <feColorMatrix type="saturate" values="0" />
             <feComponentTransfer>
-              <feFuncR type="linear" slope=".44" intercept=".045" />
-              <feFuncG type="linear" slope=".45" intercept=".052" />
-              <feFuncB type="linear" slope=".43" intercept=".048" />
+              <feFuncR type="linear" slope=".72" intercept=".346" />
+              <feFuncG type="linear" slope=".67" intercept=".391" />
+              <feFuncB type="linear" slope=".63" intercept=".414" />
             </feComponentTransfer>
           </filter>
           <linearGradient id="jm-image-edge" x1="0" y1="0" x2="0" y2="1">

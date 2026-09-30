@@ -7,6 +7,12 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
     small = innerWidth < 768;
   const cleanups: Array<() => void> = [];
   let disposed = false;
+  if (document.documentElement.dataset.colorTheme === "cream") {
+    gsap.fromTo(root.querySelector(".wild-worlds"), { backgroundColor: "#f5eee9" }, {
+      backgroundColor: "#d8cab9", ease: "none",
+      scrollTrigger: { trigger: ".wild-worlds", start: "top 65%", end: "top top", scrub: true },
+    });
+  }
   // Desktop keeps the 3D galleries; phones use the photographic reading sequence.
   for (const [selector, mount] of small
     ? []
@@ -102,20 +108,15 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       scrollTrigger: opening,
     },
   );
-  gsap.fromTo(
-    ".reserve-editorial-image img",
-    { yPercent: -8 },
-    {
-      yPercent: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".reserve-editorial",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-    },
-  );
+  // Tengile useMediaParallax(0.12): scale 1.12, yPercent -6 → +6.
+  root.querySelectorAll<HTMLElement>(".reserve-editorial-image").forEach((frame) => {
+    const target = frame.querySelector<HTMLElement>("img")!;
+    gsap.fromTo(target, { scale: 1.12, yPercent: -6 }, {
+      scale: 1.12, yPercent: 6, ease: "none",
+      scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: true },
+    });
+  });
+  cleanups.push(() => document.body.classList.remove("photo-scene"));
   const film = root.querySelector<HTMLElement>(".life-film")!,
     track = root.querySelector<HTMLElement>(".life-track")!;
   const nightScene = root.querySelector<HTMLElement>(".life-finale")!;
@@ -132,6 +133,11 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       ".worlds-mobile-photo, .life-chapter:not(.life-finale) .story-photo",
     );
     photos.forEach((photo, index) => {
+      const image = photo.querySelector("img");
+      if (image) gsap.fromTo(image, { scale: 1.12, yPercent: -6 }, {
+        scale: 1.12, yPercent: 6, ease: "none",
+        scrollTrigger: { trigger: photo, start: "top bottom", end: "bottom top", scrub: true },
+      });
       gsap.fromTo(
         photo,
         { x: index % 2 ? 28 : -28, y: 36, autoAlpha: 0 },
@@ -151,7 +157,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
     });
     root
       .querySelectorAll<HTMLElement>(
-        ".worlds-caption h3, .life-chapter h3, .ring-title h2",
+        ".life-chapter h3, .ring-title h2",
       )
       .forEach((title) => {
         gsap.fromTo(
@@ -173,7 +179,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
   } else {
     const travel = () => track.scrollWidth - w();
     const measure = () => {
-      film.style.height = `${travel() + 2 * h()}px`;
+      film.style.height = `${travel() + 3 * h()}px`;
     };
     measure();
     ScrollTrigger.addEventListener("refreshInit", measure);
@@ -181,25 +187,24 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       ScrollTrigger.removeEventListener("refreshInit", measure);
       film.style.removeProperty("height");
     });
-    // Original expansive card: 480/1440 -> 1 over exactly one viewport of scroll.
+    // First the full-frame photograph covers the last 3D scene in normal flow.
+    // It then opens into the same image-left / copy-right composition as the chapters.
+    const inset = () => gsap.utils.clamp(96, 140, h() * 0.12);
+    ScrollTrigger.create({
+      trigger: film, start: "top -94%", end: "top -120%",
+      onToggle: (self) => document.body.classList.toggle("photo-scene", self.isActive),
+    });
     const expansion = gsap.timeline({
       defaults: { ease: "power1.inOut" },
       scrollTrigger: {
         trigger: film,
-        start: "top top",
-        end: "top -100%",
+        start: "top -100%",
+        end: "top -200%",
         scrub: true,
         invalidateOnRefresh: true,
       },
     });
     expansion
-      .fromTo(
-        ".life-card",
-        { y: () => -h(), yPercent: -50, scale: 480 / 1440 },
-        { y: 0, yPercent: -50, scale: 1, duration: 1, ease: "none" },
-        0,
-      )
-      .fromTo(".life-card", { scale: 480 / 1440 }, { scale: 1, duration: 1 }, 0)
       .fromTo(
         ".life-card-title",
         { opacity: 1 },
@@ -208,15 +213,15 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       )
       .fromTo(
         ".life-card-picture>.story-photo",
-        { x: () => w() * 0.205625, scale: 1.5 },
-        { x: 0, scale: 1, duration: 1 },
+        { left: 0, top: 0, width: () => w(), height: () => h(), x: 0, scale: 1 },
+        { left: () => w() * 0.05, top: inset, width: () => h() - 2 * inset(), height: () => h() - 2 * inset(), duration: 1 },
         0,
       )
       .fromTo(
         ".life-card-picture>h3,.life-card-picture>p",
         { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: "none" },
-        0.35,
+        { opacity: 1, duration: 0.28, ease: "none" },
+        0.72,
       );
     const slider = gsap.to(track, {
       x: () => -travel(),
@@ -224,7 +229,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       scrollTrigger: {
         id: "bonanza-life",
         trigger: film,
-        start: "top -100%",
+        start: "top -200%",
         end: "bottom bottom",
         scrub: true,
         invalidateOnRefresh: true,
@@ -238,14 +243,15 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       onToggle: self => setNightNavigation(self.isActive),
     });
     track.querySelectorAll<HTMLElement>(".story-photo").forEach((figure) => {
-      if (figure.closest(".life-intro, .life-editorial--landscape-pair"))
+      if (figure.closest(".life-intro"))
         return;
       const img = figure.querySelector("img")!;
       gsap.fromTo(
         img,
-        { xPercent: -100 / 6 },
+        { scale: 1.12, xPercent: -6 },
         {
-          xPercent: 0,
+          scale: 1.12,
+          xPercent: 6,
           ease: "none",
           scrollTrigger: {
             trigger: figure,

@@ -1,10 +1,24 @@
 /* One shared composition for every chapter in the horizontal story. */
 .life-film {
   --chapter-inset: clamp(96px, 12svh, 140px);
+  --chapter-photo-height: calc(100svh - 2 * var(--chapter-inset));
   --chapter-title: clamp(40px, min(3.2vw, 6.5svh), 64px);
   --chapter-body: clamp(18px, 1.5vw, 24px);
 }
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .dream-home .life-card {
+    height: 100svh;
+    aspect-ratio: auto;
+  }
+  html[data-color-theme] .dream-home .life-chapter.life-intro .life-card-title {
+    z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(64px, 10vw, 160px);
+    color: #fff;
+    text-shadow: 0 2px 24px #0007;
+    pointer-events: none;
+  }
   .dream-home .life-card-picture {
     width: 100vw;
     height: 100svh;
@@ -18,13 +32,23 @@
     height: calc(100svh - 2 * var(--chapter-inset));
     background: #000;
   }
-  .dream-home .life-card-picture > .story-photo img { width: 100%; object-fit: contain; }
+  .dream-home .life-card-picture > .story-photo img { width: 100%; object-fit: cover; }
+  .dream-home .life-intro--landscape .life-card-picture > .story-photo {
+    height: auto;
+    aspect-ratio: 1672 / 941;
+  }
   .dream-home .life-editorial.life-editorial--landscape-pair {
     width: auto;
     grid-template-columns: max-content 40.375vw;
   }
   .life-editorial--landscape-pair .chapter-media {
-    grid-auto-columns: calc((100svh - 2 * var(--chapter-inset)) * 16 / 9);
+    display: flex;
+    width: max-content;
+  }
+  .life-editorial--landscape-pair .chapter-media > .story-photo {
+    flex: 0 0 auto;
+    width: calc(var(--chapter-photo-height) * var(--photo-ratio, 1.77777778));
+    height: var(--chapter-photo-height);
   }
   .dream-home .life-card-picture h3 {
     top: var(--chapter-inset);
@@ -96,7 +120,8 @@
   overflow: hidden;
 }
 .chapter-media > .story-photo { width: 100%; height: 100%; min-width: 0; }
-.life-editorial--landscape-pair .story-photo img { width: 100%; object-fit: contain; }
+.chapter-media .story-photo img { width: 100%; }
+.life-editorial--landscape-pair .story-photo img { object-fit: cover; }
 .chapter-copy .security-facts { margin: 16px 0 20px; }
 .dream-home .life-editorial .chapter-copy .security-facts dd { margin-bottom: 0; }
 .chapter-copy .security-facts > div { padding: 12px 0; }
@@ -115,6 +140,7 @@
   width: 100%;
   height: 100%;
 }
+.dream-home .life-finale > .story-photo img { width: 100%; }
 .dream-home .life-finale::after {
   content: "";
   position: absolute;

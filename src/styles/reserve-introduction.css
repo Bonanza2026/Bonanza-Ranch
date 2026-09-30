@@ -85,12 +85,14 @@
 }
 .reserve-editorial-image {
   margin: 0;
-  height: 80svh;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
   overflow: hidden;
 }
 .reserve-editorial-image img {
   width: 100%;
-  height: 112%;
+  height: 100%;
   object-fit: cover;
 }
 .reserve-facts {
@@ -131,8 +133,8 @@
   letter-spacing: 0.01em;
 }
 .reserve-facts > p:last-child {
-  font: 400 18px/1.65 var(--font-sans);
-  max-width: 440px;
+  font: 400 clamp(18px, 1.3vw, 22px)/1.65 var(--font-sans);
+  max-width: 48ch;
 }
 @media (min-width: 1920px) {
   .reserve-introduction {
@@ -199,10 +201,14 @@
     gap: 35px;
   }
   .reserve-editorial-image {
-    height: 50svh;
+    height: auto;
     width: 100%;
+    margin: 0;
+    align-self: center;
+    aspect-ratio: 1;
   }
   .reserve-facts {
+    display: block;
     padding: 0;
     width: 100%;
   }

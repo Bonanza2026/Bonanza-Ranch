@@ -26,8 +26,13 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 const nativeScroll = new URLSearchParams(location.search).get("scroll") === "native";
 const lenis = new Lenis({
   autoRaf: false,
+  // Tengile's duration and exponential easing; driven by the shared GSAP clock.
+  duration: 1.2,
+  easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smoothWheel: !reduced.matches && !nativeScroll,
   syncTouch: false,
+  touchMultiplier: 2,
+  prevent: (element) => element.closest(".no-lenis") !== null,
 });
 lenis.on("scroll", ScrollTrigger.update);
 const tick = (t: number) => lenis.raf(t * 1000);

@@ -91,14 +91,17 @@ const e = "/bonanza/experiences/";
       </div>
       <figure class="reserve-editorial-image">
         <img
-          src={`${e}bush-trail.webp`}
+          src="/bonanza/current/mountains.webp"
+          srcset="/bonanza/current/mountains-640.webp 640w, /bonanza/current/mountains-960.webp 960w, /bonanza/current/mountains.webp 1672w"
+          sizes="(min-width: 768px) 50vw, calc(100vw - 48px)"
           alt={t(
-            "Ein Weg durch die Weite der Kapregion",
-            "A trail through the open Cape landscape",
+            "Weite Berglandschaft der Klein Karoo",
+            "Open mountain scenery in the Klein Karoo",
           )}
-          width="1440"
-          height="960"
+          width="1672"
+          height="941"
           loading="lazy"
+          decoding="async"
         />
       </figure>
     </div>

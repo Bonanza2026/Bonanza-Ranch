@@ -98,7 +98,7 @@ function stage(element: HTMLElement) {
         return;
       }
       const ratio = tex.image.width / tex.image.height,
-        target = 720 / 480;
+        target = 720 / (480 * 0.85);
       if (ratio > target) {
         tex.repeat.x = target / ratio;
         tex.offset.x = (1 - tex.repeat.x) / 2;
@@ -284,7 +284,8 @@ export function mountWildWorlds(root: HTMLElement) {
     captions.forEach((caption, index) => {
       const enter = clamp((textProgress - index + 0.1) / 0.1);
       const leave = index === 2 ? 0 : clamp((textProgress - index - 0.8) / 0.1);
-      const opacity = clamp((v - 2) / 0.2) * enter * (1 - leave);
+      const close = clamp((v - 4.7) / 0.3);
+      const opacity = clamp((v - 2) / 0.2) * enter * (1 - leave) * (1 - close);
       caption.style.opacity = String(opacity);
       caption.style.visibility = opacity > 0.001 ? "visible" : "hidden";
       caption.style.transform = `translateY(${24 * (1 - enter - leave)}px)`;
