@@ -3,7 +3,6 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CookieNotice from "../components/CookieNotice.astro";
 import ContactOptions from "../components/ContactOptions.astro";
-import heroFont from '../assets/Oswald-hero.woff2?inline';
 import { languagePages, siteUrl } from '../../site.config.mjs';
 import "../styles/reference.css";
 import "../styles/bonanza.css";
@@ -33,7 +32,6 @@ const isHome = ['/', '/de', '/en'].includes(pathname);
     <meta name="theme-color" content="#fafaf8" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {isHome && <style is:inline set:html={`@font-face{font-family:"Bonanza Hero";src:url("${heroFont}") format("woff2");font-style:normal;font-weight:400;font-display:swap}`} />}
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="de" href={siteUrl + pages.de} />
     <link rel="alternate" hreflang="en" href={siteUrl + pages.en} />
@@ -50,8 +48,8 @@ const isHome = ['/', '/de', '/en'].includes(pathname);
     <meta property="og:image:alt" content={lang === 'en' ? 'The landscape of Bonanza Ranch in South Africa' : 'Die Landschaft der Bonanza Ranch in Südafrika'} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="/bonanza/favicon.png" />
-    <link rel="preload" href="/fonts/InterTight-de-en.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/Oswald-de-en.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/PPFragment-GlareVariable.woff" as="font" type="font/woff" crossorigin />
     {isHome && <>
       <link rel="preload" href="/media/hero-poster-mobile-v3.webp" as="image" media="(max-width: 767px)" fetchpriority="high" />
       <link rel="preload" href="/media/hero-poster-v3.webp" as="image" media="(min-width: 768px)" fetchpriority="high" />

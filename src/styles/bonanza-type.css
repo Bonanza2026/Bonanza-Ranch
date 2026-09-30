@@ -1,32 +1,55 @@
 @font-face {
-  font-family: "Bonanza Serif";
-  src: url("/fonts/CormorantGaramond-Regular.woff2") format("woff2");
+  font-family: "PP Fragment";
+  src: url("/fonts/PPFragment-GlareVariable.woff") format("woff");
   font-style: normal;
-  font-weight: 300 500;
+  font-weight: 100 900;
   font-display: swap;
 }
 @font-face {
-  font-family: "Bonanza Serif";
-  src: url("/fonts/CormorantGaramond-Italic.woff2") format("woff2");
-  font-style: italic;
-  font-weight: 300 500;
+  font-family: "Inter";
+  src: url("/fonts/Inter-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
   font-display: swap;
 }
 :root {
-  --font-display: "Bonanza Serif", Georgia, serif;
+  --font-display: "PP Fragment", Georgia, serif;
+  --font-condensed: var(--font-display);
+  --font-serif: var(--font-display);
+  --font-sans: "Inter", Arial, sans-serif;
+}
+.dream-home h1, .dream-home h2, .dream-home h3,
+.dream-contact h2, .footer-component .t-title-italic {
+  font-family: var(--font-display);
+  font-weight: 220;
+  font-synthesis: none;
 }
 .dream-home h2,
 .dream-home h3 {
   letter-spacing: -0.025em;
-  font-family: var(--font-condensed) !important;
-  font-weight: 400;
+  font-family: var(--font-display) !important;
+  font-weight: 220;
 }
 .dream-home h2 em, .dream-home h3 em {
-  font-family: "Bonanza Serif", Georgia, serif !important;
-  font-style: italic;
+  font-family: var(--font-display) !important;
+  font-style: normal;
+  font-weight: inherit;
 }
-.ring-title em {
-  font-style: italic;
+.dream-home em, .dream-contact em, .footer-component .t-title-italic {
+  font-style: normal;
+}
+.dream-home .flight-opening h1 { font-family: var(--font-display); font-size: 10.8vw; font-weight: 220; }
+.dream-home .flight-arrival-line { font-style: normal; font-weight: 220; }
+.footer-component .bonanza-footer-word { font-size: 10.8vw; font-weight: 220; }
+@media (min-width: 768px) {
+  body nav .nav-right .btn-cta { width: max-content; padding-inline: 20px; }
 }
 .reserve-editorial h2 em {
   line-height: 1.2;

@@ -2,6 +2,12 @@
   display: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .dream-home .worlds-visuals { display: none; }
+  .dream-home .worlds-mobile-photo { display: block; margin-bottom: 32px; }
+  .dream-home .worlds-mobile-photo img { width: 100%; height: auto; }
+}
+
 @media (max-width: 767px) {
   .dream-home {
     --mobile-gutter: 24px;
@@ -35,7 +41,7 @@
     width: max(255vw, calc(var(--flight-height, 100lvh) * 1.7));
   }
   .dream-home .flight-opening h1 {
-    font-size: clamp(54px, min(22vw, calc(var(--flight-opening-height, 100svh) * .12)), 148px);
+    font-size: clamp(44px, min(17.5vw, calc(var(--flight-opening-height, 100svh) * .12)), 148px);
     text-align: center;
   }
   .dream-home .flight-opening-line {
@@ -100,19 +106,12 @@
     height: auto;
     padding: 0 var(--mobile-gutter);
   }
-  .dream-home .worlds-intro {
-    height: auto;
-    padding: 0 0 40px;
-  }
-  .dream-home .worlds-heading {
-    font-size: 44px;
-  }
   .dream-home .worlds-stage {
     position: static;
     height: auto;
     overflow: visible;
   }
-  .dream-home .worlds-webgl {
+  .dream-home .worlds-visuals {
     display: none;
   }
   .dream-home .worlds-captions {
@@ -129,14 +128,14 @@
   .dream-home .worlds-mobile-photo {
     display: block;
     margin: 0 0 var(--mobile-image-copy-gap);
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1672 / 941;
     overflow: hidden;
   }
   .worlds-mobile-photo img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
   .dream-home .worlds-caption h3 {
     font-size: 36px;

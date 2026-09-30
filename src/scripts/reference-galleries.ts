@@ -9,18 +9,15 @@ import {
   Mesh,
   PlaneGeometry,
   MeshBasicMaterial,
-  ShaderMaterial,
   DoubleSide,
   Group,
 } from "three";
 import { Flow } from "three/addons/modifiers/CurveModifier.js";
 import { gsap } from "gsap";
 
-// Source: Sobha's three-worlds-webgl / carousel-webgl. Camera coordinates, plane
-// geometry, radius, offsets and easing are retained; only the content changes.
+// Closing ring adapted from Sobha's carousel-webgl camera and curve geometry.
 const clamp = (v: number) => Math.max(0, Math.min(1, v));
 const mix = (a: number, b: number, p: number) => a + (b - a) * p;
-const quad = (p: number) => (p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2);
 class GalleryCircle extends Curve<Vector3> {
   getPoint(t: number, target = new Vector3()) {
     return target.set(
@@ -184,125 +181,6 @@ function stage(element: HTMLElement) {
       renderer.domElement.remove();
       element.classList.remove("webgl-ready");
     },
-  };
-}
-export function mountWildWorlds(root: HTMLElement) {
-  const canvas = root.querySelector<HTMLElement>(".worlds-webgl")!;
-  const app = stage(canvas);
-  if (!app) return () => {};
-  const small = innerWidth < 768;
-  const sources = Array.from(
-    root.querySelectorAll<HTMLImageElement>(".worlds-fallback img"),
-  ).map((img) => img.getAttribute("src")!);
-  const cards = sources.map((url, i) =>
-    app.card(url, i * (small ? 0.056 : 0.065) + (small ? 0.18025 : 0.16225)),
-  );
-  cards.forEach((card) => app.scene.add(card.object3D));
-  app.camera.rotation.set(-Math.PI, 0, 0);
-  const intro = root.querySelector<HTMLElement>(".worlds-intro")!;
-  const captions = Array.from(
-    root.querySelectorAll<HTMLElement>(".worlds-caption"),
-  );
-  // Source module 314: two flat shader planes take over from the curved cards.
-  const wipes = sources
-    .slice(0, -1)
-    .map((url, index) => {
-      const map = app.texture(url);
-      const material = new ShaderMaterial({
-        uniforms: {
-          map: { value: map },
-          uProgress: { value: 0 },
-          uvScale: { value: map.repeat },
-          uvOffset: { value: map.offset },
-        },
-        vertexShader: `varying vec2 vUv; varying float vClip; uniform vec2 uvScale; uniform vec2 uvOffset;
-        void main(){vUv=uv*uvScale+uvOffset;vClip=uv.y;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
-        fragmentShader: `uniform sampler2D map; uniform float uProgress; varying vec2 vUv; varying float vClip;
-        void main(){if(uProgress<vClip)discard;gl_FragColor=texture2D(map,vUv);
-        #include <tonemapping_fragment>
-        #include <colorspace_fragment>
-        }`,
-        side: DoubleSide,
-      });
-      const mesh = new Mesh(
-        new PlaneGeometry(5, (480 / 720) * 0.85 * 5, 10, 1),
-        material,
-      );
-      mesh.position.z = 0.01 * index - 15.02;
-      mesh.scale.y = -1;
-      mesh.visible = false;
-      app.scene.add(mesh);
-      return mesh;
-    })
-    .reverse();
-  let lastRotation = 0;
-  app.render(() => {
-    const h = canvas.clientHeight,
-      w = canvas.clientWidth,
-      v = -(root.getBoundingClientRect().top + intro.offsetHeight) / h;
-    const rotate = 1 - (1 - clamp((v + 1) / 2)) ** 2;
-    cards.forEach((card) =>
-      card.moveAlongCurve(-0.25 * (rotate - lastRotation)),
-    );
-    lastRotation = rotate;
-    const zoom = clamp(v - 1),
-      q = quad(zoom),
-      z = quad(zoom * zoom);
-    // Exact Sobha camera endpoints and half-height clipping, ported to native Three.
-    app.camera.position.set(
-      0,
-      mix(0, small ? 1.25 : 0.9, q),
-      mix(-22, -57.4, z),
-    );
-    app.camera.setFocalLength(mix(22.56276459333814, 300, z));
-    app.camera.setViewOffset(
-      w,
-      h,
-      0,
-      (1 - q) * h * (small ? -0.05 : -0.15),
-      w,
-      h,
-    );
-    const entrance = small ? 0 : -25 * (1 - clamp((v + 0.5) / 0.5) ** 2);
-    canvas.style.transform = `translateY(${entrance}svh)`;
-    canvas.style.clipPath = `inset(0% 0% ${50 * q}% 0%)`;
-    // The title has its own lead-in above the stage; photographs never cover it.
-    const imageProgress = clamp((v - 2.5) / 1.5);
-    const minimum = small ? 0.05 : 0.15;
-    const maximum = small
-      ? 0.95
-      : 1 + minimum - Math.abs(h / w / 2 / ((480 / 720) * 0.85) - 1) + 0.1;
-    wipes.forEach((mesh, index) => {
-      mesh.visible = v > 2.5;
-      mesh.material.uniforms.uProgress.value = mix(
-        minimum,
-        maximum,
-        clamp(imageProgress * 2 - index),
-      );
-    });
-    const textProgress = clamp((v - 2) / 1.5) * 2;
-    captions.forEach((caption, index) => {
-      const enter = clamp((textProgress - index + 0.1) / 0.1);
-      const leave = index === 2 ? 0 : clamp((textProgress - index - 0.8) / 0.1);
-      const close = clamp((v - 4.7) / 0.3);
-      const opacity = clamp((v - 2) / 0.2) * enter * (1 - leave) * (1 - close);
-      caption.style.opacity = String(opacity);
-      caption.style.visibility = opacity > 0.001 ? "visible" : "hidden";
-      caption.style.transform = `translateY(${24 * (1 - enter - leave)}px)`;
-      caption.setAttribute(
-        "aria-hidden",
-        String(Math.floor(textProgress + 0.1) !== index),
-      );
-    });
-  });
-  return () => {
-    app.dispose();
-    canvas.style.removeProperty("transform");
-    canvas.style.removeProperty("clip-path");
-    captions.forEach((caption) => {
-      caption.removeAttribute("style");
-      caption.removeAttribute("aria-hidden");
-    });
   };
 }
 export function mountImageRing(root: HTMLElement) {

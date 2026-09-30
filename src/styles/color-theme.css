@@ -1,8 +1,9 @@
 /* Coffee-cream study. ?theme=dark keeps the previous black photographic story. */
 html[data-color-theme="cream"] {
   --story-paper: #f5eee9;
-  --story-ink: #332b24;
-  --story-muted: #625446;
+  --story-ink: #1e211c;
+  --story-green: #5c6e21;
+  --story-muted: #64675f;
   --dream-paper: var(--story-paper);
   background: var(--story-paper);
 }
@@ -31,9 +32,12 @@ html[data-color-theme="cream"] .jm-heading::before {
 html[data-color-theme="cream"] body.flight-is-cloudy.flight-arrived nav {
   color: #fafaf8;
 }
-html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .life-chapter:not(.life-finale)) :is(h2, h3, p, dd),
-html[data-color-theme="cream"] .dream-home .life-card-title {
+html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .life-chapter:not(.life-finale)) :is(p, dd) {
   color: var(--story-ink);
+}
+html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .life-chapter:not(.life-finale)) :is(h2, h3),
+html[data-color-theme="cream"] .dream-home .life-card-title {
+  color: var(--story-green);
 }
 html[data-color-theme="cream"] .dream-home :is(.chapter-media, .life-card-picture) .story-photo,
 html[data-color-theme="cream"] .dream-home .life-card-picture > .story-photo img {
@@ -45,16 +49,14 @@ html[data-color-theme="cream"] :is(.reserve-area small span, .chapter-image-note
 html[data-color-theme="cream"] :is(.reserve-areas, .security-facts > div) {
   border-color: #332b2433;
 }
-html[data-color-theme="cream"] :is(.bonanza-footer-word, .footer-credit a) {
+html[data-color-theme="cream"] .bonanza-footer-word { color: var(--story-green); }
+html[data-color-theme="cream"] .footer-credit a {
   color: var(--story-ink);
 }
 html[data-color-theme="cream"] body[data-nav-theme="story"] nav {
   color: var(--story-ink);
 }
 html[data-color-theme="cream"] body.night-scene nav {
-  color: #fafaf8;
-}
-html[data-color-theme="cream"] body.photo-scene nav {
   color: #fafaf8;
 }
 html[data-color-theme="cream"] :is(.cookie-notice, .contact-options) {

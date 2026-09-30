@@ -7,17 +7,10 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
     small = innerWidth < 768;
   const cleanups: Array<() => void> = [];
   let disposed = false;
-  if (document.documentElement.dataset.colorTheme === "cream") {
-    gsap.fromTo(root.querySelector(".wild-worlds"), { backgroundColor: "#f5eee9" }, {
-      backgroundColor: "#d8cab9", ease: "none",
-      scrollTrigger: { trigger: ".wild-worlds", start: "top 65%", end: "top top", scrub: true },
-    });
-  }
-  // Desktop keeps the 3D galleries; phones use the photographic reading sequence.
+  // Only the closing ring uses WebGL; the three wildlife photographs stay flat.
   for (const [selector, mount] of small
     ? []
     : ([
-        [".wild-worlds", "mountWildWorlds"],
         [".bonanza-ring", "mountImageRing"],
       ] as const)) {
     const section = root.querySelector<HTMLElement>(selector)!;
@@ -49,6 +42,41 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
         : section,
     );
     cleanups.push(() => observer.disconnect());
+  }
+  if (!small) {
+    const worlds = root.querySelector<HTMLElement>(".wild-worlds")!;
+    const photos = Array.from(worlds.querySelectorAll<HTMLElement>(".worlds-photo"));
+    const captions = Array.from(worlds.querySelectorAll<HTMLElement>(".worlds-caption"));
+    gsap.set(photos.slice(1), { clipPath: "inset(100% 0% 0% 0%)" });
+    gsap.set(captions, { autoAlpha: 0 });
+    const sequence = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: { trigger: worlds, start: "top top", end: "bottom bottom", scrub: true, invalidateOnRefresh: true },
+    });
+    sequence
+      .fromTo(photos[0], { scale: 0.65, y: () => h() * 0.24 }, { scale: 1, y: 0, duration: 1, ease: "power1.inOut" }, 0)
+      .to(captions[0], { autoAlpha: 1, duration: 0.25 }, 0.85);
+    for (let index = 1; index < photos.length; index++) {
+      const at = index === 1 ? 1.55 : 2.7;
+      sequence
+        .to(photos[index], { clipPath: "inset(0% 0% 0% 0%)", duration: 0.65, ease: "power1.inOut" }, at)
+        .to(captions[index - 1], { autoAlpha: 0, duration: 0.2 }, at)
+        .to(captions[index], { autoAlpha: 1, duration: 0.25 }, at + 0.45);
+    }
+    sequence
+      .to(captions[2], { autoAlpha: 0, duration: 0.25 }, 4.1)
+      .to({}, { duration: 0.85 }, 4.35);
+    // Decode all three before the zoom so a slow connection cannot stall a wipe.
+    const prepare = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      prepare.disconnect();
+      worlds.querySelectorAll<HTMLImageElement>(".worlds-photo img").forEach(image => {
+        image.loading = "eager";
+        void image.decode().catch(() => {});
+      });
+    }, { rootMargin: "1200px" });
+    prepare.observe(worlds);
+    cleanups.push(() => prepare.disconnect());
   }
   // Sobha landingLuxuryTitle / MoveSide / ScaleCenter and ScaleSide patterns.
   const intro = root.querySelector<HTMLElement>(".reserve-introduction")!;
@@ -116,7 +144,6 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: true },
     });
   });
-  cleanups.push(() => document.body.classList.remove("photo-scene"));
   const film = root.querySelector<HTMLElement>(".life-film")!,
     track = root.querySelector<HTMLElement>(".life-track")!;
   const nightScene = root.querySelector<HTMLElement>(".life-finale")!;
@@ -179,7 +206,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
   } else {
     const travel = () => track.scrollWidth - w();
     const measure = () => {
-      film.style.height = `${travel() + 3 * h()}px`;
+      film.style.height = `${travel() + 2 * h()}px`;
     };
     measure();
     ScrollTrigger.addEventListener("refreshInit", measure);
@@ -187,24 +214,24 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       ScrollTrigger.removeEventListener("refreshInit", measure);
       film.style.removeProperty("height");
     });
-    // First the full-frame photograph covers the last 3D scene in normal flow.
-    // It then opens into the same image-left / copy-right composition as the chapters.
-    const inset = () => gsap.utils.clamp(96, 140, h() * 0.12);
-    ScrollTrigger.create({
-      trigger: film, start: "top -94%", end: "top -120%",
-      onToggle: (self) => document.body.classList.toggle("photo-scene", self.isActive),
-    });
+    // The original card rises from below and opens into the horizontal chapters.
     const expansion = gsap.timeline({
       defaults: { ease: "power1.inOut" },
       scrollTrigger: {
         trigger: film,
-        start: "top -100%",
-        end: "top -200%",
+        start: "top top",
+        end: "top -100%",
         scrub: true,
         invalidateOnRefresh: true,
       },
     });
     expansion
+      .fromTo(
+        ".life-card",
+        { y: () => -h(), yPercent: -50, scale: 480 / 1440 },
+        { y: 0, yPercent: -50, scale: 1, duration: 1, ease: "none" },
+        0,
+      )
       .fromTo(
         ".life-card-title",
         { opacity: 1 },
@@ -213,15 +240,15 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       )
       .fromTo(
         ".life-card-picture>.story-photo",
-        { left: 0, top: 0, width: () => w(), height: () => h(), x: 0, scale: 1 },
-        { left: () => w() * 0.05, top: inset, width: () => h() - 2 * inset(), height: () => h() - 2 * inset(), duration: 1 },
+        { x: () => w() * 0.205625, scale: 1.25 },
+        { x: 0, scale: 1, duration: 1, ease: "none" },
         0,
       )
       .fromTo(
         ".life-card-picture>h3,.life-card-picture>p",
         { opacity: 0 },
-        { opacity: 1, duration: 0.28, ease: "none" },
-        0.72,
+        { opacity: 1, duration: 0.15, ease: "none" },
+        0.85,
       );
     const slider = gsap.to(track, {
       x: () => -travel(),
@@ -229,7 +256,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       scrollTrigger: {
         id: "bonanza-life",
         trigger: film,
-        start: "top -200%",
+        start: "top -100%",
         end: "bottom bottom",
         scrub: true,
         invalidateOnRefresh: true,

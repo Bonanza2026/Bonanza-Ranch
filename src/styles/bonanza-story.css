@@ -39,19 +39,12 @@ html[lang="en"] .flight-arrival-word {
   font-weight: 400;
 }
 .wild-worlds {
-  --worlds-leadin: clamp(240px, 40svh, 440px);
-  height: calc(600svh + var(--worlds-leadin));
+  height: 620svh;
   margin-top: -1px;
   position: relative;
   z-index: 3;
   background: #000;
   color: #f5f3ed;
-}
-.worlds-intro {
-  height: var(--worlds-leadin);
-  display: grid;
-  place-items: center;
-  padding: 40px 20px;
 }
 .worlds-stage {
   position: sticky;
@@ -59,36 +52,30 @@ html[lang="en"] .flight-arrival-word {
   height: 100svh;
   overflow: hidden;
 }
-.worlds-webgl {
+.worlds-visuals {
+  position: absolute;
+  inset: 7svh 0 auto;
+  height: 46svh;
+}
+.worlds-photo {
   position: absolute;
   inset: 0;
-  height: 100svh;
+  margin: 0;
+  background: inherit;
+  transform-origin: center;
+  will-change: transform, clip-path;
 }
-.worlds-webgl canvas,
+.worlds-photo:not(:first-child) { clip-path: inset(100% 0% 0% 0%); }
+.worlds-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 .ring-webgl canvas {
   display: block;
   width: 100%;
   height: 100%;
-}
-.worlds-heading {
-  font-size: clamp(44px, 4.5vw, 72px);
-  position: relative;
-  width: 100%;
-  text-align: center;
-  pointer-events: none;
-  z-index: 2;
-  line-height: 1.12;
-}
-.worlds-heading em,
-.worlds-heading > span {
-  display: block;
-}
-.worlds-heading em {
-  font-size: 0.85em;
-  line-height: 1.25;
-}
-.worlds-heading > span {
-  padding-bottom: 8px;
 }
 .worlds-captions {
   position: absolute;
@@ -109,30 +96,18 @@ html[lang="en"] .flight-arrival-word {
   opacity: 0;
 }
 .dream-home .worlds-caption h3 {
-  font: 400 clamp(34px, 3.7vw, 62px) / 1.08 var(--font-display);
+  font: 220 clamp(32px, min(3.2vw, 5.8svh), 56px) / 1.1 var(--font-display);
   letter-spacing: -0.02em !important;
 }
 .worlds-caption h3 em {
   display: block;
 }
 .worlds-caption p {
-  font: 400 17px/1.65 var(--font-sans);
-  max-width: 440px;
-  margin-top: 24px;
+  font: 400 clamp(17px, 1.3vw, 22px)/1.6 var(--font-sans);
+  max-width: 54ch;
+  margin-top: 20px;
   color: #c7c7c2;
 }
-.worlds-fallback {
-  position: absolute;
-  inset: 32% 0 6%;
-  display: flex;
-  gap: 3vw;
-  justify-content: center;
-}
-.worlds-fallback img {
-  width: 45vw;
-  object-fit: cover;
-}
-.webgl-ready > .worlds-fallback,
 .webgl-ready > .ring-fallback {
   visibility: hidden;
 }
@@ -749,15 +724,6 @@ html[lang="en"] .flight-arrival-word {
     --gallery-h1: 36px;
     --gallery-script-size: 36px;
   }
-  .wild-worlds {
-    height: calc(600svh + var(--worlds-leadin));
-  }
-  .worlds-heading {
-    font-size: 12vw;
-  }
-  .worlds-heading > span {
-    font-size: inherit;
-  }
   .life-film {
     margin-top: 0;
     padding-top: 0;
@@ -1004,24 +970,9 @@ html[lang="en"] .flight-arrival-word {
     position: relative;
     overflow: visible;
   }
-  .worlds-heading {
-    position: relative;
-    top: auto;
-    font-size: 48px;
-    margin-bottom: 40px;
-  }
-  .worlds-webgl {
-    position: relative;
-    height: auto;
-  }
-  .worlds-fallback {
-    position: static;
-    display: grid;
-  }
-  .worlds-fallback img {
-    width: 100%;
-    height: 50svh;
-  }
+  .worlds-visuals { display: none; }
+  .worlds-mobile-photo { display: block; margin-bottom: 32px; }
+  .worlds-mobile-photo img { width: 100%; height: auto; }
   .worlds-captions {
     position: relative;
     inset: auto;

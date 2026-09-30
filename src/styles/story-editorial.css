@@ -6,23 +6,17 @@
   --chapter-body: clamp(18px, 1.5vw, 24px);
 }
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-  .dream-home .life-card {
-    height: 100svh;
-    aspect-ratio: auto;
-  }
   html[data-color-theme] .dream-home .life-chapter.life-intro .life-card-title {
     z-index: 2;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: clamp(64px, 10vw, 160px);
-    color: #fff;
-    text-shadow: 0 2px 24px #0007;
+    top: 60px;
+    font-size: clamp(60px, 9vw, 144px);
     pointer-events: none;
   }
   .dream-home .life-card-picture {
     width: 100vw;
     height: 100svh;
     aspect-ratio: auto;
+    flex: none;
   }
   .dream-home .life-card-picture > .story-photo {
     position: absolute;

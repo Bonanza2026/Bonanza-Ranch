@@ -24,29 +24,23 @@ const images = [
 ---
 
 <section class="wild-worlds" id="wildnis" data-nav-theme="story">
-  <header class="worlds-intro">
-    <h2 class="worlds-heading">
-      <span>{t("Wildnis.", "Wilderness.")}</span>
-      <em>{t("Ganz nah.", "Up close.")}</em>
-    </h2>
-  </header>
   <div class="worlds-stage">
-    <div class="worlds-webgl" aria-hidden="true">
-      <div class="worlds-fallback">
-        {["cormorant", "zebra", "oryx"].map((name) => (
+    <div class="worlds-visuals" aria-hidden="true">
+        {["oryx", "zebra", "cormorant"].map((name) => (
+          <figure class="worlds-photo">
           <img
-            src={`${current}${name}-960.webp`}
+            {...photo(name)}
+            sizes="(min-width: 768px) 90vw, 100vw"
             alt=""
-            width="1440"
-            height="960"
             loading="lazy"
+            decoding="async"
           />
+          </figure>
         ))}
-      </div>
     </div>
     <div class="worlds-captions">
       <div class="worlds-caption">
-        <figure class="worlds-mobile-photo"><img src={`${current}cormorant.webp`} alt={t("Kormoran auf einem Ast", "Cormorant on a branch")} width="1440" height="960" loading="lazy" decoding="async" /></figure>
+        <figure class="worlds-mobile-photo"><img {...photo("oryx")} alt={t("Oryx-Antilope in Südafrika", "Oryx antelope in South Africa")} loading="lazy" decoding="async" /></figure>
         <h3>
           {t("Natur erleben.", "Explore.")}{" "}
           <em>{t("Ganz privat.", "In private.")}</em>
@@ -59,7 +53,7 @@ const images = [
         </p>
       </div>
       <div class="worlds-caption">
-        <figure class="worlds-mobile-photo"><img src={`${current}zebra.webp`} alt={t("Zebra im Buschland", "Zebra in the bush")} width="1440" height="960" loading="lazy" decoding="async" /></figure>
+        <figure class="worlds-mobile-photo"><img {...photo("zebra")} alt={t("Zebra im Buschland", "Zebra in the bush")} loading="lazy" decoding="async" /></figure>
         <h3>
           {t("Beobachten.", "Watch.")}{" "}
           <em>{t("Zeit vergessen.", "Forget the time.")}</em>
@@ -72,7 +66,7 @@ const images = [
         </p>
       </div>
       <div class="worlds-caption">
-        <figure class="worlds-mobile-photo"><img src={`${current}oryx.webp`} alt={t("Oryx-Antilope in Südafrika", "Oryx antelope in South Africa")} width="1440" height="960" loading="lazy" decoding="async" /></figure>
+        <figure class="worlds-mobile-photo"><img {...photo("cormorant")} alt={t("Kormoran auf einem Ast", "Cormorant on a branch")} loading="lazy" decoding="async" /></figure>
         <h3>
           {t("Wildnis braucht", "Wildlife needs")}{" "}
           <em>{t("Freiraum.", "room to roam.")}</em>

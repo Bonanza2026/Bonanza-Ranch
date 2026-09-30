@@ -20,7 +20,7 @@ body{font-weight:400;background:var(--dream-paper)}
 .dream-film-button{border:1px solid #ffffff55;background:transparent;color:inherit;padding:1rem 1.5rem;display:flex;align-items:center;gap:3rem;font:400 .8rem var(--font-sans);cursor:pointer;transition:background .3s}
 .dream-film-button:hover{background:#ffffff22}
 .dream-film-button span{font-size:1.2rem}
-.flight-opening h1{font-family:"Bonanza Hero",var(--font-condensed);font-size:14.5vw;line-height:1.15;letter-spacing:-.035em;white-space:nowrap;text-align:center}
+.flight-opening h1{font-family:var(--font-display);font-size:10.8vw;line-height:1.15;letter-spacing:-.035em;white-space:nowrap;text-align:center}
 .flight-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:1.4rem;font-size:.64rem;letter-spacing:.13em}
 .flight-bottom a{display:flex;align-items:center;gap:2rem;letter-spacing:.04em;font-size:.75rem}
 .flight-bottom a span{font-size:1.6rem}
