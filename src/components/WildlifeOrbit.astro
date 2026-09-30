@@ -3,7 +3,7 @@ const { lang = "de" } = Astro.props;
 const t = (de: string, en: string) => lang === "en" ? en : de;
 const images = ["rhino", "bird", "water", "zebra", "sunset", "oryx", "horses", "buffalo"];
 ---
-<section class="wildlife-orbit" id="augenblicke" data-nav-theme="light" aria-label={t("Augenblicke auf Bonanza", "Moments at Bonanza")}>
+<section class="wildlife-orbit" id="augenblicke" data-nav-theme="story" aria-label={t("Augenblicke auf Bonanza", "Moments at Bonanza")}>
   <div class="wildlife-orbit-stage">
     <div class="wildlife-orbit-images" aria-hidden="true">
       {images.map((name, index) => (

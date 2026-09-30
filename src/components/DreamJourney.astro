@@ -89,15 +89,20 @@ const en = lang === "en";
         <span class="flight-thought-rule"></span>
       </div>
       <div class="flight-arrival" aria-hidden="true">
+        <img
+          class="flight-arrival-landscape"
+          src="/bonanza/current/sunset.webp"
+          srcset="/bonanza/current/sunset-640.webp 640w, /bonanza/current/sunset-960.webp 960w, /bonanza/current/sunset.webp 1672w"
+          sizes="(max-width: 767px) 150vw, 100vw"
+          width="1672"
+          height="941"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          fetchpriority="low"
+        />
+        <div class="flight-arrival-shade"></div>
         <div class="flight-arrival-copy">
-          <svg class="arrival-flag" viewBox="0 0 90 60" aria-hidden="true">
-            <path fill="#e03c31" d="M0 0h90v30H0z" />
-            <path fill="#001489" d="M0 30h90v30H0z" />
-            <path fill="#fff" d="M0 0l40 22h50v16H40L0 60z" />
-            <path fill="#007749" d="M0 5l39 22h51v6H39L0 55z" />
-            <path fill="#ffb81c" d="M0 6l36 24L0 54z" />
-            <path fill="#000" d="M0 12l27 18L0 48z" />
-          </svg>
           <p class="flight-arrival-word">{en ? "SOUTH AFRICA" : "SÜDAFRIKA"}</p>
           <p class="flight-arrival-line">
             {en

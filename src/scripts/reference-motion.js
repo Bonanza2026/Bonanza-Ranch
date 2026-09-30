@@ -206,12 +206,22 @@ export function createHeaderMotion({gsap,ScrollTrigger,lenis,isMenuOpen=()=>fals
   };
   lenis.on('scroll',onScroll);
   const themes=[];
+  const syncThemes=()=>{
+    for(const attribute of ['data-nav-theme','data-alt-nav']){
+      const active=themes.filter(entry=>entry.attribute===attribute&&window.scrollY>=entry.trigger.start&&window.scrollY<entry.trigger.end).sort((a,b)=>b.trigger.start-a.trigger.start)[0];
+      if(active)document.body.setAttribute(attribute,active.theme);
+      else document.body.removeAttribute(attribute);
+    }
+  };
   document.body.removeAttribute('data-nav-theme');document.body.removeAttribute('data-alt-nav');
   for(const section of scope.querySelectorAll('[data-nav-theme]:not(body)')){
     const theme=section.getAttribute('data-nav-theme');
     for(const [attribute,start,end] of [['data-nav-theme','clamp(top 40px)','bottom 40px'],['data-alt-nav','top+=40px bottom','bottom bottom+=40px']]){
-      themes.push(ScrollTrigger.create({trigger:section,start,end,onEnter:()=>document.body.setAttribute(attribute,theme),onEnterBack:()=>document.body.setAttribute(attribute,theme),onLeave:()=>document.body.removeAttribute(attribute),onLeaveBack:()=>document.body.removeAttribute(attribute)}));
+      themes.push({attribute,theme,trigger:ScrollTrigger.create({trigger:section,start,end,onToggle:syncThemes})});
     }
   }
-  return()=>{lenis.off('scroll',onScroll);timeline.revert();themes.forEach(t=>t.kill());context.revert();document.body.removeAttribute('data-nav-theme');document.body.removeAttribute('data-alt-nav');};
+  lenis.on('scroll',syncThemes);
+  ScrollTrigger.addEventListener('refresh',syncThemes);
+  syncThemes();
+  return()=>{lenis.off('scroll',onScroll);lenis.off('scroll',syncThemes);ScrollTrigger.removeEventListener('refresh',syncThemes);timeline.revert();themes.forEach(entry=>entry.trigger.kill());context.revert();document.body.removeAttribute('data-nav-theme');document.body.removeAttribute('data-alt-nav');};
 }

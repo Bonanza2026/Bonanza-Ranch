@@ -56,8 +56,18 @@
 /* The first wildlife image uses the same frame as the following chapters. */
 html[data-color-theme] .dream-home .life-film { margin-top: 0; padding-top: 0; background: var(--story-paper, #000); }
 .dream-home .life-stage { overflow: hidden; }
+.dream-home .life-finale {
+  width: 100vw; height: 100svh; min-height: 0;
+  padding: var(--chapter-inset) 5vw;
+  display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; background: var(--story-paper, #000);
+}
+.dream-home .life-finale::after { display: none; }
+.life-finale-frame { position: relative; isolation: isolate; overflow: hidden; width: min(100%, calc(var(--chapter-photo-height) * 1.77777778)); height: 100%; }
+.dream-home .life-finale-copy { padding: 40px 5vw; }
+.dream-home .life-finale h3 { font-size: var(--chapter-title); }
+.dream-home .life-finale .chapter-image-note { color: inherit; }
 .wildlife-orbit {
-  position: relative; z-index: 5; background: #000; color: #f5eee9;
+  position: relative; z-index: 5; background: var(--story-paper, #000); color: var(--story-ink, #f5eee9);
   padding: 64px 0 100px; overflow: clip;
 }
 .wildlife-orbit-stage {
@@ -83,12 +93,16 @@ html[data-color-theme] .dream-home .life-film { margin-top: 0; padding-top: 0; b
 .wildlife-orbit-copy h2 em { display: block; font-weight: inherit; }
 .wildlife-orbit-copy p { font: 400 clamp(16px, 1.5vw, 20px)/1.6 var(--font-sans); color: inherit; margin: 0; }
 .wildlife-orbit-pause {
-  appearance: none; border: 0; border-bottom: 1px solid #f5eee950; background: transparent;
+  appearance: none; border: 0; border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent); background: transparent;
   color: inherit; padding: 6px 0; margin-top: 24px; cursor: pointer; font: 400 12px/1.5 var(--font-sans);
 }
-.wildlife-orbit-pause:focus-visible { outline: 2px solid #f5eee9; outline-offset: 5px; }
-html[data-color-theme="cream"] .dream-home .flight-arrival,
-html[data-color-theme="cream"] .dream-home .flight-arrival :is(h2, p, span, small) { color: var(--story-paper); }
+.wildlife-orbit-pause:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .dream-home .life-finale { width: 100%; height: auto; min-height: 0; padding: 56px 24px; }
+  .life-finale-frame { width: 100%; height: auto; min-height: 0; aspect-ratio: 4 / 5; display: grid; }
+  .dream-home .life-finale-copy { position: relative; padding: 40px 24px; }
+  .dream-home .life-finale h3 { font-size: 34px; }
+}
 @media (max-width: 767px) {
   .dream-home .reserve-editorial h2 { margin-bottom: 64px; }
   .wildlife-stack { padding: 0 24px 64px; }

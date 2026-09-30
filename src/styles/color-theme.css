@@ -19,15 +19,22 @@ html[data-color-theme="cream"] .dream-home .life-chapter:not(.life-finale):not(.
   color: var(--story-ink);
 }
 html[data-color-theme="cream"] .dream-home :is(.dream-flight, .flight-stage, .flight-arrival, .jm-heading) {
-  background: var(--story-green);
+  background: var(--story-paper);
+  color: var(--story-ink);
+}
+html[data-color-theme="cream"] .dream-home .flight-opening {
+  color: #fff;
+}
+html[data-color-theme="cream"] .dream-home .flight-arrival,
+html[data-color-theme="cream"] .dream-home .flight-arrival :is(h2, p, span, small) {
   color: var(--story-paper);
 }
 html[data-color-theme="cream"] .jm-heading :is(.jm-departure, .jm-destination-label),
 html[data-color-theme="cream"] .jm-heading > div > p {
-  color: var(--story-paper);
+  color: var(--story-ink);
 }
 html[data-color-theme="cream"] .jm-heading::before {
-  border-color: #ffffff30;
+  border-color: #1e211c30;
 }
 html[data-color-theme="cream"] body.flight-is-cloudy.flight-arrived nav {
   color: var(--story-paper);
@@ -55,9 +62,6 @@ html[data-color-theme="cream"] .footer-credit a {
 }
 html[data-color-theme="cream"] body[data-nav-theme="story"] nav {
   color: var(--story-ink);
-}
-html[data-color-theme="cream"] body.night-scene nav {
-  color: #fafaf8;
 }
 html[data-color-theme="cream"] :is(.cookie-notice, .contact-options) {
   background: var(--story-paper);

@@ -98,6 +98,7 @@ const photo = (name: string) => ({
         <StoryImage {...photo("security-gate")} alt={t("Kontrollierte Zufahrt zur Ranch", "Controlled entry to the ranch")} />
       </StoryChapter>
       <article class="life-chapter life-finale">
+        <div class="life-finale-frame">
         <StoryImage
           src={`${c}karoo-night-sky.webp`}
           alt={t(
@@ -117,6 +118,7 @@ const photo = (name: string) => ({
           )}
         </p>
         <small class="chapter-image-note">{t("Konzeptvisualisierung", "Concept visualisation")}</small>
+        </div>
         </div>
       </article>
     </div>

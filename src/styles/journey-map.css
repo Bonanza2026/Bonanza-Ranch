@@ -8,7 +8,18 @@
   color: #fafaf8;
   background: #19362d;
 }
-.arrival-flag { width: 60px; height: 40px; margin-bottom: 28px; }
+.flight-arrival-landscape,
+.flight-arrival-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.flight-arrival-landscape { object-fit: cover; object-position: 62% center; }
+.flight-arrival-shade { background: rgb(15 20 16 / 42%); }
+.flight-arrival-copy > * { position: relative; z-index: 1; }
+.flight-arrival-copy > .flight-arrival-bottom { position: absolute; }
 /* Specificity keeps Astro's production CSS ordering from restoring the old 27vw size. */
 .dream-home .flight-arrival .flight-arrival-word {
   font-size: min(13.5vw, 32svh, 260px);
