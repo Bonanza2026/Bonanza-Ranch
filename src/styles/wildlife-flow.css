@@ -106,12 +106,19 @@ html[data-color-theme] .dream-home .life-film { margin-top: 0; padding-top: 0; b
 @media (max-width: 767px) {
   .dream-home .reserve-editorial h2 { margin-bottom: 64px; }
   .wildlife-stack { padding: 0 24px 64px; }
-  .wildlife-stack-item { position: relative; top: auto; min-height: 0; }
+  .wildlife-stack-items { height: var(--stack-height, auto); }
+  .wildlife-stack-item {
+    position: sticky;
+    top: calc(var(--item-offset, 0px) + var(--stack-offset, 0px));
+    height: var(--item-height, auto);
+    min-height: 0;
+    overflow: hidden;
+  }
   .wildlife-stack-label { grid-template-columns: 40px 1fr; gap: 16px; font-size: 11px; }
-  .wildlife-stack-content { grid-template-columns: 1fr; gap: 32px; min-height: 0; padding: 20px 0 64px; }
+  .wildlife-stack-content { grid-template-columns: 1fr; gap: 40px; min-height: 0; padding: 40px 0 64px; }
+  .wildlife-stack-copy { grid-row: 1; }
   .dream-home .wildlife-stack-copy h3 { font-size: 36px; text-align: center; }
   .wildlife-stack-copy p { font-size: 18px; margin-top: 24px; }
-  .wildlife-stack-item:last-child .wildlife-stack-content { padding-bottom: 0; }
   .dream-home .life-film { padding-top: 0; }
   .wildlife-orbit { padding: 0 0 72px; }
   .wildlife-orbit-stage { --orbit-size: 640px; left: 50%; margin-left: -320px; height: 640px; }

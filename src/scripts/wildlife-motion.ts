@@ -17,6 +17,45 @@ export function createWildlifeMotion(root: HTMLElement) {
       ScrollTrigger.removeEventListener("refreshInit", measure);
       items.forEach(item => item.style.removeProperty("height"));
     });
+  } else if (items.length) {
+    const stack = root.querySelector<HTMLElement>(".wildlife-stack-items")!;
+    // Tengile's mobile stack: retain 55px headers and compensate for panels
+    // taller than the viewport, so their last lines and images remain reachable.
+    const viewportHeight = innerHeight;
+    let overflow = 55;
+    const measure = () => {
+      items.forEach(item => item.style.removeProperty("--item-height"));
+      const naturalHeights = items.map(item => item.scrollHeight);
+      overflow = naturalHeights.slice(1).reduce((sum, height) => sum + Math.max(0, height - viewportHeight), 55);
+      let total = 0;
+      items.forEach((item, index) => {
+        const offset = 55 * index;
+        const height = Math.max(viewportHeight - offset, naturalHeights[index]);
+        item.style.setProperty("--item-offset", `${offset}px`);
+        item.style.setProperty("--item-height", `${height}px`);
+        total += height;
+      });
+      stack.style.setProperty("--stack-height", `${total}px`);
+    };
+    measure();
+    const trigger = ScrollTrigger.create({
+      trigger: stack,
+      start: "top top",
+      end: "bottom bottom",
+      onUpdate: self => stack.style.setProperty("--stack-offset", `${-self.progress * overflow}px`),
+      onRefresh: self => stack.style.setProperty("--stack-offset", `${-self.progress * overflow}px`),
+    });
+    ScrollTrigger.addEventListener("refreshInit", measure);
+    cleanups.push(() => {
+      trigger.kill();
+      ScrollTrigger.removeEventListener("refreshInit", measure);
+      items.forEach(item => {
+        item.style.removeProperty("--item-height");
+        item.style.removeProperty("--item-offset");
+      });
+      stack.style.removeProperty("--stack-height");
+      stack.style.removeProperty("--stack-offset");
+    });
   }
 
   const orbit = root.querySelector<HTMLElement>(".wildlife-orbit")!;

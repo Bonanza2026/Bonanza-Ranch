@@ -38,7 +38,7 @@
   }
   .dream-home .flight-plane-image,
   .dream-home .flight-plane-shadow {
-    width: max(255vw, calc(var(--flight-height, 100lvh) * 1.7));
+    width: max(190vw, calc(var(--flight-height, 100lvh) * 1.1));
   }
   .dream-home .flight-opening h1 {
     font-size: clamp(44px, min(17.5vw, calc(var(--flight-opening-height, 100svh) * .12)), 148px);
