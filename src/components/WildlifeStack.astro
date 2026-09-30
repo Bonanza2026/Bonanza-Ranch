@@ -1,0 +1,27 @@
+---
+const { lang = "de" } = Astro.props;
+const t = (de: string, en: string) => lang === "en" ? en : de;
+const chapters = [
+  { image: "oryx", alt: t("Oryx-Antilope in Südafrika", "Oryx antelope in South Africa"), label: t("Natur erleben", "Explore nature"), title: t("Natur erleben.", "Explore."), emphasis: t("Ganz privat.", "In private."), text: t("Mit erfahrenen Rangern aufbrechen. Ganz privat, als Eigentümer oder Gast. Anhalten, beobachten und die Wildnis im eigenen Rhythmus entdecken.", "Set out with experienced rangers. In private, as an owner or guest. Time to stop, observe wildlife and explore at your own pace.") },
+  { image: "zebra", alt: t("Zebra im Buschland", "Zebra in the bush"), label: t("Zeit vergessen", "Take your time"), title: t("Beobachten.", "Watch."), emphasis: t("Zeit vergessen.", "Forget the time."), text: t("Eine Herde am Horizont. Ein Rascheln im Busch. Begegnungen, für die man keinen Termin braucht.", "A herd on the horizon. A rustle in the bush. Encounters you cannot put in a diary.") },
+  { image: "cormorant", alt: t("Kormoran auf einem Ast", "Cormorant on a branch"), label: t("Freiraum bewahren", "Room to roam"), title: t("Wildnis braucht", "Wildlife needs"), emphasis: t("Freiraum.", "room to roam."), text: t("Das bestehende Wildtierschutzgebiet rund um die Bonanza Ranch bietet Südafrikas Tierwelt weite Lebensräume. Diese Landschaft und ihre Artenvielfalt zu bewahren und seltene Arten zu schützen, ist Teil der Bonanza-Vision.", "The existing wildlife reserve surrounding Bonanza Ranch provides open habitats for South Africa’s wildlife. Preserving this landscape, its biodiversity and rare species is part of the Bonanza vision.") },
+];
+---
+<section class="wildlife-stack" id="wildnis" data-nav-theme="story" aria-label={t("Natur auf Bonanza", "Nature at Bonanza")}>
+  <div class="wildlife-stack-items">
+    {chapters.map((chapter, index) => (
+      <article class="wildlife-stack-item" style={`--stack-index: ${index}`}>
+        <header class="wildlife-stack-label"><span>0{index + 1}</span><span>{chapter.label}</span></header>
+        <div class="wildlife-stack-content">
+          <figure class="wildlife-stack-photo">
+            <img src={`/bonanza/current/${chapter.image}.webp`} srcset={`/bonanza/current/${chapter.image}-640.webp 640w, /bonanza/current/${chapter.image}-960.webp 960w, /bonanza/current/${chapter.image}.webp 1672w`} sizes="(min-width: 768px) 44vw, calc(100vw - 48px)" width="1672" height="941" alt={chapter.alt} loading="lazy" decoding="async" />
+          </figure>
+          <div class="wildlife-stack-copy">
+            <h3>{chapter.title}<em>{chapter.emphasis}</em></h3>
+            <p>{chapter.text}</p>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

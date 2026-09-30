@@ -18,19 +18,19 @@ html[data-color-theme="cream"] .dream-home .life-chapter:not(.life-finale):not(.
   background: var(--story-paper);
   color: var(--story-ink);
 }
-html[data-color-theme="cream"] .dream-home :is(.dream-flight, .flight-arrival, .jm-heading) {
-  background: #19362d;
-  color: #fafaf8;
+html[data-color-theme="cream"] .dream-home :is(.dream-flight, .flight-stage, .flight-arrival, .jm-heading) {
+  background: var(--story-green);
+  color: var(--story-paper);
 }
 html[data-color-theme="cream"] .jm-heading :is(.jm-departure, .jm-destination-label),
 html[data-color-theme="cream"] .jm-heading > div > p {
-  color: #dbe3df;
+  color: var(--story-paper);
 }
 html[data-color-theme="cream"] .jm-heading::before {
   border-color: #ffffff30;
 }
 html[data-color-theme="cream"] body.flight-is-cloudy.flight-arrived nav {
-  color: #fafaf8;
+  color: var(--story-paper);
 }
 html[data-color-theme="cream"] .dream-home :is(.reserve-introduction, .wild-worlds, .life-chapter:not(.life-finale)) :is(p, dd) {
   color: var(--story-ink);

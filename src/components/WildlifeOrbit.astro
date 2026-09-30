@@ -1,0 +1,25 @@
+---
+const { lang = "de" } = Astro.props;
+const t = (de: string, en: string) => lang === "en" ? en : de;
+const images = ["rhino", "bird", "water", "zebra", "sunset", "oryx", "horses", "buffalo"];
+---
+<section class="wildlife-orbit" id="augenblicke" data-nav-theme="light" aria-label={t("Augenblicke auf Bonanza", "Moments at Bonanza")}>
+  <div class="wildlife-orbit-stage">
+    <div class="wildlife-orbit-images" aria-hidden="true">
+      {images.map((name, index) => (
+        <figure class="wildlife-orbit-photo" style={`--orbit-angle: ${index * 45}deg`}>
+          <img src={`/bonanza/current/${name}-640.webp`} width="1672" height="941" alt="" loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+    <div class="wildlife-orbit-copy">
+      <p class="wildlife-orbit-label">BONANZA RANCH</p>
+      <h2>
+        <span>{t("Vielleicht ist es die Weite.", "Perhaps it is the open space.")}</span>
+        <span>{t("Vielleicht die Nähe zur Natur.", "Perhaps the closeness to nature.")}</span>
+        <em>{t("Vielleicht der Gedanke, wiederzukommen und für immer zu bleiben.", "Perhaps the thought of returning and staying for good.")}</em>
+      </h2>
+      <button class="wildlife-orbit-pause" type="button" aria-pressed="false" data-paused-label={t("Bilder weiterbewegen", "Resume images")} data-playing-label={t("Bilder anhalten", "Pause images")}>{t("Bilder anhalten", "Pause images")}</button>
+    </div>
+  </div>
+</section>

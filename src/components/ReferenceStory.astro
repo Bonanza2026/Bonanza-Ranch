@@ -1,6 +1,8 @@
 ---
 import StoryImage from "./StoryImage.astro";
 import StoryChapter from "./StoryChapter.astro";
+import WildlifeStack from "./WildlifeStack.astro";
+import WildlifeOrbit from "./WildlifeOrbit.astro";
 const { lang = "de" } = Astro.props;
 const en = lang === "en";
 const t = (de: string, english: string) => (en ? english : de);
@@ -14,73 +16,10 @@ const photo = (name: string) => ({
   width: 1672,
   height: name === "buffalo" ? 940 : 941,
 });
-const images = [
-  current + "horses-960.webp", e + "giraffes.webp", current + "antelope-960.webp",
-  current + "water-960.webp", current + "oryx-960.webp", e + "safari-drive.webp",
-  current + "sunset-960.webp", current + "bird-960.webp", current + "cormorant-960.webp",
-  current + "trail-960.webp", current + "rhino-960.webp", current + "zebra-960.webp",
-  current + "buffalo-960.webp", current + "meerkat-960.webp",
-];
+
 ---
 
-<section class="wild-worlds" id="wildnis" data-nav-theme="story">
-  <div class="worlds-stage">
-    <div class="worlds-visuals" aria-hidden="true">
-        {["oryx", "zebra", "cormorant"].map((name) => (
-          <figure class="worlds-photo">
-          <img
-            {...photo(name)}
-            sizes="(min-width: 768px) 90vw, 100vw"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-          </figure>
-        ))}
-    </div>
-    <div class="worlds-captions">
-      <div class="worlds-caption">
-        <figure class="worlds-mobile-photo"><img {...photo("oryx")} alt={t("Oryx-Antilope in Südafrika", "Oryx antelope in South Africa")} loading="lazy" decoding="async" /></figure>
-        <h3>
-          {t("Natur erleben.", "Explore.")}{" "}
-          <em>{t("Ganz privat.", "In private.")}</em>
-        </h3>
-        <p>
-          {t(
-            "Mit erfahrenen Rangern aufbrechen. Ganz privat, als Eigentümer oder Gast. Anhalten, beobachten und die Wildnis im eigenen Rhythmus entdecken.",
-            "Set out with experienced rangers. In private, as an owner or guest. Time to stop, observe wildlife and explore at your own pace.",
-          )}
-        </p>
-      </div>
-      <div class="worlds-caption">
-        <figure class="worlds-mobile-photo"><img {...photo("zebra")} alt={t("Zebra im Buschland", "Zebra in the bush")} loading="lazy" decoding="async" /></figure>
-        <h3>
-          {t("Beobachten.", "Watch.")}{" "}
-          <em>{t("Zeit vergessen.", "Forget the time.")}</em>
-        </h3>
-        <p>
-          {t(
-            "Eine Herde am Horizont. Ein Rascheln im Busch. Begegnungen, für die man keinen Termin braucht.",
-            "A herd on the horizon. A rustle in the bush. Encounters you cannot put in a diary.",
-          )}
-        </p>
-      </div>
-      <div class="worlds-caption">
-        <figure class="worlds-mobile-photo"><img {...photo("cormorant")} alt={t("Kormoran auf einem Ast", "Cormorant on a branch")} loading="lazy" decoding="async" /></figure>
-        <h3>
-          {t("Wildnis braucht", "Wildlife needs")}{" "}
-          <em>{t("Freiraum.", "room to roam.")}</em>
-        </h3>
-        <p>
-          {t(
-            "Das bestehende Wildtierschutzgebiet rund um die Bonanza Ranch bietet Südafrikas Tierwelt weite Lebensräume. Diese Landschaft und ihre Artenvielfalt zu bewahren und seltene Arten zu schützen, ist Teil der Bonanza-Vision.",
-            "The existing wildlife reserve surrounding Bonanza Ranch provides open habitats for South Africa’s wildlife. Preserving this landscape, its biodiversity and rare species is part of the Bonanza vision.",
-          )}
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+<WildlifeStack lang={lang} />
 <section
   class="life-film"
   id="freizeit"
@@ -92,28 +31,25 @@ const images = [
 >
   <div class="life-stage">
     <div class="life-track">
-      <article class="life-chapter life-intro life-intro--landscape" data-life-chapter>
-        <div class="life-card">
-          <h2 class="life-card-title">{t("ERLEBNISSE", "EXPERIENCES")}</h2>
-          <div class="life-card-picture">
-            <StoryImage
-              {...photo("horses")}
-              alt={t("Tiere auf unserer Weide", "Animals in our pasture")}
-              position="50% 15%"
-            />
-            <h3>
-              <em>{t("Im", "In the")}</em>
-              <span>{t("SATTEL", "SADDLE")}</span>
-            </h3>
-            <p>
+      <StoryChapter lead={t("Südafrikas", "South Africa’s")} title={t("TIERWELT.", "WILDLIFE.")} id="tierwelt" landscapePair>
+        <Fragment slot="copy">
+          <p>{t("Majestätische Giraffen zwischen den Bäumen. Zebraherden in der weiten Ebene. Springböcke, die mit einem Satz die Stille durchbrechen. Bonanza ist Heimat einer reichen Tierwelt.", "Majestic giraffes among the trees. Herds of zebras on the open plains. Springbok breaking the stillness with a single leap. Bonanza is home to an abundance of wildlife.")}</p>
+          <p>{t("Auch Kudus, Eland- und Oryx-Antilopen ziehen durch diese Landschaft. Wer sich Zeit nimmt, entdeckt immer mehr: ein leises Rascheln, ein Blick aus dem Busch, eine Herde am Horizont.", "Kudu, eland and oryx also roam this landscape. Take your time and more comes into view: a soft rustle, a watchful gaze from the bush, a herd on the horizon.")}</p>
+        </Fragment>
+        <StoryImage {...photo("buffalo")} alt={t("Büffel am Wasser", "Buffalo at the water")} />
+        <StoryImage src={`${e}giraffes.webp`} alt={t("Giraffen zwischen den Büschen der Klein Karoo", "Giraffes among the bushes of the Klein Karoo")} position="58% 50%" aspect="square" />
+        <StoryImage {...photo("antelope")} alt={t("Antilopen auf sandigem Boden", "Antelope on sandy ground")} />
+        <StoryImage {...photo("meerkat")} aspect="square" alt={t("Erdmännchen im warmen Licht", "Meerkat in warm light")} />
+      </StoryChapter>
+      <StoryChapter lead={t("Im", "In the")} title={t("SATTEL", "SADDLE")} id="reiten" landscapePair>
+        <p slot="copy">
               {t(
                 "Mit einem Pferdeflüsterer in den Tag starten. Vertrauen fassen, aufsitzen, der endlosen Weite entgegenreiten. Country Horse Riding mit persönlicher Begleitung. Nur Sie, Ihr Pferd und der offene Horizont.",
                 "Begin the day with a horse whisperer. Build trust, settle into the saddle and ride into the open country. Personally guided country horse riding. Just you, your horse and the horizon.",
               )}
             </p>
-          </div>
-        </div>
-      </article>
+        <StoryImage {...photo("horses")} alt={t("Tiere auf unserer Weide", "Animals in our pasture")} />
+      </StoryChapter>
       <StoryChapter lead={t("Mit Ihrem", "With your")} title="RANGER" id="ranger" landscapePair>
         <p slot="copy">{t("Im 4×4-Jeep mit Ihrem Ranger den Spuren der Wildnis folgen. Anhalten, staunen, die Stille wirken lassen. Ein Erlebnis!", "Follow the tracks of wildlife in a 4×4 jeep with your ranger. Stop, take it in and listen to the stillness. What an experience!")}</p>
         <StoryImage
@@ -123,16 +59,6 @@ const images = [
             "Safari drive in South Africa",
           )}
         />
-      </StoryChapter>
-      <StoryChapter lead={t("Südafrikas", "South Africa’s")} title={t("TIERWELT.", "WILDLIFE.")} id="tierwelt" landscapePair>
-        <Fragment slot="copy">
-          <p>{t("Majestätische Giraffen zwischen den Bäumen. Zebraherden in der weiten Ebene. Springböcke, die mit einem Satz die Stille durchbrechen. Bonanza ist Heimat einer reichen Tierwelt.", "Majestic giraffes among the trees. Herds of zebras on the open plains. Springbok breaking the stillness with a single leap. Bonanza is home to an abundance of wildlife.")}</p>
-          <p>{t("Auch Kudus, Eland- und Oryx-Antilopen ziehen durch diese Landschaft. Wer sich Zeit nimmt, entdeckt immer mehr: ein leises Rascheln, ein Blick aus dem Busch, eine Herde am Horizont.", "Kudu, eland and oryx also roam this landscape. Take your time and more comes into view: a soft rustle, a watchful gaze from the bush, a herd on the horizon.")}</p>
-        </Fragment>
-        <StoryImage src={`${e}giraffes.webp`} alt={t("Giraffen zwischen den Büschen der Klein Karoo", "Giraffes among the bushes of the Klein Karoo")} position="58% 50%" aspect="square" />
-        <StoryImage {...photo("buffalo")} alt={t("Büffel am Wasser", "Buffalo at the water")} />
-        <StoryImage {...photo("antelope")} alt={t("Antilopen auf sandigem Boden", "Antelope on sandy ground")} />
-        <StoryImage {...photo("meerkat")} aspect="square" alt={t("Erdmännchen im warmen Licht", "Meerkat in warm light")} />
       </StoryChapter>
       <StoryChapter lead={t("Ans", "By the")} title={t("WASSER", "WATER")} id="wasser" landscapePair>
         <p slot="copy">{t("Glitzerndes Wasser, schattige Ufer, ein weiter Himmel. Unsere Vision: morgens auf Forellenbarsch (Largemouth Bass) angeln, im Kajak stille Buchten entdecken, mit dem Jetski die Freiheit spüren. Hier soll Wassersport so vielseitig werden wie Ihre Wünsche.", "Shimmering water, shady shores, an open sky. Our vision: mornings fishing for largemouth bass, quiet coves explored by kayak, the freedom of a jet ski. The water sports envisaged here leave room for every mood.")}</p>
@@ -151,10 +77,9 @@ const images = [
       </StoryChapter>
       <StoryChapter lead={t("Lange", "Long")} title={t("ABENDE", "EVENINGS")} id="geniessen" landscapePair imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
         <p slot="copy">{t("Warmes Wasser auf der Haut. Wohlige Ruhe in Spa und Sauna. Später zieht der Duft von Holzfeuer durch die Abendluft. Ein vollmundiger Wein, ein liebevoll gedeckter Tisch, vertraute Gesichter. Am Boma-Feuer verweilen, bis über dem Sternen-Deck die Nacht aufzieht.", "Warm water on your skin. Deep relaxation in the spa and sauna. Later, the scent of a wood fire drifts through the evening air. A full-bodied wine, a beautifully laid table, familiar faces. Linger by the boma fire as night settles over the stargazing deck.")}</p>
-        <StoryImage src={`${c}wellbeing-concept.webp`} alt={t("Wellnessbereich, Konzeptbild", "Wellness area concept")} />
         <StoryImage src={`${c}clubhouse-concept.webp`} alt={t("Clubhaus im Abendlicht, Konzeptbild", "Clubhouse at dusk, concept")} />
       </StoryChapter>
-      <StoryChapter lead={t("Butler &", "Butler &")} title={t("PRIVATKOCH", "PRIVATE CHEF")} id="service" landscapePair imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
+      <StoryChapter lead={t("Ankommen.", "Arrive.")} title={t("GENIESSEN.", "SAVOUR.")} id="service" landscapePair imageNote={t("Konzeptvisualisierungen", "Concept visualisations")}>
         <p slot="copy">{t("Vom Flughafen direkt in die Ruhe der Ranch. Persönlich organisierte Airport-Transfers oder die Anreise per Helikopter lassen Sie entspannt ankommen. Ihr Butler kümmert sich um die kleinen Wünsche, Ihr Privatkoch um einen genussvollen Abend. Dazu ein charaktervoller Wein vom eigenen Weingut. Ihnen bleibt das Schönste: Zeit für Ihre Gäste.", "From the airport straight to the quiet of the ranch. Personally arranged airport transfers or arrival by helicopter make the journey effortless. Your butler attends to the little wishes, your private chef prepares an evening to savour. Add a characterful wine from our own vineyard. You have the best part: time for your guests.")}</p>
         <StoryImage {...photo("helicopter")} alt={t("Helikopter auf dem Landeplatz", "Helicopter at the landing pad")} />
         <StoryImage {...photo("vineyard")} alt={t("Mit Wein im Abendlicht anstoßen", "A toast with wine in the evening light")} />
@@ -197,51 +122,4 @@ const images = [
     </div>
   </div>
 </section>
-<section
-  class="bonanza-ring"
-  id="augenblicke"
-  data-nav-theme="light"
-  aria-label={t("Augenblicke auf Bonanza", "Moments at Bonanza")}
->
-  <div class="ring-stage">
-    <div class="ring-webgl" aria-hidden="true">
-      <div class="ring-fallback">
-        {images.map((src) => (
-          <img
-            src={src}
-            alt=""
-            width="1440"
-            height="960"
-            loading="lazy"
-          />
-        ))}
-      </div>
-    </div>
-    <div class="ring-title">
-      <h2>
-        <em>{t("Hier bleiben.", "Stay a while.")}</em>
-      </h2>
-      <p>
-        {t(
-          "Ein privater Rückzugsort. In Südafrikas weiter Landschaft.",
-          "A private retreat. In South Africa’s open country.",
-        )}
-      </p>
-    </div>
-  </div>
-  <div class="ring-story">
-    <p class="ring-text-first">
-      {t(
-        "Vielleicht ist es die Weite. Vielleicht die Nähe zur Natur. Vielleicht der Gedanke, wiederzukommen und für immer zu bleiben.",
-        "Perhaps it is the open space. Perhaps the closeness to nature. Perhaps the thought of returning and staying for good.",
-      )}
-    </p>
-    <div></div>
-    <p class="ring-text-last">
-      {t(
-        "BONANZA RANCH. DIE VISION VON EINEM LEBEN IN SÜDAFRIKA.",
-        "BONANZA RANCH. A VISION FOR LIFE IN SOUTH AFRICA.",
-      )}
-    </p>
-  </div>
-</section>
+<WildlifeOrbit lang={lang} />
