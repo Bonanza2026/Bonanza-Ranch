@@ -502,5 +502,29 @@
     "output": "public/media/hero-poster-mobile-v3.webp",
     "bytes": 41286,
     "note": "New 14.72-second hero; 24 fps, muted; VP9 preferred and H.264 compatibility fallback"
+  },
+  {
+    "source": "C:/Users/royin/Documents/bonanza/bilder/neu/pferde.png",
+    "output": "public/bonanza/current/horses-v2-640.webp",
+    "width": 640,
+    "height": 360,
+    "encoding": "lossless WebP",
+    "bytes": 257332
+  },
+  {
+    "source": "C:/Users/royin/Documents/bonanza/bilder/neu/pferde.png",
+    "output": "public/bonanza/current/horses-v2-960.webp",
+    "width": 960,
+    "height": 540,
+    "encoding": "lossless WebP",
+    "bytes": 559588
+  },
+  {
+    "source": "C:/Users/royin/Documents/bonanza/bilder/neu/pferde.png",
+    "output": "public/bonanza/current/horses-v2.webp",
+    "width": 1672,
+    "height": 941,
+    "encoding": "lossless WebP",
+    "bytes": 1590152
   }
 ]

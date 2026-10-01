@@ -10,7 +10,7 @@ const request = (country, cookie, path = '/') => {
 };
 test('Germany enters in German; other countries enter in English', () => {
   assert.equal(middleware(request('DE')).headers.get('x-middleware-next'), '1');
-  for (const country of ['ZA','AT','US',undefined]) {
+  for (const country of ['ZA','AT','US','PL','CN','JP','SG','IN',undefined]) {
     const response = middleware(request(country));
     assert.equal(response.status, 307);
     assert.equal(response.headers.get('location'), 'https://www.bonanza-ranch.com/en');

@@ -105,6 +105,39 @@ html[data-color-theme] .dream-home .life-film { margin-top: 0; padding-top: 0; b
   .dream-home .life-finale h3 { font-size: 34px; }
 }
 @media (max-width: 767px) {
+  .dream-home .life-finale {
+    padding: 0 var(--mobile-gutter) var(--mobile-section-gap);
+  }
+  .life-finale-frame {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--mobile-image-copy-gap);
+  }
+  .dream-home .life-finale-frame > .story-photo {
+    position: relative;
+    inset: auto;
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+  .dream-home .life-finale-frame::after { display: none; }
+  .dream-home .life-finale-copy {
+    position: static;
+    padding: 0;
+    color: var(--story-ink, #f5eee9);
+    text-shadow: none;
+  }
+  .dream-home .life-finale h3 {
+    color: var(--story-green, #f5eee9);
+    font-size: 38px;
+    margin-bottom: 24px;
+  }
+  .dream-home .life-finale-copy p {
+    max-width: 36ch;
+    line-height: 1.65;
+    text-align: left;
+  }
+  .dream-home .life-finale .chapter-image-note { color: var(--story-muted, #c8c8c4); }
   .dream-home .reserve-editorial h2 { margin-bottom: 64px; }
   .wildlife-stack { padding: 0 24px 64px; }
   .wildlife-stack-items { height: var(--stack-height, auto); }
