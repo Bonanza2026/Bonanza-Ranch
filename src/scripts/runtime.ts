@@ -16,6 +16,7 @@ import {
 import { bindJourneyMap } from "./journey-map";
 import { createDreamMotion } from "./dream-motion";
 import { sectionScrollPosition } from "./section-navigation";
+import { createStoryImageLoader } from "./story-images.mjs";
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MotionPathPlugin, CustomEase);
 // Height-only resizes from mobile browser bars must not refresh scrubbed scenes.
 // Width/orientation changes are handled explicitly below.
@@ -118,6 +119,10 @@ function setupMotion() {
 // Start the journey immediately. Slow font downloads must not leave the hero
 // pinned without its flight timeline; only measurements need a later refresh.
 setupMotion();
+// Warm only nearby photos after motion measurements, including reduced motion.
+const storyImages = createStoryImageLoader(document.querySelector('.life-film'));
+lenis.on('scroll', storyImages.update);
+ScrollTrigger.addEventListener('refresh', storyImages.update);
 // Resolve incoming chapter links after scene measurements, and once more when
 // fonts settle. Never pull a visitor back after they have started interacting.
 const entryChapter = Array.from(document.querySelectorAll<HTMLElement>("[data-life-chapter]"))
@@ -173,6 +178,8 @@ addEventListener("pagehide", (event) => {
   // run again on restore, so keep the scroll instance and animations alive.
   if (event.persisted) return;
   lenis.destroy();
+  storyImages.destroy();
+  ScrollTrigger.removeEventListener('refresh', storyImages.update);
   gsap.ticker.remove(tick);
   cleanups.forEach((fn) => fn());
 });

@@ -10,6 +10,10 @@ Die Website führt vom ersten Landschaftseindruck über die Anreise aus Europa u
 
 Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien, die Animationen, die Sprachsteuerung sowie die Konfiguration für Build, Suchmaschinen und Hosting.
 
+**Live:** [bonanza-ranch.com](https://bonanza-ranch.com/) · [Deutsch](https://bonanza-ranch.com/de) · [English](https://bonanza-ranch.com/en)
+
+**Dokumentation:** [Hosting, Domains und Betrieb](docs/HOSTING-AND-DOMAINS.md) · [Technische Prüf- und Optimierungshistorie](docs/TECHNICAL-REVIEW.md) · [Lokale Einrichtung](#lokal-starten)
+
 ## Projektumfang auf einen Blick
 
 | Bereich | Umsetzung |
@@ -24,6 +28,8 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 | Medienauslieferung | WebP-Fotos, responsive Bildgrößen, WebM-Video und MP4-Kompatibilitätsfallback |
 | Datenschutz | Lokale Medien und Schriften, Cookie-Hinweis, Sprachpräferenz, Impressum und Datenschutz in DE/EN |
 | Technik | Statischer Astro-Build, Vercel-Middleware, Sicherheitsheader und automatisierte Integritätsprüfungen |
+| Veröffentlichung | GitHub mit automatischem Vercel-Deployment, eigene Hauptdomain, drei permanente Domain-Weiterleitungen und HTTPS |
+| Domainumstellung | Trennung der Domains vom bisherigen Homepage-Baukasten, externe DNS-Konfiguration und Erhalt der E-Mail-Einträge |
 
 ## Die Website als zusammenhängende Reise
 
@@ -199,6 +205,7 @@ Die Auslieferung ist auf große Bildwelten bei möglichst wenig unnötigem Daten
 - Getrennte mobile und Desktop-Videoquellen, statt beide Größen parallel zu laden.
 - Responsive Hero-Poster mit zum Bildschirm passendem Preload.
 - Lazy Loading und asynchrones Decoding bei nachfolgenden Bildern, soweit in der jeweiligen Komponente vorgesehen.
+- Gezielter Ladevorlauf im Erlebnisbereich: Bilder bis zu zwei Bildschirmbreiten bzw. -höhen vor der sichtbaren Ansicht werden früher angefordert. Der zusätzliche Vorlauf startet höchstens zwei Bilder gleichzeitig und berücksichtigt die tatsächlichen Positionen im horizontal bewegten Kapitel. Bilddateien, Auflösung und responsive Quellen bleiben unverändert.
 - Der separat aufrufbare Film erhält seine Medienquelle erst beim Öffnen.
 - Pausieren des Hero-Videos bei verdecktem oder nicht sichtbarem Inhalt.
 - Berücksichtigung von `prefers-reduced-motion`, einschließlich Verzicht auf den automatischen Hero-Videodownload.
@@ -264,27 +271,40 @@ Die lokale Website ist unter `http://127.0.0.1:4323/` erreichbar. Die Sprachfass
 
 ## Deployment auf Vercel
 
-1. Dieses Repository als Projekt in Vercel importieren.
-2. Framework-Preset **Astro** verwenden.
-3. Build-Befehl: `npm run build`.
-4. Ausgabeverzeichnis: `dist`.
-5. `SITE_URL` auf die tatsächliche öffentliche HTTPS-Adresse setzen.
-6. Nach einer Änderung von `SITE_URL` neu deployen.
-7. Anschließend beide Sprachen, Hauptadresse, Medien, Kontakt- und Rechtslinks kontrollieren.
+### Eingerichteter Produktionsbetrieb
 
-Beispiel für eine eigene Domain:
+| Einstellung | Aktueller Stand |
+| --- | --- |
+| GitHub-Repository | [Bonanza2026/Bonanza-Ranch](https://github.com/Bonanza2026/Bonanza-Ranch) |
+| Produktionsbranch | `main` |
+| Vercel-Projekt | `bonanza-ranch` im Team `bonanza2026` |
+| Veröffentlichung | Ein Push auf `main` stößt über die GitHub-Verbindung einen neuen Vercel-Build an |
+| Framework / Build / Ausgabe | Astro · `npm run build` · `dist` |
+| Öffentliche Hauptadresse | `https://bonanza-ranch.com` |
+| Weitere Domains | `www.bonanza-ranch.com`, `bonanzaranch.co.za`, `www.bonanzaranch.co.za` |
+| Domain-Weiterleitung | Alle drei Varianten führen per HTTP **308** zur Hauptadresse; Pfad und URL-Parameter bleiben erhalten |
+| DNS und E-Mail | Weiterhin bei united-domains; Web-DNS zeigt auf Vercel |
+| HTTPS | Zertifikatsbereitstellung über Vercel; alle vier Domain-Zuordnungen wurden geprüft |
+
+Die Domains wurden vom bisherigen Homepage-Baukasten getrennt und für Vercel eingerichtet. Das war eine Umstellung der Web-Zuordnung, kein Domaintransfer und keine Kündigung der bestehenden Baukastenverträge. Mailserver-, SPF- und DKIM-Einträge wurden erhalten.
+
+**Der vollständige Betriebsleitfaden steht in [HOSTING-AND-DOMAINS.md](docs/HOSTING-AND-DOMAINS.md):** genaue A- und CNAME-Werte, Weiterleitungen, HTTPS-Prüfung, Sprachsteuerung, Veröffentlichung, Fehlerdiagnose und Rücknahme einer fehlerhaften Codeänderung. Die Provider-Einstellungen stehen nicht vollständig im Git-Repository und müssen bei einem Projektumzug separat übernommen werden.
+
+### Domain-Konfiguration im Quellcode
+
+Der Code verwendet bereits `https://bonanza-ranch.com` als Standard. Zum dokumentierten Einrichtungsstand ist **keine zusätzliche `SITE_URL`-Umgebungsvariable in Vercel gesetzt oder nötig**. Für einen späteren Domainwechsel kann der Wert ausdrücklich überschrieben werden:
 
 ```env
 SITE_URL=https://bonanza-ranch.com
 ```
 
-Ohne eigene Einstellung verwendet der Code die Hauptdomain `https://bonanza-ranch.com`. `www.bonanza-ranch.com`, `bonanzaranch.co.za` und `www.bonanzaranch.co.za` werden in Vercel dauerhaft auf diese Hauptdomain weitergeleitet. Die Vorlage befindet sich in [.env.example](.env.example). Lokale `.env`-Dateien werden nicht eingecheckt.
+Nach einer Änderung ist ein neuer Build erforderlich. Die Vorlage befindet sich in [.env.example](.env.example). Lokale `.env`-Dateien werden nicht eingecheckt. DNS-Ziele und Domain-Weiterleitungen werden unabhängig davon bei den Providern verwaltet.
 
 Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusätzlich die Root-Middleware und die Header-Konfiguration. Ein reiner statischer Dateiserver bildet diese Hosting-Funktionen nicht automatisch nach.
 
 ## Qualitätssicherung
 
-Der dokumentierte Stand vom **1. Oktober 2026** besteht den Produktionsbuild und **11 automatisierte Tests**. Geprüft werden unter anderem:
+Der dokumentierte Stand vom **1. Oktober 2026** besteht den Produktionsbuild und **14 automatisierte Tests**. Geprüft werden unter anderem:
 
 - Deutschland → Deutsch; andere und unbekannte Länder → Englisch.
 - Vorrang einer gespeicherten Sprachwahl und Umgang mit ungültigen Cookie-Werten.
@@ -297,8 +317,11 @@ Der dokumentierte Stand vom **1. Oktober 2026** besteht den Produktionsbuild und
 - Keine unnötigen parallelen Videoquellen und kein Vorladen des ungeöffneten Films.
 - Korrekte DE/EN-Menütexte und eindeutige Footer-Sprungziele.
 - Auswahl der zur Bildschirmgröße passenden Videoquelle mit Fallback.
+- Bildladevorlauf ohne Änderung der Bildquellen, begrenzte parallele Vorbereitung, Verhalten bei Sprungnavigation und Ladefehlern sowie Aufräumen beim Verlassen der Seite.
 
 Zusätzlich wurden die aktuellen Änderungen in Desktop- und mobilen Browseransichten kontrolliert: Bildabstände, Zoom, Kapitel-Navigation, Sprachauswahl, Pferdemotiv und Sternenhimmel. Die mobilen Prüfungen verwenden simulierte Viewports; reale Endgeräte können bei Autoplay und Drittanbieter-Erweiterungen abweichen.
+
+Bei der Domainumstellung wurden außerdem alle drei HTTPS-Weiterleitungen mit Pfaden und URL-Parametern, die deutschen und englischen Hauptseiten, Canonicals, robots.txt sowie die unveränderten öffentlichen MX-Einträge geprüft. Die SMTP-Zustellung wurde dabei nicht durch eine Test-E-Mail geprüft.
 
 ## Wo welche Teile gepflegt werden
 

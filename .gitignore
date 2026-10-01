@@ -16,8 +16,10 @@ docs/*
 !docs/generated-editorial-images.json
 !docs/map-relief-source.json
 !docs/TECHNICAL-REVIEW.md
+!docs/HOSTING-AND-DOMAINS.md
 scripts/*
 !scripts/language-routing.test.mjs
 !scripts/optimize-current-media.mjs
 !scripts/site-integrity.test.mjs
+!scripts/story-images.test.mjs
 !scripts/prune-css.mjs
