@@ -31,40 +31,42 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
       { y: 0, ease: "none", scrollTrigger: entrance },
     );
   }
-  const opening = {
-    trigger: small ? ".reserve-triptych-sticky" : wrapper,
-    start: small ? "top 38.8889%" : "top 65%",
-    end: small ? "top top" : "bottom top",
-    scrub: true,
-    invalidateOnRefresh: true,
-  };
-  gsap.fromTo(
+  // A shared, gently scrubbed timeline keeps the three frames in step. On
+  // mobile the zoom continues into the sticky phase instead of finishing on entry.
+  const opening = gsap.timeline({
+    defaults: { duration: 1, ease: "none" },
+    scrollTrigger: {
+      trigger: small ? ".reserve-triptych-sticky" : wrapper,
+      start: small ? "top 45%" : "top 65%",
+      end: small ? "top -35%" : "bottom top",
+      scrub: small ? 0.45 : 0.55,
+      invalidateOnRefresh: true,
+    },
+  });
+  opening.fromTo(
     ".reserve-center",
     { scale: 1, clipPath: "inset(0% 0% 0% 0%)" },
     {
       scale: small ? 360 / 220 : 1.4,
       clipPath: small ? "inset(0% 0% 0% 0%)" : "inset(10% 0% 10% 0%)",
-      ease: "power1.inOut",
-      scrollTrigger: opening,
     },
+    0,
   );
-  gsap.fromTo(
+  opening.fromTo(
     ".reserve-side-left",
     { x: 0 },
     {
       x: () => -w() * (small ? 0.19444444 : 1 / 12),
-      ease: "power1.inOut",
-      scrollTrigger: opening,
     },
+    0,
   );
-  gsap.fromTo(
+  opening.fromTo(
     ".reserve-side-right",
     { x: 0 },
     {
       x: () => w() * (small ? 0.19444444 : 1 / 12),
-      ease: "power1.inOut",
-      scrollTrigger: opening,
     },
+    0,
   );
   // Tengile useMediaParallax(0.12): scale 1.12, yPercent -6 → +6.
   root.querySelectorAll<HTMLElement>(".reserve-editorial-image").forEach((frame) => {
