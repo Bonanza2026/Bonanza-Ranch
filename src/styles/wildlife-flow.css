@@ -139,7 +139,7 @@ html[data-color-theme] .dream-home .life-film { margin-top: 0; padding-top: 0; b
   }
   .dream-home .life-finale .chapter-image-note { color: var(--story-muted, #c8c8c4); }
   .dream-home .reserve-editorial h2 { margin-bottom: 64px; }
-  .wildlife-stack { padding: 0 24px 64px; }
+  .wildlife-stack { padding: 0 24px 16px; }
   .wildlife-stack-items { height: var(--stack-height, auto); }
   .wildlife-stack-item {
     position: sticky;
@@ -150,6 +150,7 @@ html[data-color-theme] .dream-home .life-film { margin-top: 0; padding-top: 0; b
   }
   .wildlife-stack-label { grid-template-columns: 40px 1fr; gap: 16px; font-size: 11px; }
   .wildlife-stack-content { grid-template-columns: 1fr; gap: 40px; min-height: 0; padding: 40px 0 64px; }
+  .wildlife-stack-item:last-child .wildlife-stack-content { padding-bottom: 0; }
   .wildlife-stack-copy { grid-row: 1; }
   .dream-home .wildlife-stack-copy h3 { font-size: 36px; text-align: center; }
   .wildlife-stack-copy p { font-size: 18px; margin-top: 24px; }

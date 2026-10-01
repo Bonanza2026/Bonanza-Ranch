@@ -30,7 +30,10 @@ export function createWildlifeMotion(root: HTMLElement) {
       let total = 0;
       items.forEach((item, index) => {
         const offset = 55 * index;
-        const height = Math.max(viewportHeight - offset, naturalHeights[index]);
+        // The final panel exits straight into the next image; no viewport filler.
+        const height = index === items.length - 1
+          ? naturalHeights[index]
+          : Math.max(viewportHeight - offset, naturalHeights[index]);
         item.style.setProperty("--item-offset", `${offset}px`);
         item.style.setProperty("--item-height", `${height}px`);
         total += height;
