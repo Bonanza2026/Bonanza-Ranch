@@ -1,8 +1,8 @@
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CustomEase } from "gsap/CustomEase";
 import { createHowItWorks, createCursor } from "./reference-interactions";
 import { bindMediaSlider, bindCampActivityHover } from "./reference-subpages";
+import { sectionScrollPosition } from "./section-navigation";
 export function initializeBonanzaUI(lenis: any) {
   const en = document.documentElement.lang === "en";
   const nav = document.querySelector("nav")!,
@@ -148,9 +148,12 @@ export function initializeBonanzaUI(lenis: any) {
       location.assign(url.href);
       return;
     }
+    const currentPath = location.pathname.replace(/\/$/, "") || "/";
+    const linkPath = url.pathname.replace(/\/$/, "") || "/";
+    const samePage = linkPath === currentPath || (currentPath === "/" && linkPath === (en ? "/en" : "/de"));
     if (
       url.origin === location.origin &&
-      url.pathname === location.pathname &&
+      samePage &&
       url.hash
     ) {
       const target = document.getElementById(
@@ -158,21 +161,10 @@ export function initializeBonanzaUI(lenis: any) {
       );
       if (target) {
         e.preventDefault();
-        const scene = ScrollTrigger.getById("bonanza-life");
-        const track = document.querySelector<HTMLElement>(".life-track");
-        if (target.hasAttribute("data-life-chapter") && scene && track) {
-          const progress = Math.min(
-            1,
-            target.offsetLeft / Math.max(1, track.scrollWidth - innerWidth),
-          );
-          lenis.scrollTo(scene.start + (scene.end - scene.start) * progress, {
-            duration: 1.5,
-          });
-        } else
-          lenis.scrollTo(target, {
-            duration: 1.2,
-            offset: innerWidth < 768 && target.id === "freizeit" ? -90 : 0,
-          });
+        if (location.hash !== url.hash) history.pushState(null, "", url.hash);
+        lenis.scrollTo(sectionScrollPosition(target), {
+          duration: matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1.2,
+        });
       }
     }
   });

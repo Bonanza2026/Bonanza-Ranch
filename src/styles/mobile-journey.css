@@ -21,7 +21,7 @@
     text-wrap: balance;
   }
   .dream-home .dream-flight {
-    height: calc(var(--flight-height, 100lvh) * 2.65);
+    height: calc(var(--flight-height, 100lvh) * 2.8);
     background: #000;
   }
   .dream-home .flight-stage {

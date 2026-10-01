@@ -55,7 +55,8 @@
 }
 /* The first wildlife image uses the same frame as the following chapters. */
 html[data-color-theme] .dream-home .life-film { margin-top: 0; padding-top: 0; background: var(--story-paper, #000); }
-.dream-home .life-stage { overflow: hidden; }
+/* Clip the animated track without creating a second native scroll container. */
+.dream-home .life-stage { overflow: clip; }
 .dream-home .life-finale {
   width: 100vw; height: 100svh; min-height: 0;
   padding: var(--chapter-inset) 5vw;

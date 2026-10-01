@@ -108,7 +108,7 @@ export function createDreamMotion() {
         start: "top top",
         end: () => `+=${flight.offsetHeight - height}`,
         // A short catch-up softens coarse input without the long delayed exit.
-        scrub: mobile ? 0.12 : 0.35,
+        scrub: mobile ? 0.18 : 0.4,
         invalidateOnRefresh: true,
       },
       onUpdate: mobile ? () => coverFilm(flightTimeline.progress() >= 0.18) : undefined,

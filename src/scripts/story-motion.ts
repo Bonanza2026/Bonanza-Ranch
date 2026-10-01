@@ -7,7 +7,6 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
     w = () => innerWidth,
     small = innerWidth < 768;
   const cleanups: Array<() => void> = [];
-  let disposed = false;
   cleanups.push(createWildlifeMotion(root));
   // Sobha landingLuxuryTitle / MoveSide / ScaleCenter and ScaleSide patterns.
   const intro = root.querySelector<HTMLElement>(".reserve-introduction")!;
@@ -155,25 +154,8 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
           },
         );
       });
-    const destination =
-      location.hash === "#sicherheit"
-        ? root.querySelector<HTMLElement>("#sicherheit")
-        : null;
-    if (destination)
-      requestAnimationFrame(() => {
-        if (disposed) return;
-        const st = slider.scrollTrigger!;
-        scrollTo({
-          top:
-            st.start +
-            (st.end - st.start) *
-              Math.min(1, destination.offsetLeft / travel()),
-          behavior: "instant",
-        });
-      });
   }
   return () => {
-    disposed = true;
     cleanups.forEach((cleanup) => cleanup());
   };
 }

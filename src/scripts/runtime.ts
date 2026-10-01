@@ -15,6 +15,7 @@ import {
 } from "./reference-subpages";
 import { bindJourneyMap } from "./journey-map";
 import { createDreamMotion } from "./dream-motion";
+import { sectionScrollPosition } from "./section-navigation";
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MotionPathPlugin, CustomEase);
 // Height-only resizes from mobile browser bars must not refresh scrubbed scenes.
 // Width/orientation changes are handled explicitly below.
@@ -117,11 +118,35 @@ function setupMotion() {
 // Start the journey immediately. Slow font downloads must not leave the hero
 // pinned without its flight timeline; only measurements need a later refresh.
 setupMotion();
+// Resolve incoming chapter links after scene measurements, and once more when
+// fonts settle. Never pull a visitor back after they have started interacting.
+const entryChapter = Array.from(document.querySelectorAll<HTMLElement>("[data-life-chapter]"))
+  .find(element => `#${element.id}` === location.hash);
+let entryInterrupted = false;
+const interruptEntry = () => { entryInterrupted = true; };
+if (entryChapter) {
+  ["wheel", "touchstart", "pointerdown", "keydown"].forEach(type =>
+    addEventListener(type, interruptEntry, { once: true, passive: true }),
+  );
+}
+const alignEntryChapter = () => {
+  if (entryChapter && !entryInterrupted) lenis.scrollTo(sectionScrollPosition(entryChapter), { immediate: true });
+};
+requestAnimationFrame(alignEntryChapter);
+addEventListener("hashchange", () => {
+  const target = document.getElementById(location.hash.slice(1));
+  if (target) lenis.scrollTo(sectionScrollPosition(target), { immediate: true });
+});
+if (document.readyState !== "complete") addEventListener("load", () => {
+  ScrollTrigger.refresh();
+  alignEntryChapter();
+}, { once: true });
 document.fonts.ready.then(() => {
   const refreshFonts = () => {
     ScrollTrigger.removeEventListener("scrollEnd", refreshFonts);
     lenis.resize();
     ScrollTrigger.refresh();
+    alignEntryChapter();
   };
   // A late font must not reset the flight while a finger is moving the page.
   if (ScrollTrigger.isScrolling()) ScrollTrigger.addEventListener("scrollEnd", refreshFonts);

@@ -12,7 +12,7 @@ const enPath = pages.en;
 ---
 <!-- Adapted as an Astro component; reference layout and motion selectors retained. -->
 <nav aria-label={en ? "Main navigation" : "Hauptnavigation"}>
-  <div class="language-switch" aria-label={en ? "Language" : "Sprache"}><a href={dePath} lang="de" aria-current={!en ? "page" : undefined}>DE</a><span>/</span><a href={enPath} lang="en" aria-current={en ? "page" : undefined}>EN</a></div>
+  <div class="language-switch" aria-label={en ? "Language" : "Sprache"}><a href={dePath} lang="de" hreflang="de" aria-label="Deutsch" aria-current={!en ? "page" : undefined}>DE</a><span>/</span><a href={enPath} lang="en" hreflang="en" aria-label="English" aria-current={en ? "page" : undefined}>EN</a></div>
   <div class="nav-contain container">
     <div class="nav-layout u-grid">
       <div class="nav-col col-4">
@@ -70,7 +70,7 @@ const enPath = pages.en;
         </ul>
       </div>
       <div class="nav-col col-4">
-        <a href={home} aria-label="Bonanza Ranch – Startseite">
+        <a href={home} aria-label={en ? "Bonanza Ranch – home" : "Bonanza Ranch – Startseite"}>
           <span
             class="bonanza-logo"
             role="img"
@@ -197,7 +197,7 @@ const enPath = pages.en;
       </div>
       <div class="nav-col">
         <div class="nav-logo">
-          <a href={home} aria-label="Bonanza Ranch – Startseite">
+          <a href={home} aria-label={en ? "Bonanza Ranch – home" : "Bonanza Ranch – Startseite"}>
             <span
               class="bonanza-logo"
               role="img"

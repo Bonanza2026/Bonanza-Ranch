@@ -94,6 +94,29 @@ test('HTML does not eagerly load several video formats or the unopened film', ()
   }
 });
 
+test('authored languages stay intact and footer chapter links resolve in both languages', () => {
+  for (const [lang, menu, evenings, security] of [
+    ['de', 'Menü', 'Lange ABENDE', 'Sicherheit'],
+    ['en', 'Menu', 'Long EVENINGS', 'Security'],
+  ]) {
+    const html = page('/' + lang);
+    assert.equal(html('html').attr('translate'), 'no');
+    assert.equal(html('meta[name="google"]').attr('content'), 'notranslate');
+    const menuLabels = html('nav .menu-toggle .btn-text, nav .nav-left .btn-text').map((_, el) => html(el).text().trim()).get();
+    assert.ok(menuLabels.length >= 2);
+    assert.ok(menuLabels.every(label => label === menu), menuLabels.join(', '));
+    assert.equal(html('#geniessen h3').text().replace(/\s+/g, ' ').replace(/(Lange|Long)(ABENDE|EVENINGS)/, '$1 $2').trim(), evenings);
+    assert.equal(html(`footer a[href="/${lang}#sicherheit"]`).text().trim(), security);
+    html('footer a[href*="#"]').each((_, el) => {
+      const url = new URL(html(el).attr('href'), siteUrl);
+      assert.equal(url.pathname, '/' + lang);
+      assert.equal(html(`[id="${url.hash.slice(1)}"]`).length, 1, url.href);
+    });
+    assert.equal(html('.language-switch a[lang="de"]').attr('hreflang'), 'de');
+    assert.equal(html('.language-switch a[lang="en"]').attr('hreflang'), 'en');
+  }
+});
+
 test('video selection stays at the selected viewport size, with a compatible fallback', () => {
   for (const mobile of [true, false]) {
     const selected = heroSources(mobile, true);
