@@ -1,4 +1,4 @@
-const configuredUrl = new URL(process.env.SITE_URL || 'https://bonanza-gamma.vercel.app');
+const configuredUrl = new URL(process.env.SITE_URL || 'https://bonanza-ranch.com');
 if (configuredUrl.protocol !== 'https:' || configuredUrl.username || configuredUrl.password || configuredUrl.pathname !== '/' || configuredUrl.search || configuredUrl.hash) {
   throw new Error('SITE_URL must be an HTTPS origin without a path, credentials, query or fragment.');
 }

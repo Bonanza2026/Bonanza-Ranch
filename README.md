@@ -275,10 +275,10 @@ Die lokale Website ist unter `http://127.0.0.1:4323/` erreichbar. Die Sprachfass
 Beispiel für eine eigene Domain:
 
 ```env
-SITE_URL=https://www.bonanza-ranch.com
+SITE_URL=https://bonanza-ranch.com
 ```
 
-Ohne eigene Einstellung verwendet der aktuelle Code `https://bonanza-gamma.vercel.app`. Die Vorlage befindet sich in [.env.example](.env.example). Lokale `.env`-Dateien werden nicht eingecheckt.
+Ohne eigene Einstellung verwendet der Code die Hauptdomain `https://bonanza-ranch.com`. `www.bonanza-ranch.com`, `bonanzaranch.co.za` und `www.bonanzaranch.co.za` werden in Vercel dauerhaft auf diese Hauptdomain weitergeleitet. Die Vorlage befindet sich in [.env.example](.env.example). Lokale `.env`-Dateien werden nicht eingecheckt.
 
 Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusätzlich die Root-Middleware und die Header-Konfiguration. Ein reiner statischer Dateiserver bildet diese Hosting-Funktionen nicht automatisch nach.
 
