@@ -38,9 +38,9 @@ https://www.bonanzaranch.co.za/en?source=partner
 → https://www.bonanza-ranch.com/en?source=partner
 ```
 
-Die `.co.za`-Weiterleitungen liegen in den Vercel-Projekteinstellungen. Die Weiterleitung der Adresse ohne `www` ist dagegen als erste, nur auf `bonanza-ranch.com` begrenzte Host-Regel in [vercel.json](../vercel.json) versioniert. Sie läuft vor den Markdown-Weiterleitungen und erhält den angeforderten Pfad. Die Sprach-Middleware bleibt für die Eingangssprache zuständig. Auch eine reine Weiterleitungsdomain benötigt für einen HTTPS-Aufruf eine funktionierende Zertifikatszuordnung.
+Die `.co.za`-Weiterleitungen liegen in den Vercel-Projekteinstellungen. Die Weiterleitung der Adresse ohne `www` ist dagegen als erste, nur auf `bonanza-ranch.com` begrenzte Host-Regel in [vercel.json](../vercel.json) versioniert. Sie läuft vor den Markdown-Weiterleitungen und erhält den angeforderten Pfad. Am Einstieg `/` führt zusätzlich [middleware.js](../middleware.js) diese Host-Weiterleitung vor der Sprachauswahl aus: Der erste Live-Test zeigte hier trotz aktiver Konfigurationsregel noch HTTP 200. Die Sprachauswahl erfolgt anschließend auf der Hauptdomain. Auch eine reine Weiterleitungsdomain benötigt für einen HTTPS-Aufruf eine funktionierende Zertifikatszuordnung.
 
-Vercel ließ die Dashboard-Weiterleitung der Adresse ohne `www` nicht speichern, solange die `.co.za`-Domains auf diese Adresse zeigen. Deshalb wird diese Weiterleitung über die Projektkonfiguration ausgeliefert. Bei einer späteren Vereinfachung zunächst beide `.co.za`-Ziele direkt auf `www.bonanza-ranch.com` ändern; anschließend kann auch die Adresse ohne `www` im Dashboard weitergeleitet und die entsprechende Code-Regel entfernt werden.
+Vercel ließ die Dashboard-Weiterleitung der Adresse ohne `www` nicht speichern, solange die `.co.za`-Domains auf diese Adresse zeigen. Deshalb wird diese Weiterleitung über die Projektkonfiguration ausgeliefert. Bei einer späteren Vereinfachung zunächst beide `.co.za`-Ziele direkt auf `www.bonanza-ranch.com` ändern; anschließend kann auch die Adresse ohne `www` im Dashboard weitergeleitet werden. Nach erfolgreicher Live-Prüfung lassen sich dann die Host-Regel in `vercel.json` und die Host-Weiterleitung am Anfang der Sprach-Middleware entfernen.
 
 ## 3. DNS-Konfiguration bei united-domains
 

@@ -18,6 +18,20 @@ test('Germany enters in German; other countries enter in English', () => {
     assert.equal(response.headers.get('cache-control'), 'private, no-store');
   }
 });
+
+test('apex entry reaches the canonical host before country, cookie or Markdown selection', () => {
+  for (const country of ['DE', 'CN', undefined]) {
+    for (const cookie of ['bonanza_language=de', 'bonanza_language=en', undefined]) {
+      for (const accept of ['text/html', 'text/markdown']) {
+        const input = request(country, cookie, '/?source=partner&phrase=hello%20world', accept);
+        const response = middleware(new Request('https://bonanza-ranch.com/?source=partner&phrase=hello%20world', input));
+        assert.equal(response.status, 308);
+        assert.equal(response.headers.get('location'), 'https://www.bonanza-ranch.com/?source=partner&phrase=hello%20world');
+        assert.equal(response.headers.get('x-middleware-next'), null);
+      }
+    }
+  }
+});
 test('manual choice takes priority over country, malformed preferences are ignored', () => {
   assert.equal(middleware(request('DE','other=1; bonanza_language=en')).status, 307);
   assert.equal(middleware(request('ZA','bonanza_language=de; other=1')).headers.get('x-middleware-next'), '1');

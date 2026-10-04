@@ -305,7 +305,7 @@ Die lokale Website ist unter `http://127.0.0.1:4323/` erreichbar. Die Sprachfass
 | DNS und E-Mail | Weiterhin bei united-domains; Web-DNS zeigt auf Vercel |
 | HTTPS | Zertifikatsbereitstellung über Vercel; alle vier Domain-Zuordnungen wurden geprüft |
 
-Die Weiterleitung von `bonanza-ranch.com` nach `www.bonanza-ranch.com` steht als Host-Regel in `vercel.json`. Die beiden `.co.za`-Adressen führen über ihre bestehenden Vercel-Domain-Einstellungen zuerst zur Adresse ohne `www` und dann zur Hauptadresse: zwei dauerhafte Weiterleitungsschritte. `www.bonanza-ranch.com` ist direkt mit Production verbunden.
+Die Weiterleitung von `bonanza-ranch.com` nach `www.bonanza-ranch.com` steht als Host-Regel in `vercel.json`. Für den Einstieg `/` führt auch die Sprach-Middleware zuerst diese Host-Weiterleitung aus. Die beiden `.co.za`-Adressen führen über ihre bestehenden Vercel-Domain-Einstellungen zuerst zur Adresse ohne `www` und dann zur Hauptadresse: zwei dauerhafte Weiterleitungsschritte. `www.bonanza-ranch.com` ist direkt mit Production verbunden.
 
 Die Domains wurden vom bisherigen Homepage-Baukasten getrennt und für Vercel eingerichtet. Das war eine Umstellung der Web-Zuordnung, kein Domaintransfer und keine Kündigung der bestehenden Baukastenverträge. Mailserver-, SPF- und DKIM-Einträge wurden erhalten.
 
@@ -325,12 +325,13 @@ Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusät
 
 ## Qualitätssicherung
 
-Der dokumentierte Stand vom **4. Oktober 2026** besteht den Produktionsbuild und **19 automatisierte Tests**. Geprüft werden unter anderem:
+Der dokumentierte Stand vom **4. Oktober 2026** besteht den Produktionsbuild und **20 automatisierte Tests**. Geprüft werden unter anderem:
 
 - Deutschland → Deutsch; andere und unbekannte Länder → Englisch.
 - Vorrang einer gespeicherten Sprachwahl und Umgang mit ungültigen Cookie-Werten.
 - Unveränderte explizite Sprachseiten, Assets und Rechtslinks.
 - Erhalt von URL-Parametern bei der Weiterleitung.
+- Weiterleitung des Einstiegs ohne `www` vor der Auswahl nach Land, Sprachcookie oder Markdown-Anfrage.
 - Auflösbare Links in robots.txt, llms.txt und Sitemap.
 - Markdown-Abruf mit positiven `Accept`-Gewichtungen, Ausschluss von `q=0` und unveränderte Sprachpräferenzen.
 - Vollständige Markdown-Ziele für alle kanonischen Seiten, Inhalte in beiden Sprachen, Link-Header und korrekte Antworttypen.
