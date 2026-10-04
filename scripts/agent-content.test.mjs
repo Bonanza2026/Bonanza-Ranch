@@ -8,6 +8,7 @@ import { pageToMarkdown } from './generate-agent-content.mjs';
 
 const read = (path) => readFileSync(new URL('../dist/' + path, import.meta.url), 'utf8');
 const config = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+const markdownRedirects = config.redirects.filter(rule => rule.has?.some(condition => condition.type === 'header' && condition.key === 'accept'));
 
 test('Markdown negotiation accepts explicit positive media ranges, not browser defaults or q=0', () => {
   const examples = [
@@ -21,7 +22,7 @@ test('Markdown negotiation accepts explicit positive media ranges, not browser d
   ];
   for (const [accept, expected] of examples) {
     assert.equal(acceptsMarkdown(accept), expected, accept);
-    for (const rule of config.redirects) {
+    for (const rule of markdownRedirects) {
       assert.equal(new RegExp(rule.has[0].value).test(accept || ''), expected, accept);
     }
   }
@@ -68,8 +69,8 @@ test('all canonical Markdown pages and full content reflect the same built Germa
 
 test('Vercel exposes real Markdown targets and discovery links while preserving public HTML indexation', () => {
   const paths = languagePages.flatMap(Object.values);
-  assert.deepEqual(config.redirects.map(rule => rule.source).sort(), [...paths].sort());
-  for (const rule of config.redirects) {
+  assert.deepEqual(markdownRedirects.map(rule => rule.source).sort(), [...paths].sort());
+  for (const rule of markdownRedirects) {
     assert.equal(rule.permanent, false);
     assert.equal(rule.destination, markdownPath(rule.source));
     assert.ok(read(rule.destination.slice(1)).length);

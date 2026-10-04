@@ -24,20 +24,23 @@ Dashboard-Zugriff setzt entsprechende Kontorechte voraus. Zugangsdaten, Tokens, 
 | Aufgerufene Domain | Funktion / Ziel |
 | --- | --- |
 | `www.bonanza-ranch.com` | Hauptdomain, mit der Vercel-Produktionsumgebung verbunden |
-| `bonanza-ranch.com` | Dauerhafte Weiterleitung auf `https://www.bonanza-ranch.com` |
-| `bonanzaranch.co.za` | Dauerhafte Weiterleitung auf `https://www.bonanza-ranch.com` |
-| `www.bonanzaranch.co.za` | Dauerhafte Weiterleitung auf `https://www.bonanza-ranch.com` |
+| `bonanza-ranch.com` | Mit Production verbunden; Host-Regel in `vercel.json` leitet dauerhaft auf `https://www.bonanza-ranch.com` weiter |
+| `bonanzaranch.co.za` | Vercel-Domain-Weiterleitung auf `https://bonanza-ranch.com`, anschließend zur Hauptdomain |
+| `www.bonanzaranch.co.za` | Vercel-Domain-Weiterleitung auf `https://bonanza-ranch.com`, anschließend zur Hauptdomain |
 
 Seit dem 4. Oktober 2026 ist die `www`-Adresse die Hauptdomain. Canonicals, Sprachalternativen, Social-Media-Verweise, Sitemap und KI-Dateien verwenden denselben Hostnamen. Die Umstellung folgt Vercels Empfehlung zur Nutzung eines CNAME für die Hauptadresse; sie garantiert keine Freigabe durch jeden KI-Lesedienst. DNS- und Mail-Einträge bleiben unverändert.
 
-Die drei Weiterleitungen verwenden **HTTP 308**. Es werden keine separaten Kopien der Website auf diesen Domains gepflegt. Pfad und Abfrageparameter werden übernommen, zum Beispiel:
+Die Weiterleitungen verwenden **HTTP 308**. Die beiden `.co.za`-Adressen erreichen die Hauptdomain in zwei Schritten. Es werden keine separaten Kopien der Website auf diesen Domains gepflegt. Pfad und Abfrageparameter werden übernommen, zum Beispiel:
 
 ```text
 https://www.bonanzaranch.co.za/en?source=partner
+→ https://bonanza-ranch.com/en?source=partner
 → https://www.bonanza-ranch.com/en?source=partner
 ```
 
-Die Domain-Weiterleitungen liegen in den Vercel-Projekteinstellungen. Sie werden nicht durch die Sprach-Middleware oder durch eine Weiterleitung beim Registrar ersetzt. Auch eine reine Weiterleitungsdomain benötigt für einen HTTPS-Aufruf eine funktionierende Zertifikatszuordnung.
+Die `.co.za`-Weiterleitungen liegen in den Vercel-Projekteinstellungen. Die Weiterleitung der Adresse ohne `www` ist dagegen als erste, nur auf `bonanza-ranch.com` begrenzte Host-Regel in [vercel.json](../vercel.json) versioniert. Sie läuft vor den Markdown-Weiterleitungen und erhält den angeforderten Pfad. Die Sprach-Middleware bleibt für die Eingangssprache zuständig. Auch eine reine Weiterleitungsdomain benötigt für einen HTTPS-Aufruf eine funktionierende Zertifikatszuordnung.
+
+Vercel ließ die Dashboard-Weiterleitung der Adresse ohne `www` nicht speichern, solange die `.co.za`-Domains auf diese Adresse zeigen. Deshalb wird diese Weiterleitung über die Projektkonfiguration ausgeliefert. Bei einer späteren Vereinfachung zunächst beide `.co.za`-Ziele direkt auf `www.bonanza-ranch.com` ändern; anschließend kann auch die Adresse ohne `www` im Dashboard weitergeleitet und die entsprechende Code-Regel entfernt werden.
 
 ## 3. DNS-Konfiguration bei united-domains
 

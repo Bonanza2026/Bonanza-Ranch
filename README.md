@@ -305,6 +305,8 @@ Die lokale Website ist unter `http://127.0.0.1:4323/` erreichbar. Die Sprachfass
 | DNS und E-Mail | Weiterhin bei united-domains; Web-DNS zeigt auf Vercel |
 | HTTPS | Zertifikatsbereitstellung über Vercel; alle vier Domain-Zuordnungen wurden geprüft |
 
+Die Weiterleitung von `bonanza-ranch.com` nach `www.bonanza-ranch.com` steht als Host-Regel in `vercel.json`. Die beiden `.co.za`-Adressen führen über ihre bestehenden Vercel-Domain-Einstellungen zuerst zur Adresse ohne `www` und dann zur Hauptadresse: zwei dauerhafte Weiterleitungsschritte. `www.bonanza-ranch.com` ist direkt mit Production verbunden.
+
 Die Domains wurden vom bisherigen Homepage-Baukasten getrennt und für Vercel eingerichtet. Das war eine Umstellung der Web-Zuordnung, kein Domaintransfer und keine Kündigung der bestehenden Baukastenverträge. Mailserver-, SPF- und DKIM-Einträge wurden erhalten.
 
 **Der vollständige Betriebsleitfaden steht in [HOSTING-AND-DOMAINS.md](docs/HOSTING-AND-DOMAINS.md):** genaue A- und CNAME-Werte, Weiterleitungen, HTTPS-Prüfung, Sprachsteuerung, Veröffentlichung, Fehlerdiagnose und Rücknahme einer fehlerhaften Codeänderung. Die Provider-Einstellungen stehen nicht vollständig im Git-Repository und müssen bei einem Projektumzug separat übernommen werden.
@@ -317,9 +319,9 @@ Der Code verwendet seit dem 4. Oktober 2026 `https://www.bonanza-ranch.com` als 
 SITE_URL=https://www.bonanza-ranch.com
 ```
 
-Nach einer Änderung ist ein neuer Build erforderlich. Die Vorlage befindet sich in [.env.example](.env.example). Lokale `.env`-Dateien werden nicht eingecheckt. DNS-Ziele und Domain-Weiterleitungen werden unabhängig davon bei den Providern verwaltet.
+Nach einer Änderung ist ein neuer Build erforderlich. Die Vorlage befindet sich in [.env.example](.env.example). Lokale `.env`-Dateien werden nicht eingecheckt. Bei einem Domainwechsel außerdem die Host-Weiterleitung in `vercel.json` und die Domain-Zuordnungen im Vercel-Dashboard anpassen. DNS-Ziele werden beim Registrar verwaltet.
 
-Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusätzlich die Root-Middleware, die Header-Konfiguration und die bedingten Markdown-Weiterleitungen aus `vercel.json`. Ein reiner statischer Dateiserver bildet diese Hosting-Funktionen nicht automatisch nach. Die erzeugten Markdown-Dateien selbst lassen sich auch in der lokalen Vorschau direkt öffnen.
+Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusätzlich die Root-Middleware, die Header-Konfiguration sowie die Host- und Markdown-Weiterleitungen aus `vercel.json`. Ein reiner statischer Dateiserver bildet diese Hosting-Funktionen nicht automatisch nach. Die erzeugten Markdown-Dateien selbst lassen sich auch in der lokalen Vorschau direkt öffnen.
 
 ## Qualitätssicherung
 
