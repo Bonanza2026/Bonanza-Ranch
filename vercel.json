@@ -4,20 +4,159 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' blob:; connect-src 'self'; worker-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=()" }
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' blob:; connect-src 'self'; worker-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+        }
       ]
     },
     {
-      "source": "/(robots.txt|llms.txt)",
-      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
+      "source": "/(robots.txt|llms.txt|llms-full.txt)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
     },
     {
       "source": "/sitemap.xml",
-      "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</llms.txt>; rel=\"describedby\"; type=\"text/plain\", </llms-full.txt>; rel=\"describedby\"; type=\"text/plain\""
+        }
+      ]
+    },
+    {
+      "source": "/(de|en|impressum|datenschutz|en/legal|en/privacy)",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
+    },
+    {
+      "source": "/_agent-markdown/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/(llms.txt|llms-full.txt)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/de",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(^|.*,\\s*)\\s*[Tt][Ee][Xx][Tt]/[Mm][Aa][Rr][Kk][Dd][Oo][Ww][Nn](\\s*;\\s*[Qq]=(1(\\.0{0,3})?|0\\.([1-9][0-9]{0,2}|0[1-9][0-9]?|00[1-9])))?\\s*(,.*|$)"
+        }
+      ],
+      "destination": "/_agent-markdown/de.md",
+      "permanent": false
+    },
+    {
+      "source": "/en",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(^|.*,\\s*)\\s*[Tt][Ee][Xx][Tt]/[Mm][Aa][Rr][Kk][Dd][Oo][Ww][Nn](\\s*;\\s*[Qq]=(1(\\.0{0,3})?|0\\.([1-9][0-9]{0,2}|0[1-9][0-9]?|00[1-9])))?\\s*(,.*|$)"
+        }
+      ],
+      "destination": "/_agent-markdown/en.md",
+      "permanent": false
+    },
+    {
+      "source": "/impressum",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(^|.*,\\s*)\\s*[Tt][Ee][Xx][Tt]/[Mm][Aa][Rr][Kk][Dd][Oo][Ww][Nn](\\s*;\\s*[Qq]=(1(\\.0{0,3})?|0\\.([1-9][0-9]{0,2}|0[1-9][0-9]?|00[1-9])))?\\s*(,.*|$)"
+        }
+      ],
+      "destination": "/_agent-markdown/impressum.md",
+      "permanent": false
+    },
+    {
+      "source": "/en/legal",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(^|.*,\\s*)\\s*[Tt][Ee][Xx][Tt]/[Mm][Aa][Rr][Kk][Dd][Oo][Ww][Nn](\\s*;\\s*[Qq]=(1(\\.0{0,3})?|0\\.([1-9][0-9]{0,2}|0[1-9][0-9]?|00[1-9])))?\\s*(,.*|$)"
+        }
+      ],
+      "destination": "/_agent-markdown/en/legal.md",
+      "permanent": false
+    },
+    {
+      "source": "/datenschutz",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(^|.*,\\s*)\\s*[Tt][Ee][Xx][Tt]/[Mm][Aa][Rr][Kk][Dd][Oo][Ww][Nn](\\s*;\\s*[Qq]=(1(\\.0{0,3})?|0\\.([1-9][0-9]{0,2}|0[1-9][0-9]?|00[1-9])))?\\s*(,.*|$)"
+        }
+      ],
+      "destination": "/_agent-markdown/datenschutz.md",
+      "permanent": false
+    },
+    {
+      "source": "/en/privacy",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(^|.*,\\s*)\\s*[Tt][Ee][Xx][Tt]/[Mm][Aa][Rr][Kk][Dd][Oo][Ww][Nn](\\s*;\\s*[Qq]=(1(\\.0{0,3})?|0\\.([1-9][0-9]{0,2}|0[1-9][0-9]?|00[1-9])))?\\s*(,.*|$)"
+        }
+      ],
+      "destination": "/_agent-markdown/en/privacy.md",
+      "permanent": false
     }
   ]
 }

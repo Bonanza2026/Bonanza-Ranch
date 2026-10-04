@@ -4,6 +4,7 @@ import SiteFooter from "../components/SiteFooter.astro";
 import CookieNotice from "../components/CookieNotice.astro";
 import ContactOptions from "../components/ContactOptions.astro";
 import { languagePages, siteUrl } from '../../site.config.mjs';
+import { markdownPath } from '../../agent-content.mjs';
 import "../styles/reference.css";
 import "../styles/bonanza.css";
 import "../styles/dream.css";
@@ -35,6 +36,9 @@ const isHome = ['/', '/de', '/en'].includes(pathname);
     <meta name="description" content={description} />
     <meta name="google" content="notranslate" />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="text/markdown" href={siteUrl + markdownPath(pages[lang === 'en' ? 'en' : 'de'])} />
+    <link rel="describedby" type="text/plain" href={siteUrl + '/llms.txt'} />
+    <link rel="describedby" type="text/plain" href={siteUrl + '/llms-full.txt'} />
     <link rel="alternate" hreflang="de" href={siteUrl + pages.de} />
     <link rel="alternate" hreflang="en" href={siteUrl + pages.en} />
     <link rel="alternate" hreflang="x-default" href={siteUrl + pages.en} />

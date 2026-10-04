@@ -122,7 +122,7 @@ Die Domain-Weiterleitung vereinheitlicht den **Hostnamen**. Erst danach entschei
 - Andere oder unbekannte Länder werden mit HTTP **307** zu `/en` weitergeleitet.
 - `/de`, `/en` und die ausdrücklich verlinkten Rechtsseiten behalten ihre Sprache.
 
-Die Root-Antwort verwendet `Cache-Control: private, no-store` sowie `Vary: Cookie, X-Vercel-IP-Country`, damit die Entscheidung nicht als gemeinsame Sprachantwort für alle Besucher zwischengespeichert wird.
+Die Root-Antwort verwendet `Cache-Control: private, no-store` sowie `Vary: Accept, Cookie, X-Vercel-IP-Country`, damit Sprache und Darstellungsformat nicht als gemeinsame Antwort für alle Besucher zwischengespeichert werden.
 
 Für internationale Empfehlungen die Hauptadresse ohne `/de` teilen. Ein ausdrücklich deutscher Link soll absichtlich nicht anhand des Landes überschrieben werden. Die Ländererkennung basiert auf der Hosting-Information, nicht auf einer GPS-Freigabe. Die Astro-Vorschau allein simuliert die Vercel-Middleware nicht.
 
@@ -178,7 +178,34 @@ Die Erlebnisbilder bleiben als echte `img`-Elemente mit ihren bestehenden `src`-
 
 Die Vorbereitungen beginnen erst in der Nähe des Erlebnisbereichs. Weiter entfernte Bilder bleiben beim normalen Lazy Loading. Beim Verlassen der Seite wird die Warteschlange aufgeräumt. Ein fehlgeschlagenes Bild blockiert die folgenden nicht. Das verkürzt den sichtbaren Nachladeeffekt, ohne Fotos neu zu komprimieren oder kleinere Bildquellen zu erzwingen. Die tatsächlich benötigte Downloadzeit hängt weiterhin von Verbindung, Bildgröße und Scrolltempo ab.
 
-## 9. Rücknahme und spätere Übergabe
+## 9. Maschinenlesbare Inhalte und KI-Abrufe
+
+**Ergänzung vom 4. Oktober 2026:** Neben HTML gibt es automatisch aus dem Produktionsbuild erzeugte Markdown-Fassungen aller sechs kanonischen Seiten sowie `/llms-full.txt`. `/llms.txt` verlinkt diese Fassungen. Die öffentlichen Antworten enthalten einen `Link`-Header zu beiden llms-Dateien; die HTML-Seiten verweisen zusätzlich auf ihre jeweilige Markdown-Alternative.
+
+Die Regeln in [vercel.json](../vercel.json) führen ausdrücklich angeforderte Markdown-Antworten mit HTTP 307 zur jeweiligen Datei unter `/_agent-markdown/`. Sie liefern `text/markdown; charset=utf-8`. Requests ohne ausdrückliche Markdown-Anforderung behalten HTML. `q=0` bedeutet, dass Markdown nicht akzeptiert wird. Für `/` wählt die Middleware vorher weiterhin die Sprache. Die Zusatzfassungen werden nicht als neue kanonische Seiten in die Sitemap aufgenommen.
+
+Beispiele für öffentliche Prüfungen:
+
+```powershell
+curl.exe -sS -I "https://bonanza-ranch.com/en"
+curl.exe -sS -L -D - -H "Accept: text/markdown" "https://bonanza-ranch.com/en"
+curl.exe -sS -L -D - -H "Accept: text/markdown" "https://bonanza-ranch.com/de"
+curl.exe -sS -I -H "Accept: text/markdown;q=0" "https://bonanza-ranch.com/en"
+curl.exe -sS "https://bonanza-ranch.com/llms-full.txt"
+curl.exe -sS "https://bonanza-ranch.com/robots.txt"
+```
+
+robots.txt erlaubt weiterhin die öffentlichen Inhalte und benennt Such- und KI-Crawler nun ausdrücklich. `Content-Signal` ergänzt die Nutzungspräferenzen für Suche, KI-Eingaben und Training. Diese Erweiterung ist keine technische Zugriffssperre und wird nicht von jedem Dienst ausgewertet.
+
+### Produktionsdomain und Deployment-Anmeldeschutz
+
+Die öffentliche Produktionsdomain und die internen Vercel-Deployment-Adressen sind getrennt zu prüfen. Vercels **Standard Protection** verlangt eine Anmeldung für geschützte Deployment-Adressen, nimmt Produktionsdomains jedoch aus. Ein Login an einer solchen internen Adresse beweist daher keine Sperre von `bonanza-ranch.com`.
+
+Bei der Diagnose waren die öffentlichen HTML-Seiten auch ohne Anmeldung abrufbar. Zusätzlich konnte ein externer Textlesedienst Inhalte abrufen, während ein anderes Web-Lesetool einen unspezifischen Abruffehler meldete. Eine generelle KI-Sperre oder ein Zusammenhang mit einer fehlenden Suchindexierung ist dadurch nicht belegt. Die neuen Markdown-Fassungen erleichtern die Auswertung; ein konkreter Tool-Abruffehler muss weiterhin anhand seiner Antwort und der Vercel-Protokolle untersucht werden.
+
+Änderungen am Deployment-Anmeldeschutz und an der Firewall erfolgen im Vercel-Dashboard und sind keine Wirkung dieses Git-Commits. Firewall- oder Authentifizierungsschutz nicht pauschal als Diagnosemaßnahme entfernen. Für die öffentliche Domain zunächst Statuscode, Weiterleitungsziel, Antworttyp, `x-vercel-mitigated` und Einträge im Firewall-Traffic prüfen.
+
+## 10. Rücknahme und spätere Übergabe
 
 Bei einer fehlerhaften Codeänderung den verursachenden Commit nachvollziehbar zurücknehmen und den korrigierten Stand wieder nach `main` veröffentlichen. Dafür muss die Domain nicht umgezogen werden. Ein Code-Rollback stellt jedoch keine DNS-Einträge oder Dashboard-Einstellungen wieder her.
 
@@ -198,3 +225,5 @@ Der Quellcode enthält die Website und ihre Build-Konfiguration. Er enthält wed
 
 - [Vercel: eigene Domain hinzufügen](https://vercel.com/docs/domains/working-with-domains/add-a-domain)
 - [Vercel: Domains bereitstellen und weiterleiten](https://vercel.com/docs/domains/working-with-domains/deploying-and-redirecting)
+- [Vercel: Weiterleitungen über die Projektkonfiguration](https://vercel.com/docs/routing/redirects/configuration-redirects)
+- [Vercel: Standard Protection und Produktionsdomains](https://vercel.com/docs/deployment-protection#standard-protection)

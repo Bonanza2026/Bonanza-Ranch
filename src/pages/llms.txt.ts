@@ -31,8 +31,13 @@ Die Inhalte sind auf Deutsch und Englisch verfügbar. Die folgenden Sprach-URLs 
 
 ## Technische Orientierung
 
+- [Vollständige Inhalte / Full content](${siteUrl}/llms-full.txt): Deutsche und englische Seiteninhalte einschließlich Betreiber- und Datenschutzangaben, automatisch aus dem aktuellen HTML-Build erzeugt.
+- [Deutsche Startseite als Markdown](${siteUrl}/_agent-markdown/de.md): Inhaltliche Fassung ohne Animationen und Bedienoberfläche.
+- [English homepage as Markdown](${siteUrl}/_agent-markdown/en.md): Content representation without animation or interface controls.
 - [Sitemap](${siteUrl}/sitemap.xml): Kanonische Seiten und ihre Sprachvarianten.
 - [Crawler-Regeln](${siteUrl}/robots.txt): Öffentliche Abrufregeln für Suchmaschinen und andere Crawler.
+
+Die sechs kanonischen Seiten unterstützen auf Vercel auch den Abruf mit Accept: text/markdown. Eine temporäre Weiterleitung führt zur passenden Markdown-Datei. Normale Browser erhalten weiterhin HTML. An der Startadresse / bleibt die gespeicherte Sprachwahl beziehungsweise die Länderkennung maßgeblich.
 `;
   return new Response(content, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 }

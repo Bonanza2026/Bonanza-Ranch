@@ -2,10 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import middleware from '../middleware.js';
 
-const request = (country, cookie, path = '/') => {
+const request = (country, cookie, path = '/', accept) => {
   const headers = new Headers();
   if (country) headers.set('x-vercel-ip-country', country);
   if (cookie) headers.set('cookie', cookie);
+  if (accept) headers.set('accept', accept);
   return new Request(`https://www.bonanza-ranch.com${path}`, {headers});
 };
 test('Germany enters in German; other countries enter in English', () => {
@@ -30,4 +31,18 @@ test('explicit language pages, assets and legal links are not redirected', () =>
 test('query parameters survive redirects; local preview remains German', () => {
   assert.equal(middleware(request('US',undefined,'/?utm_source=test')).headers.get('location'), 'https://www.bonanza-ranch.com/en?utm_source=test');
   assert.equal(middleware(new Request('http://127.0.0.1:4323/')).headers.get('x-middleware-next'), '1');
+});
+
+test('Markdown entry requests keep country and saved language preferences', () => {
+  for (const [country, cookie, language] of [
+    ['DE', undefined, 'de'], ['CN', undefined, 'en'],
+    ['DE', 'bonanza_language=en', 'en'], ['ZA', 'bonanza_language=de', 'de'],
+  ]) {
+    const response = middleware(request(country, cookie, '/?source=reader', 'text/markdown'));
+    assert.equal(response.status, 307);
+    assert.equal(response.headers.get('location'), `https://www.bonanza-ranch.com/${language}?source=reader`);
+    assert.equal(response.headers.get('vary'), 'Accept, Cookie, X-Vercel-IP-Country');
+    assert.equal(response.headers.get('cache-control'), 'private, no-store');
+  }
+  assert.equal(middleware(request('DE', undefined, '/', 'text/markdown;q=0')).headers.get('x-middleware-next'), '1');
 });

@@ -24,7 +24,7 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 | Mobile | Eigene Flugrichtung, vertikale Kapitel, angepasste Sticky-Panels, lesbare Texte und separat abgestimmte Bildabstände |
 | Sprachen | Eigene deutsche und englische Texte, manuelle Sprachwahl und automatische Ländererkennung am Einstieg |
 | Suchmaschinen | Metadaten, Canonicals, Sprachverweise, Social-Media-Vorschauen, robots.txt und XML-Sitemap |
-| KI-Lesbarkeit | Projektspezifische llms.txt mit Fakten, Sprachvarianten, Kontakt und Inhaltsverweisen |
+| KI-Lesbarkeit | llms.txt, vollständige DE/EN-Inhalte in llms-full.txt, automatisch erzeugte Markdown-Seiten und HTTP-Link-Hinweise |
 | Medienauslieferung | WebP-Fotos, responsive Bildgrößen, WebM-Video und MP4-Kompatibilitätsfallback |
 | Datenschutz | Lokale Medien und Schriften, Cookie-Hinweis, Sprachpräferenz, Impressum und Datenschutz in DE/EN |
 | Technik | Statischer Astro-Build, Vercel-Middleware, Sicherheitsheader und automatisierte Integritätsprüfungen |
@@ -173,7 +173,9 @@ Die lokale Astro-Vorschau führt die Vercel-Middleware nicht aus. Die Länderlog
 
 ### robots.txt
 
-Die Datei erlaubt das Crawlen der öffentlichen Website und verweist auf die Sitemap. Sie wird beim Build aus der zentralen Domain-Konfiguration erzeugt.
+Die Datei erlaubt das Crawlen der öffentlichen Website und verweist auf die Sitemap. Sie wird beim Build aus der zentralen Domain-Konfiguration erzeugt. Zusätzlich zur allgemeinen Freigabe sind Suchmaschinen und KI-Crawler wie OAI-SearchBot, ChatGPT-User, PerplexityBot und ClaudeBot ausdrücklich aufgeführt.
+
+Der ergänzende `Content-Signal` benennt die Freigabe für Suche, KI-Eingaben und Training. Das ist eine optionale Erweiterung; die tatsächliche Beachtung hängt vom jeweiligen Dienst ab. robots.txt ersetzt weder Authentifizierung noch Firewall-Regeln.
 
 Quellcode: [src/pages/robots.txt.ts](src/pages/robots.txt.ts)
 
@@ -190,6 +192,23 @@ Die projektspezifische Datei fasst die Ranch, ihre Lage, die getrennten Flächen
 Das unterstützt die Orientierung von KI- und Recherchewerkzeugen. Eine garantierte Aufnahme, Zitierung oder Platzierung durch Suchmaschinen oder KI-Dienste ist damit nicht verbunden.
 
 Quellcode: [src/pages/llms.txt.ts](src/pages/llms.txt.ts)
+
+### Markdown-Ausgabe und llms-full.txt
+
+Nach dem Astro-Build und der CSS-Bereinigung erzeugt [scripts/generate-agent-content.mjs](scripts/generate-agent-content.mjs) aus den fertigen HTML-Seiten sechs Markdown-Dokumente: Startseite, Impressum und Datenschutz jeweils auf Deutsch und Englisch. Ihre Quelle sind die tatsächlich veröffentlichten Inhalte. Es gibt keine zusätzliche, unabhängig zu pflegende Textkopie.
+
+- `/_agent-markdown/de.md` und `/_agent-markdown/en.md`: die beiden Startseiten.
+- `/_agent-markdown/impressum.md` und `/_agent-markdown/en/legal.md`: Betreiberangaben.
+- `/_agent-markdown/datenschutz.md` und `/_agent-markdown/en/privacy.md`: Datenschutz.
+- `/llms-full.txt`: alle sechs Dokumente in einer zusammenhängenden Fassung.
+
+Die Markdown-Dokumente enthalten Überschriften, Texte, Listen, öffentliche Links und beschriebene Bilder. Ausführbarer Code, dekorative Elemente, Player-Steuerung und doppelte Navigation entfallen. Konzeptkennzeichnungen und rechtliche Angaben bleiben im Inhalt erhalten.
+
+Auf Vercel führt ein ausdrücklicher Request mit **`Accept: text/markdown`** von einer der sechs Seiten per **HTTP 307** zur passenden Markdown-Datei. Diese liefert **`Content-Type: text/markdown; charset=utf-8`**. Browser ohne diesen Header sowie Requests mit `text/markdown;q=0` erhalten die normale HTML-Seite. Die Root-Adresse `/` berücksichtigt auch für Markdown zuerst die Länderkennung oder die gespeicherte Sprachwahl.
+
+HTTP-`Link`-Header und Links im HTML-Head machen `llms.txt`, `llms-full.txt` beziehungsweise die passende Markdown-Datei auffindbar. Die zusätzlichen Textfassungen tragen `X-Robots-Tag: noindex, follow`, damit die kanonischen HTML-Seiten für die Suchindexierung maßgeblich bleiben. Die Auslieferung hängt nicht von einem JavaScript-Rendering oder vom Abspielen der Scroll-Animationen ab.
+
+Diese Ergänzungen orientieren sich an der Qilano-Auslieferung und sind an Bonanzas zwei Sprachen angepasst. Sie garantieren nicht, dass jedes KI-Lesetool eine Domain abrufen kann. Vercel-Login-Schutz und Firewall-Einstellungen sind eigene Hosting-Ebenen und werden durch diese Dateien nicht abgeschaltet.
 
 ### Eine zentrale Domain-Konfiguration
 
@@ -300,17 +319,19 @@ SITE_URL=https://bonanza-ranch.com
 
 Nach einer Änderung ist ein neuer Build erforderlich. Die Vorlage befindet sich in [.env.example](.env.example). Lokale `.env`-Dateien werden nicht eingecheckt. DNS-Ziele und Domain-Weiterleitungen werden unabhängig davon bei den Providern verwaltet.
 
-Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusätzlich die Root-Middleware und die Header-Konfiguration. Ein reiner statischer Dateiserver bildet diese Hosting-Funktionen nicht automatisch nach.
+Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusätzlich die Root-Middleware, die Header-Konfiguration und die bedingten Markdown-Weiterleitungen aus `vercel.json`. Ein reiner statischer Dateiserver bildet diese Hosting-Funktionen nicht automatisch nach. Die erzeugten Markdown-Dateien selbst lassen sich auch in der lokalen Vorschau direkt öffnen.
 
 ## Qualitätssicherung
 
-Der dokumentierte Stand vom **1. Oktober 2026** besteht den Produktionsbuild und **14 automatisierte Tests**. Geprüft werden unter anderem:
+Der dokumentierte Stand vom **4. Oktober 2026** besteht den Produktionsbuild und **19 automatisierte Tests**. Geprüft werden unter anderem:
 
 - Deutschland → Deutsch; andere und unbekannte Länder → Englisch.
 - Vorrang einer gespeicherten Sprachwahl und Umgang mit ungültigen Cookie-Werten.
 - Unveränderte explizite Sprachseiten, Assets und Rechtslinks.
 - Erhalt von URL-Parametern bei der Weiterleitung.
 - Auflösbare Links in robots.txt, llms.txt und Sitemap.
+- Markdown-Abruf mit positiven `Accept`-Gewichtungen, Ausschluss von `q=0` und unveränderte Sprachpräferenzen.
+- Vollständige Markdown-Ziele für alle kanonischen Seiten, Inhalte in beiden Sprachen, Link-Header und korrekte Antworttypen.
 - Übereinstimmung von Canonicals, Sitemap und Sprachalternativen.
 - Lokale ausführbare Skripte und keine Inline-Eventhandler im erzeugten HTML.
 - Passende Hero-Poster und Preloads.

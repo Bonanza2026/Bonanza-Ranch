@@ -18,6 +18,8 @@ docs/*
 !docs/TECHNICAL-REVIEW.md
 !docs/HOSTING-AND-DOMAINS.md
 scripts/*
+!scripts/generate-agent-content.mjs
+!scripts/agent-content.test.mjs
 !scripts/language-routing.test.mjs
 !scripts/optimize-current-media.mjs
 !scripts/site-integrity.test.mjs

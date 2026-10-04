@@ -20,7 +20,7 @@ test('crawler files expose the real sitemap and resolvable public content', () =
   for (const [, href] of llms.matchAll(/\]\((https:[^)]+)\)/g)) {
     const url = new URL(href);
     assert.equal(url.origin, siteUrl);
-    if (/\.(txt|xml)$/.test(url.pathname)) {
+    if (/\.(txt|xml|md)$/.test(url.pathname)) {
       assert.ok(read(url.pathname.slice(1)).length);
     } else {
       assert.ok(paths.includes(url.pathname), `Not a canonical page: ${href}`);

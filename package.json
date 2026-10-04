@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --host 127.0.0.1 --port 4323",
-    "build": "astro build && node scripts/prune-css.mjs",
+    "build": "astro build && node scripts/prune-css.mjs && node scripts/generate-agent-content.mjs",
     "preview": "astro preview --host 127.0.0.1 --port 4323",
     "qa": "npm run build && npm test",
     "test": "node --test scripts/*.test.mjs"
