@@ -1,8 +1,8 @@
 # Bonanza Ranch: Hosting, Domains und Betrieb
 
-**Dokumentierter Einrichtungsstand: 1. Oktober 2026.** Dieser Leitfaden beschreibt die tatsächlich eingerichtete Produktion und die Schritte für Wartung und Übergabe. Spätere Änderungen an Domains, Hosting oder Mail müssen hier nachgetragen werden.
+**Dokumentierter Betriebsstand: 4. Oktober 2026.** Die ursprüngliche Domain-Einrichtung erfolgte am 1. Oktober 2026. Dieser Leitfaden beschreibt die tatsächlich eingerichtete Produktion und die Schritte für Wartung und Übergabe. Spätere Änderungen an Domains, Hosting oder Mail müssen hier nachgetragen werden.
 
-[Zur Projektübersicht](../README.md) · [Website öffnen](https://bonanza-ranch.com/) · [GitHub-Repository](https://github.com/Bonanza2026/Bonanza-Ranch)
+[Zur Projektübersicht](../README.md) · [Website öffnen](https://www.bonanza-ranch.com/) · [GitHub-Repository](https://github.com/Bonanza2026/Bonanza-Ranch)
 
 ## 1. Zusammenspiel der Dienste
 
@@ -23,16 +23,18 @@ Dashboard-Zugriff setzt entsprechende Kontorechte voraus. Zugangsdaten, Tokens, 
 
 | Aufgerufene Domain | Funktion / Ziel |
 | --- | --- |
-| `bonanza-ranch.com` | Hauptdomain, mit der Vercel-Produktionsumgebung verbunden |
-| `www.bonanza-ranch.com` | Dauerhafte Weiterleitung auf `https://bonanza-ranch.com` |
-| `bonanzaranch.co.za` | Dauerhafte Weiterleitung auf `https://bonanza-ranch.com` |
-| `www.bonanzaranch.co.za` | Dauerhafte Weiterleitung auf `https://bonanza-ranch.com` |
+| `www.bonanza-ranch.com` | Hauptdomain, mit der Vercel-Produktionsumgebung verbunden |
+| `bonanza-ranch.com` | Dauerhafte Weiterleitung auf `https://www.bonanza-ranch.com` |
+| `bonanzaranch.co.za` | Dauerhafte Weiterleitung auf `https://www.bonanza-ranch.com` |
+| `www.bonanzaranch.co.za` | Dauerhafte Weiterleitung auf `https://www.bonanza-ranch.com` |
+
+Seit dem 4. Oktober 2026 ist die `www`-Adresse die Hauptdomain. Canonicals, Sprachalternativen, Social-Media-Verweise, Sitemap und KI-Dateien verwenden denselben Hostnamen. Die Umstellung folgt Vercels Empfehlung zur Nutzung eines CNAME für die Hauptadresse; sie garantiert keine Freigabe durch jeden KI-Lesedienst. DNS- und Mail-Einträge bleiben unverändert.
 
 Die drei Weiterleitungen verwenden **HTTP 308**. Es werden keine separaten Kopien der Website auf diesen Domains gepflegt. Pfad und Abfrageparameter werden übernommen, zum Beispiel:
 
 ```text
 https://www.bonanzaranch.co.za/en?source=partner
-→ https://bonanza-ranch.com/en?source=partner
+→ https://www.bonanza-ranch.com/en?source=partner
 ```
 
 Die Domain-Weiterleitungen liegen in den Vercel-Projekteinstellungen. Sie werden nicht durch die Sprach-Middleware oder durch eine Weiterleitung beim Registrar ersetzt. Auch eine reine Weiterleitungsdomain benötigt für einen HTTPS-Aufruf eine funktionierende Zertifikatszuordnung.
@@ -84,7 +86,7 @@ Kontaktlinks der Website öffnen das E-Mail-Programm des Besuchers. Es gibt kein
 | Build-Befehl | `npm run build` |
 | Ausgabe | `dist` |
 | Produktionsbranch | `main` |
-| Öffentliche Basisadresse | `https://bonanza-ranch.com` |
+| Öffentliche Basisadresse | `https://www.bonanza-ranch.com` |
 | Zusätzliche Domain-Umgebungsvariable | Zum Einrichtungsstand nicht gesetzt; der Quellcode enthält die Hauptdomain als Standard |
 
 Ein Push auf `main` startet über die GitHub-Verbindung einen Vercel-Build. Ein erfolgreicher Git-Push allein bestätigt noch kein fertiges Deployment. Im Vercel-Dashboard den zugehörigen Commit, den Build-Status und die Produktionszuordnung kontrollieren, anschließend die öffentliche Seite prüfen.
@@ -97,7 +99,7 @@ Ein Push auf `main` startet über die GitHub-Verbindung einen Vercel-Build. Ein 
 4. Betroffene Ansichten lokal prüfen, insbesondere Desktop, Mobilansicht und Sprunglinks bei Änderungen an Scroll-Kapiteln.
 5. Änderungen prüfen und nach `main` übernehmen.
 6. Den neuen Vercel-Build bis zum erfolgreichen Abschluss kontrollieren.
-7. Die betroffenen Inhalte auf `https://bonanza-ranch.com` prüfen.
+7. Die betroffenen Inhalte auf `https://www.bonanza-ranch.com` prüfen.
 
 Reine Dokumentationsänderungen benötigen keine erneute Medienaufbereitung. Da Dokumentation und Website im selben Repository liegen, kann auch ein Dokumentations-Push ein Deployment auslösen.
 
@@ -106,7 +108,7 @@ Reine Dokumentationsänderungen benötigen keine erneute Medienaufbereitung. Da 
 [site.config.mjs](../site.config.mjs) steuert Canonicals, Sprachalternativen, Sitemap, robots.txt und llms.txt. Standard:
 
 ```env
-SITE_URL=https://bonanza-ranch.com
+SITE_URL=https://www.bonanza-ranch.com
 ```
 
 Das ist der wirksame Standardwert, kein Hinweis auf eine bereits gesetzte Vercel-Umgebungsvariable. Ein späterer Override muss eine reine HTTPS-Adresse ohne Pfad, Zugangsdaten, Query oder Fragment enthalten. Nach einer Änderung neu bauen, da die Verweise beim Build entstehen.
@@ -130,9 +132,9 @@ Für internationale Empfehlungen die Hauptadresse ohne `/de` teilen. Ein ausdrü
 
 Alle vier Domain-Einträge zeigten in Vercel **Valid Configuration**. Geprüft wurden:
 
-| Prüfung | Bestätigtes Ergebnis bei der Einrichtung |
+| Prüfung | Bestätigtes Ergebnis nach den Domainumstellungen |
 | --- | --- |
-| `https://bonanza-ranch.com/de` und `/en` | Erfolgreiche Auslieferung, HTTP 200 |
+| `https://www.bonanza-ranch.com/de` und `/en` | Erfolgreiche Auslieferung, HTTP 200 |
 | Drei alternative Domains über HTTPS | HTTP 308 zur Hauptdomain |
 | Sprachpfad und Query in Weiterleitungen | Bleiben erhalten |
 | Canonicals der beiden Startseiten | Verweisen auf die neue Hauptdomain |
@@ -140,7 +142,7 @@ Alle vier Domain-Einträge zeigten in Vercel **Valid Configuration**. Geprüft w
 | XML-Sitemap im Produktionsbuild | Sechs kanonische Sprachseiten mit passender Basisadresse |
 | E-Mail-Routing | Öffentliche MX-Einträge beider Domains unverändert |
 
-Der Domainwechsel wurde mit Commit **`55fbb14`** im Repository festgehalten und erfolgreich veröffentlicht. Die zugehörige Prüfung umfasste den Produktionsbuild und die damals vorhandenen elf automatisierten Tests. Der aktuelle Testumfang steht in der [README](../README.md#qualitätssicherung).
+Die ursprüngliche Einrichtung vom 1. Oktober 2026 mit der Hauptdomain ohne `www` wurde mit Commit **`55fbb14`** im Repository festgehalten und erfolgreich veröffentlicht. Die zugehörige Prüfung umfasste den Produktionsbuild und die damals vorhandenen elf automatisierten Tests. Der aktuelle Testumfang steht in der [README](../README.md#qualitätssicherung).
 
 ### Aufgetretener SSL-Fehler bei `www.bonanzaranch.co.za`
 
@@ -167,7 +169,7 @@ Resolve-DnsName bonanza-ranch.com -Type A
 Resolve-DnsName www.bonanzaranch.co.za -Type CNAME
 Resolve-DnsName bonanza-ranch.com -Type MX
 curl.exe -I "https://www.bonanzaranch.co.za/en?domain-check=1"
-curl.exe -I "https://bonanza-ranch.com/en"
+curl.exe -I "https://www.bonanza-ranch.com/en"
 ```
 
 Zertifikatsprüfungen dabei nicht deaktivieren. Wenn ein lokaler DNS-Cache nachweislich veraltet ist, kann unter Windows `Clear-DnsClientCache` helfen; das ändert keine DNS-Einträge beim Provider.
@@ -187,12 +189,12 @@ Die Regeln in [vercel.json](../vercel.json) führen ausdrücklich angeforderte M
 Beispiele für öffentliche Prüfungen:
 
 ```powershell
-curl.exe -sS -I "https://bonanza-ranch.com/en"
-curl.exe -sS -L -D - -H "Accept: text/markdown" "https://bonanza-ranch.com/en"
-curl.exe -sS -L -D - -H "Accept: text/markdown" "https://bonanza-ranch.com/de"
-curl.exe -sS -I -H "Accept: text/markdown;q=0" "https://bonanza-ranch.com/en"
-curl.exe -sS "https://bonanza-ranch.com/llms-full.txt"
-curl.exe -sS "https://bonanza-ranch.com/robots.txt"
+curl.exe -sS -I "https://www.bonanza-ranch.com/en"
+curl.exe -sS -L -D - -H "Accept: text/markdown" "https://www.bonanza-ranch.com/en"
+curl.exe -sS -L -D - -H "Accept: text/markdown" "https://www.bonanza-ranch.com/de"
+curl.exe -sS -I -H "Accept: text/markdown;q=0" "https://www.bonanza-ranch.com/en"
+curl.exe -sS "https://www.bonanza-ranch.com/llms-full.txt"
+curl.exe -sS "https://www.bonanza-ranch.com/robots.txt"
 ```
 
 robots.txt erlaubt weiterhin die öffentlichen Inhalte und benennt Such- und KI-Crawler nun ausdrücklich. `Content-Signal` ergänzt die Nutzungspräferenzen für Suche, KI-Eingaben und Training. Diese Erweiterung ist keine technische Zugriffssperre und wird nicht von jedem Dienst ausgewertet.

@@ -10,7 +10,7 @@ Die Website führt vom ersten Landschaftseindruck über die Anreise aus Europa u
 
 Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien, die Animationen, die Sprachsteuerung sowie die Konfiguration für Build, Suchmaschinen und Hosting.
 
-**Live:** [bonanza-ranch.com](https://bonanza-ranch.com/) · [Deutsch](https://bonanza-ranch.com/de) · [English](https://bonanza-ranch.com/en)
+**Live:** [www.bonanza-ranch.com](https://www.bonanza-ranch.com/) · [Deutsch](https://www.bonanza-ranch.com/de) · [English](https://www.bonanza-ranch.com/en)
 
 **Dokumentation:** [Hosting, Domains und Betrieb](docs/HOSTING-AND-DOMAINS.md) · [Technische Prüf- und Optimierungshistorie](docs/TECHNICAL-REVIEW.md) · [Lokale Einrichtung](#lokal-starten)
 
@@ -299,8 +299,8 @@ Die lokale Website ist unter `http://127.0.0.1:4323/` erreichbar. Die Sprachfass
 | Vercel-Projekt | `bonanza-ranch` im Team `bonanza2026` |
 | Veröffentlichung | Ein Push auf `main` stößt über die GitHub-Verbindung einen neuen Vercel-Build an |
 | Framework / Build / Ausgabe | Astro · `npm run build` · `dist` |
-| Öffentliche Hauptadresse | `https://bonanza-ranch.com` |
-| Weitere Domains | `www.bonanza-ranch.com`, `bonanzaranch.co.za`, `www.bonanzaranch.co.za` |
+| Öffentliche Hauptadresse | `https://www.bonanza-ranch.com` |
+| Weitere Domains | `bonanza-ranch.com`, `bonanzaranch.co.za`, `www.bonanzaranch.co.za` |
 | Domain-Weiterleitung | Alle drei Varianten führen per HTTP **308** zur Hauptadresse; Pfad und URL-Parameter bleiben erhalten |
 | DNS und E-Mail | Weiterhin bei united-domains; Web-DNS zeigt auf Vercel |
 | HTTPS | Zertifikatsbereitstellung über Vercel; alle vier Domain-Zuordnungen wurden geprüft |
@@ -311,10 +311,10 @@ Die Domains wurden vom bisherigen Homepage-Baukasten getrennt und für Vercel ei
 
 ### Domain-Konfiguration im Quellcode
 
-Der Code verwendet bereits `https://bonanza-ranch.com` als Standard. Zum dokumentierten Einrichtungsstand ist **keine zusätzliche `SITE_URL`-Umgebungsvariable in Vercel gesetzt oder nötig**. Für einen späteren Domainwechsel kann der Wert ausdrücklich überschrieben werden:
+Der Code verwendet seit dem 4. Oktober 2026 `https://www.bonanza-ranch.com` als Standard. **Keine zusätzliche `SITE_URL`-Umgebungsvariable in Vercel ist gesetzt oder nötig.** Für einen späteren Domainwechsel kann der Wert ausdrücklich überschrieben werden:
 
 ```env
-SITE_URL=https://bonanza-ranch.com
+SITE_URL=https://www.bonanza-ranch.com
 ```
 
 Nach einer Änderung ist ein neuer Build erforderlich. Die Vorlage befindet sich in [.env.example](.env.example). Lokale `.env`-Dateien werden nicht eingecheckt. DNS-Ziele und Domain-Weiterleitungen werden unabhängig davon bei den Providern verwaltet.

@@ -1,6 +1,6 @@
 # Technical review, 28 September 2026
 
-> Historisches Prüfprotokoll. Der damalige Vercel-Hostname und einzelne Implementierungsdetails beziehen sich auf den jeweiligen Prüfzeitpunkt. Die aktuelle Produktion läuft unter **https://bonanza-ranch.com**. Domainumstellung, Hosting und Betriebsabläufe sind in [HOSTING-AND-DOMAINS.md](HOSTING-AND-DOMAINS.md) dokumentiert.
+> Historisches Prüfprotokoll. Der damalige Vercel-Hostname und einzelne Implementierungsdetails beziehen sich auf den jeweiligen Prüfzeitpunkt. Die aktuelle Produktion läuft unter **https://www.bonanza-ranch.com**. Domainumstellung, Hosting und Betriebsabläufe sind in [HOSTING-AND-DOMAINS.md](HOSTING-AND-DOMAINS.md) dokumentiert.
 
 ## Findings before changes
 
