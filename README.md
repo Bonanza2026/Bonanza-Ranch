@@ -181,7 +181,7 @@ Quellcode: [src/pages/robots.txt.ts](src/pages/robots.txt.ts)
 
 ### sitemap.xml
 
-Die XML-Sitemap enthält die sechs kanonischen Sprachseiten: Startseite, Impressum und Datenschutz jeweils auf Deutsch und Englisch. Sie enthält außerdem die zugehörigen Sprachalternativen. Reine Weiterleitungsadressen werden nicht zusätzlich als eigenständiger Inhalt eingetragen.
+Die XML-Sitemap enthält die sechs kanonischen Sprachseiten: Startseite, Impressum und Datenschutz jeweils auf Deutsch und Englisch. Sie verwendet das grundlegende Sitemap-XML-Format ohne XHTML-Erweiterung. Die zugehörigen Sprachalternativen stehen als `hreflang`-Links im HTML-Kopf jeder Seite. Reine Weiterleitungsadressen werden nicht zusätzlich als eigenständiger Inhalt eingetragen.
 
 Quellcode: [src/pages/sitemap.xml.ts](src/pages/sitemap.xml.ts)
 
