@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export function createWildlifeMotion(root: HTMLElement) {
   const cleanups: Array<() => void> = [];
   const items = Array.from(root.querySelectorAll<HTMLElement>(".wildlife-stack-item"));
-  // Reference SectionStickyScroll: each new panel leaves a 55px chapter header visible.
+  // Each new panel leaves a 55px chapter header visible.
   // Natural document heights also preserve reading order and give the stack a clean exit.
   if (innerWidth >= 768) {
     const measure = () => items.forEach((item) => {
@@ -19,7 +19,7 @@ export function createWildlifeMotion(root: HTMLElement) {
     });
   } else if (items.length) {
     const stack = root.querySelector<HTMLElement>(".wildlife-stack-items")!;
-    // Tengile's mobile stack: retain 55px headers and compensate for panels
+    // Retain the chapter headers and compensate for panels
     // taller than the viewport, so their last lines and images remain reachable.
     const viewportHeight = innerHeight;
     let overflow = 55;
@@ -69,11 +69,18 @@ export function createWildlifeMotion(root: HTMLElement) {
   let paused = false;
   let rotation = 0;
   let radius = 0;
-  // Same flat cos/sin orbit as Tengile's SectionImagesCloud; no camera or WebGL.
-  const draw = () => photos.forEach((photo, index) => {
-    const angle = index / photos.length * Math.PI * 2 + rotation;
-    gsap.set(photo, { xPercent: -50, yPercent: -50, rotation: 0,
-      x: Math.cos(angle) * radius, y: Math.sin(angle) * radius });
+  const positions = photos.map((photo, index) => {
+    gsap.set(photo, { xPercent: -50, yPercent: -50, rotation: 0 });
+    return {
+      angle: index / photos.length * Math.PI * 2,
+      x: gsap.quickSetter(photo, "x", "px"),
+      y: gsap.quickSetter(photo, "y", "px"),
+    };
+  });
+  const draw = () => positions.forEach(position => {
+    const angle = position.angle + rotation;
+    position.x(Math.cos(angle) * radius);
+    position.y(Math.sin(angle) * radius);
   });
   const measureOrbit = () => {
     radius = innerWidth < 768 ? 258 : stage.offsetWidth * 0.39;

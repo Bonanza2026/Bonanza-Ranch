@@ -1,11 +1,8 @@
 type JourneyDependencies = {
   gsap: any;
-  ScrollTrigger: any;
-  MotionPathPlugin?: any;
-  DrawSVGPlugin?: any;
 };
 
-/** White Desert travel-globe: a normal-flow component with a moving inner plane. */
+/** Synchronized Europe/Asia routes over the local SVG map. */
 export function bindJourneyMap({ gsap }: JourneyDependencies) {
   const root = document.querySelector<HTMLElement>("[data-journey-map]");
   if (!root) return () => {};
@@ -59,7 +56,7 @@ export function bindJourneyMap({ gsap }: JourneyDependencies) {
     });
     // On phones, map and explanation occupy separate rows. Only the route moves.
     if (small) return;
-    // Original source module 57368. No zoom, map pin or camera tracking.
+    // Map drift shares the chapter's scroll distance on desktop.
     gsap.fromTo(
       artwork,
       { yPercent: -5 },

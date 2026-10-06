@@ -8,7 +8,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
     small = innerWidth < 768;
   const cleanups: Array<() => void> = [];
   cleanups.push(createWildlifeMotion(root));
-  // Sobha landingLuxuryTitle / MoveSide / ScaleCenter and ScaleSide patterns.
+  // The side frames separate as the central wildlife portrait opens.
   const intro = root.querySelector<HTMLElement>(".reserve-introduction")!;
   const wrapper = intro.querySelector<HTMLElement>(
     ".reserve-parallax-wrapper",
@@ -68,7 +68,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
     },
     0,
   );
-  // Tengile useMediaParallax(0.12): scale 1.12, yPercent -6 → +6.
+  // The overscan covers the frame throughout the vertical parallax movement.
   root.querySelectorAll<HTMLElement>(".reserve-editorial-image").forEach((frame) => {
     const target = frame.querySelector<HTMLElement>("img")!;
     gsap.fromTo(target, { scale: 1.12, yPercent: -6 }, {
@@ -137,7 +137,7 @@ export function createBonanzaStoryMotion(root: HTMLElement) {
     track
       .querySelectorAll<HTMLElement>("article:not(.life-intro) h3")
       .forEach((title) => {
-        // Reference reveals the two text faces together when the column enters.
+        // Heading lines enter together with the chapter's text column.
         gsap.fromTo(
           title.children,
           { y: 35, opacity: 0 },

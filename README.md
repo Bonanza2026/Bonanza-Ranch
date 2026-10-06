@@ -14,6 +14,8 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 
 **Dokumentation:** [Hosting, Domains und Betrieb](docs/HOSTING-AND-DOMAINS.md) · [Technische Prüf- und Optimierungshistorie](docs/TECHNICAL-REVIEW.md) · [Lokale Einrichtung](#lokal-starten)
 
+**Prüfstand vom 6. Oktober 2026:** [SEO-Audit](docs/SEO-AUDIT-2026-10-06.md) · [Agent-Readiness](docs/AGENT-READINESS-2026-10-06.md) · [Code-Herkunft](docs/CODE-PROVENANCE.md) · [Schema.org und Entitäten](docs/SCHEMA-REPORT.md)
+
 ## Projektumfang auf einen Blick
 
 | Bereich | Umsetzung |
@@ -23,7 +25,7 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 | Bewegung | Lenis Smooth Scrolling, GSAP-Zeitleisten, Flugzeug-Reveal, Bildzoom, Parallax, Sticky-Panels und horizontale Erlebniskapitel |
 | Mobile | Eigene Flugrichtung, vertikale Kapitel, angepasste Sticky-Panels, lesbare Texte und separat abgestimmte Bildabstände |
 | Sprachen | Eigene deutsche und englische Texte, manuelle Sprachwahl und automatische Ländererkennung am Einstieg |
-| Suchmaschinen | Metadaten, Canonicals, Sprachverweise, Social-Media-Vorschauen, robots.txt und XML-Sitemap |
+| Suchmaschinen | Metadaten, Canonicals, Sprachverweise, Social-Media-Vorschauen, Schema.org-JSON-LD, robots.txt und XML-Sitemap |
 | KI-Lesbarkeit | llms.txt, vollständige DE/EN-Inhalte in llms-full.txt, automatisch erzeugte Markdown-Seiten und HTTP-Link-Hinweise |
 | Medienauslieferung | WebP-Fotos, responsive Bildgrößen, WebM-Video und MP4-Kompatibilitätsfallback |
 | Datenschutz | Lokale Medien und Schriften, Cookie-Hinweis, Sprachpräferenz, Impressum und Datenschutz in DE/EN |
@@ -131,12 +133,14 @@ Die mitgelieferten Open-Font-Lizenztexte liegen ebenfalls im Projekt: [Inter](pu
 | **Lenis 1.3.26** | Geglättetes Wheel-Scrolling, abgestimmt auf den gemeinsamen GSAP-Takt |
 | **GSAP 3.15.0** | Zeitachsen, Transformationen und Übergänge |
 | **ScrollTrigger** | Bindung von Animationen und horizontalen Kapiteln an die Scrollposition |
-| **CustomEase, DrawSVGPlugin, MotionPathPlugin** | Eingebundene GSAP-Erweiterungen für Easing, SVG und Pfadbewegung |
+| **CustomEase** | Easing für die Menüanimation; Flugrouten verwenden die native SVG-Geometrie |
 | **Vercel Functions / Middleware** | Länderkennung und Sprachauswahl an der Hauptadresse |
-| **PurgeCSS + Cheerio** | Bereinigung generierter Styles unter Erhalt dynamischer Animationszustände |
+| **PurgeCSS 7.0.2 + Cheerio** | Bereinigung generierter Styles unter Erhalt dynamischer Animationszustände |
 | **Node.js Test Runner** | Automatisierte Prüfungen für Routing, Metadaten, Medien und Seitenintegrität |
 
-Three.js und Galerie-Module sind ebenfalls im Projektbestand enthalten. Der aktuelle abschließende Bilderkreis verwendet DOM/GSAP; er benötigt kein WebGL-Canvas.
+Der abschließende Bilderkreis verwendet DOM/GSAP. Three.js, das ungenutzte WebGL-Galeriemodul und die alten Referenzadapter wurden entfernt. Navigation und Cursor haben eigene Projektmodule; die gemeinsame Basisgestaltung liegt in `src/styles/site-base.css`. Details stehen in [CODE-PROVENANCE.md](docs/CODE-PROVENANCE.md).
+
+PurgeCSS 7.0.2 nutzt `postcss-selector-parser` 7.1.6 über ein gezieltes npm-Override. Damit entfällt die betroffene Braces-Abhängigkeit aus PurgeCSS 8, und der ältere Selektorparser wird durch die korrigierte Version ersetzt. Ein Vergleich mit denselben Optionen und dem aktuellen Basisstylesheet ergab identische bereinigte CSS-Ausgabe.
 
 Astro erzeugt die Inhalte beim Build als statische Seiten. Animationen und Bedienelemente werden durch die jeweiligen Skripte ergänzt. Für den Betrieb der Website ist kein CMS und keine eigene Datenbank vorgesehen.
 
@@ -170,6 +174,14 @@ Die lokale Astro-Vorschau führt die Vercel-Middleware nicht aus. Die Länderlog
 - Open-Graph- und Twitter-Card-Metadaten mit Vorschaubild.
 - Semantische Überschriften, Bildbeschreibungen und stabile Abschnitts-IDs.
 - Inhalte stehen im erzeugten HTML und sind nicht erst nach dem Abspielen der Animation verfügbar.
+
+### Schema.org und Entitäten
+
+Alle sechs kanonischen Seiten enthalten einen beim Astro-Build erzeugten JSON-LD-Graphen. Er trennt **SKYWIND SOUTH AFRICA (PTY) LTD** als rechtlichen Betreiber (`Organization`) von der Bonanza-Marke (`Brand`) und der Ranch in der Klein Karoo (`Place`). Die Website (`WebSite`) und jede deutsche beziehungsweise englische Seite (`WebPage`) sind über stabile, absolute IDs miteinander verbunden. Auf den Startseiten kommt das tatsächliche Giraffen-Titelbild als `ImageObject` hinzu.
+
+Titel, Beschreibungen, Sprache und URLs entsprechen den HTML-Metadaten. Die Korrespondenzanschrift des Betreibers wird nicht als Ranch-Standort ausgegeben. Angebote, Preise, Bewertungen und Unternehmensprofile werden nur ergänzt, wenn die entsprechenden Angaben bestätigt und veröffentlicht sind.
+
+Quellmodule: [structured-data.mjs](src/content/structured-data.mjs), [operator.mjs](src/content/operator.mjs) und [site-metadata.mjs](src/content/site-metadata.mjs). Der [Schema-Bericht](docs/SCHEMA-REPORT.md) erklärt Datenquellen, Prüfungen und bewusst ausgelassene Eigenschaften. JSON-LD garantiert keine bestimmte Darstellung oder Platzierung in Suchmaschinen.
 
 ### robots.txt
 
@@ -325,7 +337,7 @@ Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusät
 
 ## Qualitätssicherung
 
-Der dokumentierte Stand vom **4. Oktober 2026** besteht den Produktionsbuild und **20 automatisierte Tests**. Geprüft werden unter anderem:
+Der dokumentierte Stand vom **6. Oktober 2026** besteht den Produktionsbuild und **25 automatisierte Tests**. `npm audit` meldet für sämtliche geprüften Produktions- und Entwicklungsabhängigkeiten **keine bekannten Sicherheitslücken**. Geprüft werden unter anderem:
 
 - Deutschland → Deutsch; andere und unbekannte Länder → Englisch.
 - Vorrang einer gespeicherten Sprachwahl und Umgang mit ungültigen Cookie-Werten.
@@ -336,6 +348,9 @@ Der dokumentierte Stand vom **4. Oktober 2026** besteht den Produktionsbuild und
 - Markdown-Abruf mit positiven `Accept`-Gewichtungen, Ausschluss von `q=0` und unveränderte Sprachpräferenzen.
 - Vollständige Markdown-Ziele für alle kanonischen Seiten, Inhalte in beiden Sprachen, Link-Header und korrekte Antworttypen.
 - Übereinstimmung von Canonicals, Sitemap und Sprachalternativen.
+- JSON-LD mit eindeutigen Entitäten, auflösbaren IDs und Angaben, die mit den HTML-Metadaten übereinstimmen.
+- Sichere JSON-LD-Serialisierung und getrennte Anschriften für rechtlichen Betreiber und Ranch.
+- Eigene deutsche und englische Beschreibungen der rechtlichen Seiten sowie die öffentliche Bonanza-Kontaktadresse.
 - Lokale ausführbare Skripte und keine Inline-Eventhandler im erzeugten HTML.
 - Passende Hero-Poster und Preloads.
 - Keine unnötigen parallelen Videoquellen und kein Vorladen des ungeöffneten Films.

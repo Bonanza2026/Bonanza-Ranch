@@ -5,7 +5,9 @@ import CookieNotice from "../components/CookieNotice.astro";
 import ContactOptions from "../components/ContactOptions.astro";
 import { languagePages, siteUrl } from '../../site.config.mjs';
 import { markdownPath } from '../../agent-content.mjs';
-import "../styles/reference.css";
+import { homeMetadata } from '../content/site-metadata.mjs';
+import { createStructuredData, serializeStructuredData } from '../content/structured-data.mjs';
+import "../styles/site-base.css";
 import "../styles/bonanza.css";
 import "../styles/dream.css";
 import "../styles/bonanza-type.css";
@@ -15,15 +17,14 @@ import "../styles/story-editorial.css";
 import "../styles/mobile-journey.css";
 import "../styles/color-theme.css";
 import "../styles/wildlife-flow.css";
-const {
-  title = "Bonanza Ranch · Ein anderes Leben. Mitten in der Natur.",
-  description = "Weite Landschaft, wilde Begegnungen und ein Leben voller Möglichkeiten. Entdecken Sie die Vision von Bonanza Ranch in Südafrika.",
-  lang = "de",
-} = Astro.props;
+const { lang = 'de' } = Astro.props;
+const locale = lang === 'en' ? 'en' : 'de';
+const { title = homeMetadata[locale].title, description = homeMetadata[locale].description } = Astro.props;
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 const pages = languagePages.find((pair) => Object.values(pair).includes(pathname)) || languagePages[0];
 const canonical = siteUrl + pages[lang === 'en' ? 'en' : 'de'];
 const isHome = ['/', '/de', '/en'].includes(pathname);
+const structuredData = createStructuredData({ path: pages[locale], lang: locale, title, description });
 ---
 
 <!doctype html>
@@ -49,10 +50,11 @@ const isHome = ['/', '/de', '/en'].includes(pathname);
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'en' ? 'en_GB' : 'de_DE'} />
     <meta property="og:image" content={siteUrl + '/media/hero-poster-v3.webp'} />
-    <meta property="og:image:width" content="1920" />
-    <meta property="og:image:height" content="1080" />
-    <meta property="og:image:alt" content={lang === 'en' ? 'The landscape of Bonanza Ranch in South Africa' : 'Die Landschaft der Bonanza Ranch in Südafrika'} />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+    <meta property="og:image:alt" content={lang === 'en' ? 'Two giraffes in a South African mountain landscape' : 'Zwei Giraffen in einer südafrikanischen Berglandschaft'} />
     <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={serializeStructuredData(structuredData)} />
     <link rel="icon" type="image/webp" href="/bonanza/favicon.webp" />
     <link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/PPFragment-GlareVariable.woff" as="font" type="font/woff" crossorigin />

@@ -1,10 +1,6 @@
-export const operator = {
-  company: 'SKYWIND SOUTH AFRICA (PTY) LTD',
-  representative: 'Wolfgang Zivny, Director / CEO',
-  email: 'info@bonanza-ranch.com',
-  address: 'c/o Jordaan, Van Wyk Attorneys Inc.<br>65 Main Service Road<br>6573 Sedgefield, Western Cape<br>South Africa',
-};
-const contact = `<address><strong>${operator.company}</strong><br>${operator.representative}<br>${operator.address}<br><a href="mailto:${operator.email}">${operator.email}</a><br><a href="mailto:info@skywind.co.za">info@skywind.co.za</a></address>`;
+import { operator } from './operator.mjs';
+export { operator };
+const contact = `<address><strong>${operator.company}</strong><br>${operator.representative}<br>${operator.address}<br><a href="mailto:${operator.email}">${operator.email}</a></address>`;
 const email = `<a href="mailto:${operator.email}">${operator.email}</a>`;
 type Section = { title: string; html: string };
 

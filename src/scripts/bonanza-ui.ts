@@ -1,7 +1,6 @@
 import { gsap } from "gsap";
 import { CustomEase } from "gsap/CustomEase";
-import { createHowItWorks, createCursor } from "./reference-interactions";
-import { bindMediaSlider, bindCampActivityHover } from "./reference-subpages";
+import { createPointerCursor } from "./pointer-cursor";
 import { sectionScrollPosition } from "./section-navigation";
 export function initializeBonanzaUI(lenis: any) {
   const en = document.documentElement.lang === "en";
@@ -11,6 +10,7 @@ export function initializeBonanzaUI(lenis: any) {
     inner = menu.querySelector(".menu-inner.is-desktop");
   let open = false,
     focus: HTMLElement | null = null;
+  gsap.registerPlugin(CustomEase);
   CustomEase.create("menuClip", "0.76,0,0.24,1");
   function setMenu(value: boolean) {
     open = value;
@@ -74,10 +74,7 @@ export function initializeBonanzaUI(lenis: any) {
       if (preview) gsap.to(preview, { opacity: 0, duration: 0.2 });
     });
   });
-  createCursor({ gsap });
-  const flyouts = Array.from(
-    document.querySelectorAll<HTMLElement>(".flyout_container.is-sticky"),
-  ).map((el) => createHowItWorks({ gsap, lenis }, el));
+  const disposeCursor = createPointerCursor();
   const film = document.querySelector<HTMLDialogElement>(".ranch-film")!,
     video = film.querySelector("video")!;
   const closeFilm = () => {
@@ -109,31 +106,9 @@ export function initializeBonanzaUI(lenis: any) {
     video.pause();
     if (!open) lenis.start();
   });
-  const page = JSON.parse(
-    document.getElementById("bonanza-page-data")?.textContent || "{}",
-  );
-  document.querySelectorAll(".gallery-slider").forEach((el) =>
-    bindMediaSlider(el, {
-      gsap,
-      slides: (page.galleryItems || []).map((s: any) => ({
-        title: s.title,
-        description: s.body,
-      })),
-    }),
-  );
-  document
-    .querySelectorAll(".split-slider")
-    .forEach((el) => bindMediaSlider(el, { gsap, variant: "split" }));
-  document.querySelectorAll(".camp-activities-component").forEach((el) =>
-    bindCampActivityHover(el, {
-      gsap,
-      activities: page.activitiesScrollItems || [],
-    }),
-  );
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       if (open) setMenu(false);
-      flyouts.forEach((f) => f?.close());
     }
   });
   document.addEventListener("click", (e) => {
@@ -168,4 +143,5 @@ export function initializeBonanzaUI(lenis: any) {
       }
     }
   });
+  return disposeCursor;
 }

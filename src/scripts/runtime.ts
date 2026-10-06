@@ -1,23 +1,13 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import { CustomEase } from "gsap/CustomEase";
 import Lenis from "lenis";
-import { createHomepageMotion, createHeaderMotion } from "./reference-motion";
+import { createNavigationMotion } from "./navigation-motion";
 import { initializeBonanzaUI } from "./bonanza-ui";
-import {
-  bindItineraryScroll,
-  bindFixedBanner,
-  bindEditorialTrio,
-  bindFloatingSectionNavigation,
-  bindAboutBanner,
-} from "./reference-subpages";
 import { bindJourneyMap } from "./journey-map";
 import { createDreamMotion } from "./dream-motion";
 import { sectionScrollPosition } from "./section-navigation";
 import { createStoryImageLoader } from "./story-images.mjs";
-gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MotionPathPlugin, CustomEase);
+gsap.registerPlugin(ScrollTrigger);
 // Height-only resizes from mobile browser bars must not refresh scrubbed scenes.
 // Width/orientation changes are handled explicitly below.
 ScrollTrigger.config({
@@ -28,7 +18,7 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 const nativeScroll = new URLSearchParams(location.search).get("scroll") === "native";
 const lenis = new Lenis({
   autoRaf: false,
-  // Tengile's duration and exponential easing; driven by the shared GSAP clock.
+  // Wheel easing uses the same frame clock as the scroll scenes.
   duration: 1.2,
   easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smoothWheel: !reduced.matches && !nativeScroll,
@@ -40,60 +30,18 @@ lenis.on("scroll", ScrollTrigger.update);
 const tick = (t: number) => lenis.raf(t * 1000);
 gsap.ticker.add(tick);
 gsap.ticker.lagSmoothing(0);
-initializeBonanzaUI(lenis);
+const disposeUI = initializeBonanzaUI(lenis);
 let cleanups: Array<() => void> = [];
 function setupMotion() {
   cleanups.forEach((fn) => fn());
   cleanups = [];
-  cleanups.push(
-    createHeaderMotion({
-      gsap,
-      ScrollTrigger,
-      lenis,
-      isMenuOpen: () => document.body.dataset.menuOpen === "true",
-    }),
-  );
-  cleanups.push(
-    bindJourneyMap({ gsap, ScrollTrigger, DrawSVGPlugin, MotionPathPlugin }),
-  );
+  cleanups.push(createNavigationMotion(lenis), bindJourneyMap({ gsap }));
   if (reduced.matches) {
     document
       .querySelectorAll<HTMLVideoElement>(".hero-banner_video")
       .forEach((v) => v.pause());
     return;
   }
-  cleanups.push(
-    createHomepageMotion({
-      gsap,
-      ScrollTrigger,
-      DrawSVGPlugin,
-      MotionPathPlugin,
-    }),
-  );
-
-  document
-    .querySelectorAll(".fixed-banner-loader")
-    .forEach((el) =>
-      cleanups.push(bindFixedBanner(el, { gsap, scrollSpeed: "65svh" })),
-    );
-  document
-    .querySelectorAll(".about-banner-loader")
-    .forEach((el) => cleanups.push(bindAboutBanner(el, { gsap })));
-  document
-    .querySelectorAll(".itinerary-scrub_component")
-    .forEach((el) => cleanups.push(bindItineraryScroll(el, { gsap })));
-  document
-    .querySelectorAll(".entertainment-intro")
-    .forEach((el) =>
-      cleanups.push(bindEditorialTrio(el, { gsap, ScrollTrigger })),
-    );
-  document
-    .querySelectorAll(".cta-nav")
-    .forEach((el) =>
-      cleanups.push(
-        bindFloatingSectionNavigation(el, { gsap, ScrollTrigger, lenis }),
-      ),
-    );
   cleanups.push(createDreamMotion());
   const context = gsap.context(() => {
     document.querySelectorAll(".has-inset-effect").forEach((el) =>
@@ -178,6 +126,7 @@ addEventListener("pagehide", (event) => {
   // run again on restore, so keep the scroll instance and animations alive.
   if (event.persisted) return;
   lenis.destroy();
+  disposeUI();
   storyImages.destroy();
   ScrollTrigger.removeEventListener('refresh', storyImages.update);
   gsap.ticker.remove(tick);

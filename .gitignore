@@ -17,6 +17,12 @@ docs/*
 !docs/map-relief-source.json
 !docs/TECHNICAL-REVIEW.md
 !docs/HOSTING-AND-DOMAINS.md
+!docs/CODE-PROVENANCE.md
+!docs/SEO-AUDIT-2026-10-06.md
+!docs/AGENT-READINESS-2026-10-06.md
+!docs/SCHEMA-REPORT.md
+!docs/generated-schema.json
+!docs/site-profile.json
 scripts/*
 !scripts/generate-agent-content.mjs
 !scripts/agent-content.test.mjs
@@ -25,3 +31,5 @@ scripts/*
 !scripts/site-integrity.test.mjs
 !scripts/story-images.test.mjs
 !scripts/prune-css.mjs
+!scripts/structured-data.test.mjs
+!scripts/hero-video.test.mjs

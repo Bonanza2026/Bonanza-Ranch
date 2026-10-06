@@ -1,5 +1,4 @@
 /* Bonanza's photographic journey. Editorial content stays in normal document flow. */
-@font-face{font-family:Cardinal Classic Long;src:url('/fonts/CardinalClassicMidWeb-Italic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap}
 :root{--dream-paper:#fafaf8;--dream-ink:#181a18;--dream-green:#101110;--dream-sand:#ded6c7}
 body{font-weight:400;background:var(--dream-paper)}
 .dream-home{overflow:clip;background:var(--dream-paper);color:var(--dream-ink)}

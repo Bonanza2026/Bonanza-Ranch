@@ -1,19 +1,21 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { imprint, privacy } from '../content/legal';
+import { legalMetadata } from '../content/site-metadata.mjs';
 const { lang = 'de', type = 'imprint' } = Astro.props;
 const en = lang === 'en';
 const isPrivacy = type === 'privacy';
 const title = isPrivacy ? (en ? 'Privacy policy' : 'Datenschutz') : (en ? 'Legal notice' : 'Impressum');
 const sections = (isPrivacy ? privacy : imprint)[lang];
+const description = legalMetadata[en ? 'en' : 'de'][isPrivacy ? 'privacy' : 'imprint'];
 ---
-<SiteLayout lang={lang} title={`${title} · Bonanza Ranch`}>
+<SiteLayout lang={lang} title={`${title} · Bonanza Ranch`} description={description}>
   <article class="legal-page" data-nav-theme="dark">
     <header class="legal-intro">
-      <a href={en ? '/en' : '/'}>← {en ? 'Back to Bonanza Ranch' : 'Zurück zur Bonanza Ranch'}</a>
+      <a href={en ? '/en' : '/de'}>← {en ? 'Back to Bonanza Ranch' : 'Zurück zur Bonanza Ranch'}</a>
       <h1>{title}</h1>
       <p>{isPrivacy ? (en ? 'What we process, why we need it and the choices you have.' : 'Welche Daten wir verarbeiten, wofür wir sie benötigen und welche Rechte Sie haben.') : (en ? 'Provider details and information about this project website.' : 'Anbieterangaben und Hinweise zu dieser Projektwebsite.')}</p>
-      <p class="legal-date">{en ? 'Last updated: 28 September 2026' : 'Stand: 28. September 2026'}</p>
+      <p class="legal-date">{en ? 'Last updated: 6 October 2026' : 'Stand: 6. Oktober 2026'}</p>
     </header>
     <div class="legal-grid">
       <aside class="legal-toc" aria-label={en ? 'Contents' : 'Inhalt'}>

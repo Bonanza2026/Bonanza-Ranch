@@ -1,0 +1,145 @@
+{
+  "siteType": "informational",
+  "capabilities": {
+    "publicWebsite": {
+      "value": true,
+      "evidence": [
+        "qa/agent-readiness-before-2026-10-06.json: successful HTTP 200 and public sitemap/Markdown/Link-header evidence."
+      ]
+    },
+    "publicIndexableContent": {
+      "value": true,
+      "evidence": [
+        "qa/agent-readiness-before-2026-10-06.json: successful HTTP 200 and public sitemap/Markdown/Link-header evidence."
+      ]
+    },
+    "aiCrawlerPolicyDefined": {
+      "value": true,
+      "evidence": [
+        "src/pages/robots.txt.ts: public Allow:/ and existing ai-train/search/ai-input=yes policy."
+      ]
+    },
+    "contentSignalsPolicyDefined": {
+      "value": true,
+      "evidence": [
+        "src/pages/robots.txt.ts: public Allow:/ and existing ai-train/search/ai-input=yes policy."
+      ]
+    },
+    "linkableMachineResource": {
+      "value": true,
+      "evidence": [
+        "qa/agent-readiness-before-2026-10-06.json: successful HTTP 200 and public sitemap/Markdown/Link-header evidence."
+      ]
+    },
+    "publishLlmsOverview": {
+      "value": true,
+      "evidence": [
+        "qa/agent-readiness-before-2026-10-06.json: successful HTTP 200 and public sitemap/Markdown/Link-header evidence."
+      ]
+    },
+    "publishLlmsFull": {
+      "value": true,
+      "evidence": [
+        "qa/agent-readiness-before-2026-10-06.json: successful HTTP 200 and public sitemap/Markdown/Link-header evidence."
+      ]
+    },
+    "sendsBotRequests": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "publicApi": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "oauthAuthorizationServer": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "oauthProtectedResource": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "agentRegistration": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "mcpServer": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "a2aAgent": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "publishedAgentSkills": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "webMcpActions": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "paidHttpRoutes": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "mppPayments": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "ucpCommerce": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "acpCommerce": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    },
+    "ap2Commerce": {
+      "value": false,
+      "evidence": [
+        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
+        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+      ]
+    }
+  }
+}

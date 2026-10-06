@@ -1,0 +1,105 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.bonanza-ranch.com/#operator",
+      "name": "SKYWIND SOUTH AFRICA (PTY) LTD",
+      "url": "https://www.bonanza-ranch.com/",
+      "email": "info@bonanza-ranch.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "c/o Jordaan, Van Wyk Attorneys Inc., 65 Main Service Road",
+        "addressLocality": "Sedgefield",
+        "addressRegion": "Western Cape",
+        "postalCode": "6573",
+        "addressCountry": "ZA"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "enquiries",
+        "email": "info@bonanza-ranch.com",
+        "availableLanguage": [
+          "de",
+          "en"
+        ]
+      },
+      "brand": {
+        "@id": "https://www.bonanza-ranch.com/#brand"
+      }
+    },
+    {
+      "@type": "Brand",
+      "@id": "https://www.bonanza-ranch.com/#brand",
+      "name": "Bonanza Ranch Eco Wildlife Estate",
+      "alternateName": "Bonanza Ranch",
+      "url": "https://www.bonanza-ranch.com/",
+      "logo": "https://www.bonanza-ranch.com/bonanza/logo-display.webp"
+    },
+    {
+      "@type": "Place",
+      "@id": "https://www.bonanza-ranch.com/#ranch",
+      "name": "Bonanza Ranch",
+      "alternateName": "Bonanza Ranch Eco Wildlife Estate",
+      "url": "https://www.bonanza-ranch.com/en#traum",
+      "description": "Eine private Ranch mit 6.300 Hektar in der Klein Karoo, Western Cape, Südafrika, nahe Oudtshoorn. Die Website stellt die Vision eines Eco Wildlife Estate vor.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Western Cape",
+        "addressCountry": "ZA"
+      },
+      "containedInPlace": {
+        "@type": "Place",
+        "name": "Klein Karoo"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.bonanza-ranch.com/#website",
+      "url": "https://www.bonanza-ranch.com/",
+      "name": "Bonanza Ranch",
+      "alternateName": "Bonanza Ranch Eco Wildlife Estate",
+      "inLanguage": [
+        "de",
+        "en"
+      ],
+      "publisher": {
+        "@id": "https://www.bonanza-ranch.com/#operator"
+      },
+      "about": {
+        "@id": "https://www.bonanza-ranch.com/#ranch"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.bonanza-ranch.com/de#webpage",
+      "url": "https://www.bonanza-ranch.com/de",
+      "name": "Bonanza Ranch · Privater Rückzugsort in Südafrika",
+      "description": "6.300 Hektar in der Klein Karoo: Bonanza Ranch verbindet Südafrikas Wildnis mit der Vision eines privaten Eco Wildlife Estate. Entdecken Sie die Ranch.",
+      "inLanguage": "de",
+      "isPartOf": {
+        "@id": "https://www.bonanza-ranch.com/#website"
+      },
+      "publisher": {
+        "@id": "https://www.bonanza-ranch.com/#operator"
+      },
+      "about": {
+        "@id": "https://www.bonanza-ranch.com/#ranch"
+      },
+      "mainEntity": {
+        "@id": "https://www.bonanza-ranch.com/#ranch"
+      },
+      "primaryImageOfPage": {
+        "@id": "https://www.bonanza-ranch.com/#hero-image"
+      }
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://www.bonanza-ranch.com/#hero-image",
+      "contentUrl": "https://www.bonanza-ranch.com/media/hero-poster-v3.webp",
+      "width": 1600,
+      "height": 900,
+      "caption": "Zwei Giraffen in einer südafrikanischen Berglandschaft"
+    }
+  ]
+}

@@ -10,7 +10,6 @@ const pages = languagePages.find((pair) => Object.values(pair).includes(pathname
 const dePath = pages.de;
 const enPath = pages.en;
 ---
-<!-- Adapted as an Astro component; reference layout and motion selectors retained. -->
 <nav aria-label={en ? "Main navigation" : "Hauptnavigation"}>
   <div class="language-switch" aria-label={en ? "Language" : "Sprache"}><a href={dePath} lang="de" hreflang="de" aria-label="Deutsch" aria-current={!en ? "page" : undefined}>DE</a><span>/</span><a href={enPath} lang="en" hreflang="en" aria-label="English" aria-current={en ? "page" : undefined}>EN</a></div>
   <div class="nav-contain container">
@@ -18,40 +17,8 @@ const enPath = pages.en;
       <div class="nav-col col-4">
         <ul class="nav-ul nav-left">
           <li>
-            <svg class="liquid-glass__svg" aria-hidden="true">
-              <defs>
-                <filter
-                  id="_R_5aklb_"
-                  x="0%"
-                  y="0%"
-                  width="100%"
-                  height=" 100%"
-                >
-                  <feTurbulence
-                    type="fractalNoise"
-                    baseFrequency="0.008 0.008"
-                    numOctaves="2"
-                    seed="100"
-                    result="noise"
-                  ></feTurbulence>
-                  <feGaussianBlur
-                    in="noise"
-                    stdDeviation="2"
-                    result="blurred"
-                  ></feGaussianBlur>
-                  <feDisplacementMap
-                    in="SourceGraphic"
-                    in2="blurred"
-                    scale="40"
-                    xChannelSelector="R"
-                    yChannelSelector="G"
-                  ></feDisplacementMap>
-                </filter>
-              </defs>
-            </svg>
             <div
               class="liquid-glass__filter"
-              style="filter:url(#_R_5aklb_)"
             ></div>
             <div
               class="liquid-glass__overlay"
@@ -81,40 +48,8 @@ const enPath = pages.en;
       <div class="nav-col col-4">
         <ul class="nav-ul nav-right">
           <li>
-            <svg class="liquid-glass__svg" aria-hidden="true">
-              <defs>
-                <filter
-                  id="_R_6qklb_"
-                  x="0%"
-                  y="0%"
-                  width="100%"
-                  height=" 100%"
-                >
-                  <feTurbulence
-                    type="fractalNoise"
-                    baseFrequency="0.008 0.008"
-                    numOctaves="2"
-                    seed="100"
-                    result="noise"
-                  ></feTurbulence>
-                  <feGaussianBlur
-                    in="noise"
-                    stdDeviation="2"
-                    result="blurred"
-                  ></feGaussianBlur>
-                  <feDisplacementMap
-                    in="SourceGraphic"
-                    in2="blurred"
-                    scale="40"
-                    xChannelSelector="R"
-                    yChannelSelector="G"
-                  ></feDisplacementMap>
-                </filter>
-              </defs>
-            </svg>
             <div
               class="liquid-glass__filter"
-              style="filter:url(#_R_6qklb_)"
             ></div>
             <div
               class="liquid-glass__overlay"
@@ -157,32 +92,7 @@ const enPath = pages.en;
       </div>
     </div>
     <div class="nav-layout_mobile">
-      <svg class="liquid-glass__svg" aria-hidden="true">
-        <defs>
-          <filter id="_R_cklb_" x="0%" y="0%" width="100%" height=" 100%">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.008 0.008"
-              numOctaves="2"
-              seed="100"
-              result="noise"
-            ></feTurbulence>
-            <feGaussianBlur
-              in="noise"
-              stdDeviation="2"
-              result="blurred"
-            ></feGaussianBlur>
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="blurred"
-              scale="40"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            ></feDisplacementMap>
-          </filter>
-        </defs>
-      </svg>
-      <div class="liquid-glass__filter" style="filter:url(#_R_cklb_)"></div>
+      <div class="liquid-glass__filter"></div>
       <div class="liquid-glass__overlay" style="--glass-opacity:0.05"></div>
       <div
         class="liquid-glass__specular"
