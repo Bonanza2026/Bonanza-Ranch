@@ -40,6 +40,8 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 Der Hero verbindet ein Landschaftsvideo mit der Bonanza-Marke und einer Einladung zum Weiterentdecken. Beim Scrollen entwickelt sich daraus die Flugsequenz: Wolken, Flugzeug und Ankunftsbild werden über eine gemeinsame Animation aufeinander abgestimmt.
 
 - Eigene Video- und Postergrößen für Mobilgeräte und Desktop.
+- Der Desktop-Hero nutzt das Schriftgewicht der Südafrika-Überschrift, mit etwas kleinerem Schriftgrad und deutlichem Wortabstand. Die mobile Typografie bleibt separat abgestimmt.
+- Im mobilen Video `hero-mobile-v5` folgt der Bildausschnitt dem Gepard während seiner Szene (3,625–7,750 Sekunden) sanft nach links. Laufzeit und alle übrigen 254 Frames sind gegenüber v4 unverändert; WebM und MP4 verwenden neue Dateinamen für zuverlässige Cache-Aktualisierung.
 - Das Poster wird zuerst decodiert; danach startet das Video.
 - Auf dem Desktop bewegt sich das Flugzeug seitlich, mobil von unten nach oben.
 - Die mobile Sequenz ist bewusst kürzer und reagiert mit sanftem Nachlauf auf die Scrollbewegung.

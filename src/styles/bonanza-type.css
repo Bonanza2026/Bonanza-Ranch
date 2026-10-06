@@ -49,6 +49,13 @@
 .dream-home .flight-arrival-line { font-style: normal; font-weight: 220; }
 .footer-component .bonanza-footer-word { font-size: 10.8vw; font-weight: 220; }
 @media (min-width: 768px) {
+  .dream-home .flight-opening h1 {
+    font-family: var(--font-condensed);
+    font-size: 9vw;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    word-spacing: 0.2em;
+  }
   body nav .nav-right .btn-cta { width: max-content; padding-inline: 20px; }
 }
 .reserve-editorial h2 em {
