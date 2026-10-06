@@ -4,8 +4,8 @@ import { readFileSync } from 'node:fs';
 import { heroSources } from '../src/scripts/hero-video.mjs';
 
 test('the corrected mobile film keeps the existing desktop film and MP4 fallback', () => {
-  assert.deepEqual(heroSources(true, true), ['/media/hero-mobile-v5.webm', '/media/hero-mobile-v5.mp4']);
-  assert.deepEqual(heroSources(true, false), ['/media/hero-mobile-v5.mp4']);
+  assert.deepEqual(heroSources(true, true), ['/media/hero-mobile-v6.webm', '/media/hero-mobile-v6.mp4']);
+  assert.deepEqual(heroSources(true, false), ['/media/hero-mobile-v6.mp4']);
   assert.deepEqual(heroSources(false, true), ['/media/hero-desktop-v3.webm', '/media/hero-desktop-v3.mp4']);
   assert.deepEqual(heroSources(false, false), ['/media/hero-desktop-v3.mp4']);
 

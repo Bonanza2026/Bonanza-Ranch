@@ -1,5 +1,5 @@
 export function heroSources(mobile, webmSupported) {
-  const stem = mobile ? '/media/hero-mobile-v5' : '/media/hero-desktop-v3';
+  const stem = mobile ? '/media/hero-mobile-v6' : '/media/hero-desktop-v3';
   return webmSupported ? [`${stem}.webm`, `${stem}.mp4`] : [`${stem}.mp4`];
 }
 
