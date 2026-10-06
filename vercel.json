@@ -107,6 +107,14 @@
     {
       "source": "/media/hero-mobile-v6.mp4",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/media/hero-mobile-v7.webm",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/media/hero-mobile-v7.mp4",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ],
   "redirects": [
