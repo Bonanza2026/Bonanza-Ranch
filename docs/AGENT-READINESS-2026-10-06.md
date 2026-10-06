@@ -6,6 +6,8 @@ Geprüft am 6. Oktober 2026 für https://www.bonanza-ranch.com mit dem öffentli
 
 Der externe Rohscan liefert **Level 3: Agent-Readable**. Alle sechs vorhandenen Kernsignale bestehen:
 
+Der erneute Scan nach der Veröffentlichung am 6. Oktober 2026, 21:53 UTC, bestätigt denselben Level und dieselben sechs bestandenen Kernchecks. Die zusätzlichen direkten Live-Prüfungen bestätigen alle sechs kanonischen Seiten und ihre sechs Markdown-Fassungen; Titel, Hauptüberschrift und Entity-Graph entsprechen dem geprüften Produktionsbuild.
+
 | Prüfung | Ergebnis | Implementierung |
 | --- | --- | --- |
 | robots.txt | Bestanden | HTTP 200, `text/plain`, öffentliche Crawl-Regeln |
