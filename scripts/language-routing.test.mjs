@@ -10,12 +10,13 @@ const request = (country, cookie, path = '/', accept) => {
   return new Request(`https://www.bonanza-ranch.com${path}`, {headers});
 };
 test('Germany enters in German; other countries enter in English', () => {
-  assert.equal(middleware(request('DE')).headers.get('x-middleware-next'), '1');
-  for (const country of ['ZA','AT','US','PL','CN','JP','SG','IN',undefined]) {
+  for (const country of ['DE','ZA','AT','US','PL','CN','JP','SG','IN',undefined]) {
     const response = middleware(request(country));
     assert.equal(response.status, 307);
-    assert.equal(response.headers.get('location'), 'https://www.bonanza-ranch.com/en');
+    assert.equal(response.headers.get('location'), `https://www.bonanza-ranch.com/${country === 'DE' ? 'de' : 'en'}`);
     assert.equal(response.headers.get('cache-control'), 'private, no-store');
+    assert.equal(response.headers.get('vary'), 'Accept, Cookie, X-Vercel-IP-Country');
+    assert.equal(response.headers.get('x-middleware-next'), null);
   }
 });
 
@@ -33,9 +34,11 @@ test('apex entry reaches the canonical host before country, cookie or Markdown s
   }
 });
 test('manual choice takes priority over country, malformed preferences are ignored', () => {
-  assert.equal(middleware(request('DE','other=1; bonanza_language=en')).status, 307);
-  assert.equal(middleware(request('ZA','bonanza_language=de; other=1')).headers.get('x-middleware-next'), '1');
-  assert.equal(middleware(request('ZA','not_bonanza_language=de')).status, 307);
+  assert.equal(middleware(request('DE','other=1; bonanza_language=en')).headers.get('location'), 'https://www.bonanza-ranch.com/en');
+  assert.equal(middleware(request('ZA','bonanza_language=de; other=1')).headers.get('location'), 'https://www.bonanza-ranch.com/de');
+  for (const cookie of ['not_bonanza_language=de', 'bonanza_language=deutsch', 'bonanza_language=enough', 'bonanza_language=DE']) {
+    assert.equal(middleware(request('ZA',cookie)).headers.get('location'), 'https://www.bonanza-ranch.com/en');
+  }
 });
 test('explicit language pages, assets and legal links are not redirected', () => {
   for (const path of ['/de','/en','/datenschutz','/impressum','/robots.txt','/llms.txt','/sitemap.xml','/media/hero_video.webm']) {
@@ -44,7 +47,8 @@ test('explicit language pages, assets and legal links are not redirected', () =>
 });
 test('query parameters survive redirects; local preview remains German', () => {
   assert.equal(middleware(request('US',undefined,'/?utm_source=test')).headers.get('location'), 'https://www.bonanza-ranch.com/en?utm_source=test');
-  assert.equal(middleware(new Request('http://127.0.0.1:4323/')).headers.get('x-middleware-next'), '1');
+  assert.equal(middleware(request('DE',undefined,'/?utm_source=test&phrase=hello%20world')).headers.get('location'), 'https://www.bonanza-ranch.com/de?utm_source=test&phrase=hello%20world');
+  assert.equal(middleware(new Request('http://127.0.0.1:4323/')).headers.get('location'), 'http://127.0.0.1:4323/de');
 });
 
 test('Markdown entry requests keep country and saved language preferences', () => {
@@ -58,5 +62,17 @@ test('Markdown entry requests keep country and saved language preferences', () =
     assert.equal(response.headers.get('vary'), 'Accept, Cookie, X-Vercel-IP-Country');
     assert.equal(response.headers.get('cache-control'), 'private, no-store');
   }
-  assert.equal(middleware(request('DE', undefined, '/', 'text/markdown;q=0')).headers.get('x-middleware-next'), '1');
+  assert.equal(middleware(request('DE', undefined, '/', 'text/markdown;q=0')).headers.get('location'), 'https://www.bonanza-ranch.com/de');
+});
+
+test('root routing is consistent for browser and crawler user agents', () => {
+  for (const country of ['DE', 'US', undefined]) {
+    for (const userAgent of ['Mozilla/5.0', 'Googlebot', 'Bingbot', 'OAI-SearchBot']) {
+      const original = request(country);
+      original.headers.set('user-agent', userAgent);
+      const response = middleware(original);
+      assert.equal(response.status, 307);
+      assert.equal(response.headers.get('location'), `https://www.bonanza-ranch.com/${country === 'DE' ? 'de' : 'en'}`);
+    }
+  }
 });

@@ -5,6 +5,7 @@ import { load } from 'cheerio';
 import { languagePages, siteUrl } from '../site.config.mjs';
 import { markdownPath } from '../agent-content.mjs';
 import { apiDocumentId, apiCatalog, openApiDocument, apiDocsHtml } from '../agent-api.mjs';
+import { agentDiscovery, agentDiscoveryPaths } from '../agent-discovery.mjs';
 
 const compact = (text) => text.replace(/\s+/g, ' ').trim();
 const escape = (text) => text.replace(/[\\`*_[\]<>]/g, '\\$&');
@@ -113,6 +114,7 @@ async function generate() {
   await writeOutput('/.well-known/api-catalog', JSON.stringify(apiCatalog));
   await writeOutput('/openapi.json', JSON.stringify(openApiDocument));
   await writeOutput('/api/docs.html', apiDocsHtml);
+  for (const path of agentDiscoveryPaths) await writeOutput(path, JSON.stringify(agentDiscovery));
   console.log(`Generated ${documents.length} Markdown pages, content API documents, llms-full.txt, API catalog and OpenAPI schema from the built HTML.`);
 }
 

@@ -123,7 +123,7 @@ DNS-Zuordnung und Domain-Weiterleitung werden dadurch nicht geändert. Bei einem
 Die Domain-Weiterleitung vereinheitlicht den **Hostnamen**. Erst danach entscheidet die Middleware beim Aufruf von `/` über die **Sprache**:
 
 - Gespeicherte manuelle Sprachwahl hat Vorrang.
-- Deutschland (`DE`) erhält die deutsche Startseite.
+- Deutschland (`DE`) wird mit HTTP **307** zu `/de` weitergeleitet.
 - Andere oder unbekannte Länder werden mit HTTP **307** zu `/en` weitergeleitet.
 - `/de`, `/en` und die ausdrücklich verlinkten Rechtsseiten behalten ihre Sprache.
 

@@ -16,7 +16,7 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 
 **Prüfstand vom 6. Oktober 2026:** [SEO-Audit](docs/SEO-AUDIT-2026-10-06.md) · [Agent-Readiness](docs/AGENT-READINESS-2026-10-06.md) · [Code-Herkunft](docs/CODE-PROVENANCE.md) · [Schema.org und Entitäten](docs/SCHEMA-REPORT.md)
 
-**Ergänzung vom 7. Oktober 2026:** [Öffentliche Inhalts-API, API-Katalog und WebMCP-Prüfung](docs/AGENT-READINESS-2026-10-07.md)
+**Ergänzung vom 7. Oktober 2026:** [Öffentliche Inhalts-API, Discovery und WebMCP-Prüfung](docs/AGENT-READINESS-2026-10-07.md) · [Indexierung und Sprach-URLs](docs/INDEXING-2026-10-07.md)
 
 ## Projektumfang auf einen Blick
 
@@ -157,7 +157,7 @@ Beim Aufruf der Hauptadresse `/` entscheidet die Vercel-Middleware vor der Ausli
 
 | Situation | Ergebnis |
 | --- | --- |
-| Besucherland Deutschland (`DE`) | Deutsche Startseite |
+| Besucherland Deutschland (`DE`) | HTTP 307 zur deutschen Startseite `/de` |
 | Anderes Land, z. B. Südafrika, Polen, China, Japan, Singapur oder Indien | Weiterleitung zur englischen Startseite `/en` |
 | Länderkennung nicht verfügbar | Englisch |
 | Zuvor bewusst gewählte Sprache | Gespeicherte Sprachwahl hat Vorrang |
@@ -238,8 +238,11 @@ Der Build erzeugt aus denselben veröffentlichten HTML- und Markdown-Inhalten ei
 | `/.well-known/api-catalog` und `/api-catalog.json` | Identischer Linkset-Katalog nach [RFC 9727](https://www.rfc-editor.org/rfc/rfc9727.html) mit Verweisen auf API, Spezifikation und Dokumentation |
 | `/openapi.json` | OpenAPI 3.1.1 mit den beiden tatsächlichen GET-Operationen und ihren Antwortschemas |
 | `/api/docs.html` | Direkt lesbare API-Dokumentation mit Beispielen |
+| `/.well-known/ard.json` und `/.well-known/ai-catalog.json` | Identische Discovery-Dateien mit Verweis auf die tatsächliche öffentliche Inhalts-API |
 
 Der Katalog wird über HTML-Links und HTTP-`Link`-Header angekündigt. Die Verträge stehen in [agent-api.mjs](agent-api.mjs); [generate-agent-content.mjs](scripts/generate-agent-content.mjs) erzeugt die Dateien. Es gibt keine Buchungs-, Nachrichtenversand- oder Zahlungsoperation. Die API dokumentiert die vorhandenen Seiteninhalte und übernimmt deren Aktualisierungen bei jedem Build.
+
+[agent-discovery.mjs](agent-discovery.mjs) beschreibt dieselbe OpenAPI-Spezifikation im [ARD-Vorschlagsformat](https://agenticresourcediscovery.org/spec/). Die aktuelle ARD-Adresse und die von Lighthouse verwendete Vorgängeradresse `ai-catalog.json` sind über HTML- und HTTP-Link-Verweise auffindbar. Der Eintrag nennt ausschließlich die tatsächlich bereitgestellten Leseoperationen. RFC-9727-API-Katalog und ARD haben verschiedene Aufgaben und werden getrennt ausgeliefert.
 
 ### Native WebMCP-Werkzeuge
 
@@ -260,7 +263,7 @@ Für **Chrome 149–162** ist die Teilnahme am WebMCP Origin Trial eingerichtet.
 
 Der öffentliche, an diese Origin gebundene Token steht in [webmcp-trial.mjs](webmcp-trial.mjs). Das Layout gibt ihn nur für die passende Domain und vor Ablauf als `origin-trial`-Meta-Tag aus. Vor Ablauf muss die Teilnahme erneuert und der Token aktualisiert werden. Ein Token kann auch über `PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN` beim Build vorgegeben werden. Bei einem Domainwechsel ist eine passende neue Registrierung nötig. Für lokale Tests unterstützt Chrome außerdem das in der [WebMCP-Dokumentation](https://developer.chrome.com/docs/ai/webmcp) beschriebene Test-Flag.
 
-Alle vier Werkzeuge wurden im lokalen Browser über die native Schnittstelle erfolgreich ausgeführt. Ob ein bestimmter KI-Dienst sie verwendet, hängt von dessen Browserintegration ab. Der neue Produktionsstand wird gesondert geprüft; daraus wird noch keine Live-Wertung abgeleitet.
+Alle vier Werkzeuge wurden im lokalen Browser und auf der Produktionsdomain über die native Schnittstelle erfolgreich ausgeführt. Ob ein bestimmter KI-Dienst sie verwendet, hängt von dessen Browserintegration ab. Der Prüfbericht dokumentiert die gemessene Lighthouse-Wertung und die davon getrennte Einstufung des öffentlichen Scanners.
 
 Ein Kontaktformular ist auf dieser Website nicht vorhanden: Kontakt erfolgt per E-Mail-Link und Kontaktdialog. Deklaratives WebMCP für HTML-Formulare ist deshalb hier nicht anwendbar. Die tatsächlichen Funktionen und Prüfgrenzen stehen im [Prüfbericht vom 7. Oktober](docs/AGENT-READINESS-2026-10-07.md).
 
@@ -379,7 +382,7 @@ Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusät
 
 ## Qualitätssicherung
 
-Die Ergänzung vom **7. Oktober 2026** besteht den Build und **40 automatisierte Tests**. Dazu gehören die API-Verträge und erzeugten Inhalte, die Katalogdateien, die WebMCP-Eingabegrenzen, Abbruchsignale und Registrierungszyklen. Die vier WebMCP-Werkzeuge wurden zusätzlich im lokalen Browser über die native Schnittstelle aufgerufen. Den aktuellen Umfang dokumentiert [AGENT-READINESS-2026-10-07.md](docs/AGENT-READINESS-2026-10-07.md).
+Die Ergänzung vom **7. Oktober 2026** besteht den Build und **46 automatisierte Tests**. Dazu gehören die API-Verträge und erzeugten Inhalte, ARD- und API-Kataloge, die WebMCP-Eingabegrenzen, Abbruchsignale und Registrierungszyklen sowie Sprach-, Slash- und Kapitelweiterleitungen. Die vier WebMCP-Werkzeuge wurden zusätzlich lokal und auf der Produktionsdomain über die native Schnittstelle aufgerufen. Den aktuellen Umfang dokumentieren [AGENT-READINESS-2026-10-07.md](docs/AGENT-READINESS-2026-10-07.md) und [INDEXING-2026-10-07.md](docs/INDEXING-2026-10-07.md).
 
 Der dokumentierte Stand vom **6. Oktober 2026** besteht den Produktionsbuild und **25 automatisierte Tests**. `npm audit` meldet für sämtliche geprüften Produktions- und Entwicklungsabhängigkeiten **keine bekannten Sicherheitslücken**. Geprüft werden unter anderem:
 
@@ -441,6 +444,7 @@ docs/                              Technische und redaktionelle Dokumentation
 middleware.js                      Automatische Eingangssprache
 site.config.mjs                    Domain und kanonische Sprachseiten
 agent-api.mjs                      Inhalts-API-Verträge, OpenAPI und API-Katalog
+agent-discovery.mjs                ARD- und AI-Katalog der vorhandenen Inhalts-API
 webmcp-trial.mjs                   Öffentlicher Origin-Trial-Token und Gültigkeit
 astro.config.mjs                   Astro-Build-Konfiguration
 vercel.json                        Hosting- und Sicherheitsheader

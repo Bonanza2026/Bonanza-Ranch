@@ -21,6 +21,7 @@ docs/*
 !docs/SEO-AUDIT-2026-10-06.md
 !docs/AGENT-READINESS-2026-10-06.md
 !docs/AGENT-READINESS-2026-10-07.md
+!docs/INDEXING-2026-10-07.md
 !docs/SCHEMA-REPORT.md
 !docs/generated-schema.json
 !docs/site-profile.json
@@ -36,3 +37,5 @@ scripts/*
 !scripts/hero-video.test.mjs
 !scripts/webmcp.test.mjs
 !scripts/agent-api.test.mjs
+!scripts/agent-discovery.test.mjs
+!scripts/canonical-routing.test.mjs

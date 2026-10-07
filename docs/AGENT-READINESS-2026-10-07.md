@@ -30,6 +30,7 @@ Die Freischaltung erfolgt bei **Chrome Origin Trials**, nicht in Google Search C
 ## Öffentliche API und Discovery
 
 - [API-Katalog](https://www.bonanza-ranch.com/.well-known/api-catalog): RFC-9727-Linkset mit tatsächlichen API-, Schema- und Dokumentationszielen.
+- [ARD](https://www.bonanza-ranch.com/.well-known/ard.json) und [AI-Katalog](https://www.bonanza-ranch.com/.well-known/ai-catalog.json): identische Discovery-Dokumente der vorhandenen Inhalts-API; aktuelle und von Lighthouse unterstützte Vorgängeradresse.
 - [OpenAPI](https://www.bonanza-ranch.com/openapi.json): GET-Operationen für Inhaltsindex und Dokumente; keine Authentifizierung oder Schreiboperationen.
 - [API-Dokumentation](https://www.bonanza-ranch.com/api/docs.html): Nutzung, Dokument-IDs und Grenzen.
 - [Inhaltsindex](https://www.bonanza-ranch.com/api/content/index.json): Metadaten der sechs kanonischen Sprachseiten.
@@ -37,12 +38,18 @@ Die Freischaltung erfolgt bei **Chrome Origin Trials**, nicht in Google Search C
 
 Weitere IDs: `impressum`, `en-legal`, `datenschutz` und `en-privacy`. Unbekannte IDs sind keine API-Dokumente und liefern 404. Jede JSON-Fassung enthält die Canonical-URL, Sprache, Metadaten, Markdown-Adresse und denselben Markdown-Inhalt wie die entsprechende alternative Seite. HTML, JSON und Markdown stammen aus demselben Build. Im HTML und im HTTP-`Link`-Header wird auf den Katalog verwiesen. Vercel liefert den Katalog als `application/linkset+json` und das Schema als `application/vnd.oai.openapi+json` aus.
 
+Die ARD-Dateien stammen aus [agent-discovery.mjs](../agent-discovery.mjs). Ihr einziger Eintrag leitet seine URL, Medienart, Beschreibung und Fähigkeiten aus der tatsächlichen OpenAPI-Beschreibung ab. Er beschreibt keinen erfundenen MCP-Server. Der [ARD-Vorschlag](https://agenticresourcediscovery.org/spec/) erlaubt die Entdeckung unterschiedlicher Schnittstellen. Die aktuelle Medienarten-Liste von Lighthouse 13.5 kennt OpenAPI noch nicht und gibt deshalb einen niedrigen Hinweis aus; die zutreffende Medienart bleibt erhalten.
+
 ## Prüfungen und ehrliche Einordnung
 
-`npm run qa` besteht mit **40 Tests**. Geprüft werden unter anderem alle erzeugten API-Dokumente gegen HTML und Markdown, die Katalogziele, begrenzte Eingaben, tatsächliche Kontaktfunktionen, Abruchverhalten, fehlende Browserunterstützung und der Back/Forward-Cache.
+Der Produktionsbuild und **46 Tests** bestehen. Geprüft werden unter anderem alle erzeugten API-Dokumente gegen HTML und Markdown, die Katalogziele, begrenzte Eingaben, tatsächliche Kontaktfunktionen, Abbruchverhalten, fehlende Browserunterstützung, der Back/Forward-Cache und kanonische Sprach- beziehungsweise Kapitelweiterleitungen.
 
-Im echten lokalen Browser wurden alle vier Werkzeuge nativ entdeckt und ausgeführt: Impressum lesen, E-Mail-Adresse lesen, Kontaktdialog öffnen und zur Wildnis navigieren. Diese Prüfung ist zusätzlich zu den automatisierten Tests erfolgt.
+Im echten lokalen Browser und auf der Produktionsdomain wurden alle vier Werkzeuge nativ entdeckt und ausgeführt: Inhalte lesen, E-Mail-Adresse lesen, Kontaktdialog öffnen und zur Wildnis navigieren. Diese Prüfung ist zusätzlich zu den automatisierten Tests erfolgt. Eine öffentliche HTTP-Prüfung kontrollierte die sechs HTML-Seiten, beide API-Katalogadressen, OpenAPI, Dokumentation und sieben JSON-Antworten. Die JSON-Dokumente bestanden zusätzlich die Prüfung gegen ihre veröffentlichten JSON-Schemas.
 
 Die Website besitzt **kein Webformular zum Absenden einer Anfrage**. Kontakt bleibt eine E-Mail-Adresse mit Auswahlfenster. Eine WebMCP-Formularabdeckung ist deshalb weiterhin nicht anwendbar. Dafür wird kein funktionsloses Formular hinzugefügt. Ein N/A ist kein Fehler und darf nicht als bestandener Formularversand ausgegeben werden.
 
-Die Lighthouse-Anzeige ist das Verhältnis der im konkreten Lauf anwendbaren, bestandenen Prüfungen. Sie ist nicht dasselbe wie der Level des öffentlichen Agent-Readiness-Scanners. Ein bestimmtes Verhältnis wird erst nach einem passenden neuen Lighthouse-Lauf angegeben. Der ursprüngliche Scan am 7. Oktober vor den Änderungen lieferte Level 3 und meldete fehlende WebMCP-Werkzeuge sowie einen fehlenden API-Katalog. Der öffentliche Nachtest und die Live-Ausführung werden nach Veröffentlichung separat ergänzt.
+Die Lighthouse-Anzeige ist das Verhältnis der im konkreten Lauf anwendbaren, bestandenen Prüfungen. Sie ist nicht dasselbe wie der Level des öffentlichen Agent-Readiness-Scanners. Der öffentliche Produktionslauf am 7. Oktober um 08:50 UTC mit **Lighthouse 13.5.0 und Chrome 152** ergab vor der zusätzlichen ARD-Datei **4 von 4**. Vier registrierte native WebMCP-Werkzeuge wurden erkannt; ihre Schemas bestanden. Formularabdeckung und die damals noch fehlende ARD-Datei waren nicht anwendbar. Die ARD-Ergänzung wird in einem weiteren Produktionslauf geprüft.
+
+Der öffentliche Agent-Readiness-Scanner wechselte nach der API-/WebMCP-Veröffentlichung von **Level 3 zu Level 4: Agent Integrated**. Er erkannte den API-Katalog. Sein WebMCP-Check meldete weiterhin `NoToolsDetected`, obwohl Lighthouse und die native Live-Ausführung vier Werkzeuge nachwiesen. Diese unterschiedlichen Prüfergebnisse werden getrennt festgehalten; es wird keine künstliche Registrierung zur Anpassung an den Scanner hinzugefügt. Lokale Belege liegen unter `qa/agent-readiness-after-2026-10-07.json`, `qa/agent-live-http-2026-10-07.json` und `qa/lighthouse-agentic-2026-10-07.json` und gehören nicht zum öffentlichen Build.
+
+Die separate [Prüfung der Indexierung und Sprach-URLs](INDEXING-2026-10-07.md) dokumentiert die tatsächlichen Search-Console-Befunde. Die Suchindexierung ist unabhängig von WebMCP und ARD.

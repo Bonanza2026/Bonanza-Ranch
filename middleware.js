@@ -1,5 +1,4 @@
 import { geolocation, next } from '@vercel/functions';
-import { acceptsMarkdown } from './agent-content.mjs';
 
 // Only the entry URL is localized. Explicit language URLs remain shareable.
 export const config = { matcher: ['/'] };
@@ -15,10 +14,9 @@ export default function middleware(request) {
   const local = ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname);
   const language = preference || (geolocation(request).country === 'DE' || local ? 'de' : 'en');
   const headers = new Headers({ 'Cache-Control': 'private, no-store', 'Vary': 'Accept, Cookie, X-Vercel-IP-Country' });
-  if (language === 'en' || acceptsMarkdown(request.headers.get('accept'))) {
-    url.pathname = `/${language}`;
-    headers.set('Location', url.toString());
-    return new Response(null, { status: 307, headers });
-  }
-  return next({ headers });
+  // Keep the entry URL from serving a second copy of the German homepage.
+  // Explicit language URLs are the stable destinations for users and crawlers.
+  url.pathname = `/${language}`;
+  headers.set('Location', url.toString());
+  return new Response(null, { status: 307, headers });
 }

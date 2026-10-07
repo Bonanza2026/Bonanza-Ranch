@@ -49,7 +49,7 @@
       "headers": [
         {
           "key": "Link",
-          "value": "</llms.txt>; rel=\"describedby\"; type=\"text/plain\", </llms-full.txt>; rel=\"describedby\"; type=\"text/plain\", </.well-known/api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\""
+          "value": "</llms.txt>; rel=\"describedby\"; type=\"text/plain\", </llms-full.txt>; rel=\"describedby\"; type=\"text/plain\", </.well-known/api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\", </.well-known/ard.json>; rel=\"ard\"; type=\"application/json\", </.well-known/ai-catalog.json>; rel=\"ai-catalog\"; type=\"application/json\""
         }
       ]
     },
@@ -88,6 +88,14 @@
       "source": "/(.well-known/api-catalog|api-catalog.json)",
       "headers": [
         { "key": "Content-Type", "value": "application/linkset+json; profile=\"https://www.rfc-editor.org/info/rfc9727\"" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "X-Robots-Tag", "value": "noindex, follow" }
+      ]
+    },
+    {
+      "source": "/.well-known/(ard|ai-catalog).json",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "X-Robots-Tag", "value": "noindex, follow" }
       ]
@@ -156,6 +164,76 @@
         }
       ],
       "destination": "https://www.bonanza-ranch.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/de/",
+      "destination": "/de",
+      "permanent": true
+    },
+    {
+      "source": "/en/",
+      "destination": "/en",
+      "permanent": true
+    },
+    {
+      "source": "/impressum/",
+      "destination": "/impressum",
+      "permanent": true
+    },
+    {
+      "source": "/en/legal/",
+      "destination": "/en/legal",
+      "permanent": true
+    },
+    {
+      "source": "/datenschutz/",
+      "destination": "/datenschutz",
+      "permanent": true
+    },
+    {
+      "source": "/en/privacy/",
+      "destination": "/en/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/freizeit",
+      "destination": "/de#freizeit",
+      "permanent": true
+    },
+    {
+      "source": "/freizeit/",
+      "destination": "/de#freizeit",
+      "permanent": true
+    },
+    {
+      "source": "/sicherheit",
+      "destination": "/de#sicherheit",
+      "permanent": true
+    },
+    {
+      "source": "/sicherheit/",
+      "destination": "/de#sicherheit",
+      "permanent": true
+    },
+    {
+      "source": "/en/leisure",
+      "destination": "/en#freizeit",
+      "permanent": true
+    },
+    {
+      "source": "/en/leisure/",
+      "destination": "/en#freizeit",
+      "permanent": true
+    },
+    {
+      "source": "/en/security",
+      "destination": "/en#sicherheit",
+      "permanent": true
+    },
+    {
+      "source": "/en/security/",
+      "destination": "/en#sicherheit",
       "permanent": true
     },
     {
