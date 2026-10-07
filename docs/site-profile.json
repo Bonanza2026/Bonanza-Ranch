@@ -46,99 +46,90 @@
     "sendsBotRequests": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "src/scripts/webmcp.mjs: browser tools request only the site's public content JSON with same-origin GET; they do not act as an autonomous outbound crawler.",
+        "No signed bot identity or Web Bot Auth request implementation is present."
       ]
     },
     "publicApi": {
-      "value": false,
+      "value": true,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "agent-api.mjs: OpenAPI 3.1.1 describes the actual public GET /api/content/index.json and GET /api/content/{documentId}.json endpoints for six bounded document IDs.",
+        "scripts/generate-agent-content.mjs: builds the content index, six document JSON files, /openapi.json, /api/docs.html and both API catalog locations from the generated HTML and Markdown.",
+        "vercel.json and SiteLayout.astro: declare API catalog discovery and endpoint content types. This is a public read-only content API."
       ]
     },
     "oauthAuthorizationServer": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "agent-api.mjs: the content API is public with security: []; it exposes no OAuth authorize, token or issuer endpoints."
       ]
     },
     "oauthProtectedResource": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "agent-api.mjs: the GET-only content API requires no authentication and declares security: []. Browser Origin Trial activation is not OAuth resource protection."
       ]
     },
     "agentRegistration": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "src/scripts/webmcp.mjs: registerTool registers browser-local website tools; the site offers no hosted agent enrollment or agent-registration endpoint."
       ]
     },
     "mcpServer": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "src/scripts/webmcp.mjs and agent-api.mjs: native browser WebMCP tools and a public JSON content API are implemented; there is no remote JSON-RPC MCP transport server."
       ]
     },
     "a2aAgent": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "agent-api.mjs: the service exposes document reads, not A2A task creation, messaging, streaming or an agent card."
       ]
     },
     "publishedAgentSkills": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "scripts/generate-agent-content.mjs: publishes content documents, OpenAPI and API documentation; it publishes no executable agent skill package or SKILL.md discovery endpoint."
       ]
     },
     "webMcpActions": {
-      "value": false,
+      "value": true,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "src/scripts/webmcp.mjs: implements read_bonanza_page, navigate_bonanza_section, get_bonanza_contact and open_bonanza_contact with bounded inputs, cancellation and lifecycle cleanup.",
+        "src/layouts/SiteLayout.astro: imports the browser module; it feature-detects native document.modelContext.registerTool, with a navigator.modelContext compatibility fallback, and provides no synthetic API shim.",
+        "webmcp-trial.mjs: stores the public Google Chrome Origin Trial token registered on 2026-10-07 for https://www.bonanza-ranch.com only, expiring 2027-03-30; layout supplies it only for the matching unexpired origin. All four tools were executed through the native interface in the local browser; production verification is tracked separately."
       ]
     },
     "paidHttpRoutes": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "agent-api.mjs: both API operations are free public GET requests; no paid route, HTTP 402 challenge or payment receipt flow is implemented."
       ]
     },
     "mppPayments": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "agent-api.mjs and src/scripts/webmcp.mjs: document reads, chapter navigation and contact display have no payment provider or MPP payment negotiation."
       ]
     },
     "ucpCommerce": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "agent-api.mjs: the content index lists pages, not saleable products; no UCP commerce, cart, checkout or order operations are exposed."
       ]
     },
     "acpCommerce": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "agent-api.mjs: the API has only public document GET operations; there is no ACP checkout session, order submission or commerce state."
       ]
     },
     "ap2Commerce": {
       "value": false,
       "evidence": [
-        "src/pages: static HTML, legal pages and text/XML discovery routes only; no service API, MCP transport, A2A agent, OAuth or commerce routes.",
-        "package.json: Astro, animation and Vercel routing dependencies; no agent server, payment or authorization implementation."
+        "src/scripts/webmcp.mjs: tools read content or change the local website view; no AP2 purchase mandate, authorization or payment transaction is implemented."
       ]
     }
   }

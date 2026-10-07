@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { load } from 'cheerio';
 import { languagePages, siteUrl } from '../site.config.mjs';
 import { markdownPath } from '../agent-content.mjs';
+import { apiDocumentId, apiCatalog, openApiDocument, apiDocsHtml } from '../agent-api.mjs';
 
 const compact = (text) => text.replace(/\s+/g, ' ').trim();
 const escape = (text) => text.replace(/[\\`*_[\]<>]/g, '\\$&');
@@ -78,6 +79,12 @@ export function pageToMarkdown(html, path) {
 
 async function generate() {
   const documents = [];
+  const summaries = [];
+  const writeOutput = async (path, content) => {
+    const output = new URL(`../dist${path}`, import.meta.url);
+    await mkdir(dirname(fileURLToPath(output)), { recursive: true });
+    await writeFile(output, content, 'utf8');
+  };
   for (const pair of languagePages) {
     for (const path of Object.values(pair)) {
       const html = await readFile(new URL(`../dist${path}/index.html`, import.meta.url), 'utf8');
@@ -86,11 +93,27 @@ async function generate() {
       await mkdir(dirname(fileURLToPath(output)), { recursive: true });
       await writeFile(output, markdown, 'utf8');
       documents.push(markdown);
+      const $ = load(html);
+      const summary = {
+        documentId: apiDocumentId(path),
+        lang: $('html').attr('lang'),
+        title: compact($('title').text()),
+        description: $('meta[name="description"]').attr('content'),
+        url: new URL(path, siteUrl).href,
+        markdownUrl: new URL(markdownPath(path), siteUrl).href,
+      };
+      summaries.push(summary);
+      await writeOutput(`/api/content/${summary.documentId}.json`, JSON.stringify({ ...summary, markdown }));
     }
   }
   const full = `# Bonanza Ranch Eco Wildlife Estate\n\n> Vollständige deutsche und englische Seiteninhalte / Complete German and English page content.\n> Automatisch aus den HTML-Seiten dieses Builds erzeugt / Generated from the HTML pages of this build.\n\n${documents.join('\n---\n\n')}`;
   await writeFile(new URL('../dist/llms-full.txt', import.meta.url), full, 'utf8');
-  console.log(`Generated ${documents.length} Markdown pages and llms-full.txt from the built HTML.`);
+  await writeOutput('/api/content/index.json', JSON.stringify({ documents: summaries }));
+  await writeOutput('/api-catalog.json', JSON.stringify(apiCatalog));
+  await writeOutput('/.well-known/api-catalog', JSON.stringify(apiCatalog));
+  await writeOutput('/openapi.json', JSON.stringify(openApiDocument));
+  await writeOutput('/api/docs.html', apiDocsHtml);
+  console.log(`Generated ${documents.length} Markdown pages, content API documents, llms-full.txt, API catalog and OpenAPI schema from the built HTML.`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await generate();

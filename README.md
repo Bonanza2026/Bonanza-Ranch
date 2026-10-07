@@ -16,6 +16,8 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 
 **Prüfstand vom 6. Oktober 2026:** [SEO-Audit](docs/SEO-AUDIT-2026-10-06.md) · [Agent-Readiness](docs/AGENT-READINESS-2026-10-06.md) · [Code-Herkunft](docs/CODE-PROVENANCE.md) · [Schema.org und Entitäten](docs/SCHEMA-REPORT.md)
 
+**Ergänzung vom 7. Oktober 2026:** [Öffentliche Inhalts-API, API-Katalog und WebMCP-Prüfung](docs/AGENT-READINESS-2026-10-07.md)
+
 ## Projektumfang auf einen Blick
 
 | Bereich | Umsetzung |
@@ -27,6 +29,7 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 | Sprachen | Eigene deutsche und englische Texte, manuelle Sprachwahl und automatische Ländererkennung am Einstieg |
 | Suchmaschinen | Metadaten, Canonicals, Sprachverweise, Social-Media-Vorschauen, Schema.org-JSON-LD, robots.txt und XML-Sitemap |
 | KI-Lesbarkeit | llms.txt, vollständige DE/EN-Inhalte in llms-full.txt, automatisch erzeugte Markdown-Seiten und HTTP-Link-Hinweise |
+| Agent-Werkzeuge | Öffentliche Inhalts-API mit OpenAPI und RFC-9727-Katalog sowie vier native WebMCP-Werkzeuge im Browser |
 | Medienauslieferung | WebP-Fotos, responsive Bildgrößen, WebM-Video und MP4-Kompatibilitätsfallback |
 | Datenschutz | Lokale Medien und Schriften, Cookie-Hinweis, Sprachpräferenz, Impressum und Datenschutz in DE/EN |
 | Technik | Statischer Astro-Build, Vercel-Middleware, Sicherheitsheader und automatisierte Integritätsprüfungen |
@@ -224,6 +227,43 @@ HTTP-`Link`-Header und Links im HTML-Head machen `llms.txt`, `llms-full.txt` bez
 
 Diese Ergänzungen orientieren sich an der Qilano-Auslieferung und sind an Bonanzas zwei Sprachen angepasst. Sie garantieren nicht, dass jedes KI-Lesetool eine Domain abrufen kann. Vercel-Login-Schutz und Firewall-Einstellungen sind eigene Hosting-Ebenen und werden durch diese Dateien nicht abgeschaltet.
 
+### Öffentliche Inhalts-API und API-Katalog
+
+Der Build erzeugt aus denselben veröffentlichten HTML- und Markdown-Inhalten eine **öffentliche, ausschließlich lesende JSON-API**. Sie benötigt keinen API-Schlüssel. Die sechs Dokumentkennungen sind `de`, `en`, `impressum`, `en-legal`, `datenschutz` und `en-privacy`.
+
+| Adresse | Inhalt |
+| --- | --- |
+| `/api/content/index.json` | Verzeichnis der sechs Dokumente mit Sprache, Titel, Beschreibung und kanonischen URLs |
+| `/api/content/{documentId}.json` | Metadaten und vollständiger Markdown-Inhalt des ausgewählten Dokuments |
+| `/.well-known/api-catalog` und `/api-catalog.json` | Identischer Linkset-Katalog nach [RFC 9727](https://www.rfc-editor.org/rfc/rfc9727.html) mit Verweisen auf API, Spezifikation und Dokumentation |
+| `/openapi.json` | OpenAPI 3.1.1 mit den beiden tatsächlichen GET-Operationen und ihren Antwortschemas |
+| `/api/docs.html` | Direkt lesbare API-Dokumentation mit Beispielen |
+
+Der Katalog wird über HTML-Links und HTTP-`Link`-Header angekündigt. Die Verträge stehen in [agent-api.mjs](agent-api.mjs); [generate-agent-content.mjs](scripts/generate-agent-content.mjs) erzeugt die Dateien. Es gibt keine Buchungs-, Nachrichtenversand- oder Zahlungsoperation. Die API dokumentiert die vorhandenen Seiteninhalte und übernimmt deren Aktualisierungen bei jedem Build.
+
+### Native WebMCP-Werkzeuge
+
+[src/scripts/webmcp.mjs](src/scripts/webmcp.mjs) stellt vier Werkzeuge für unterstützende Browser und deren Agenten bereit:
+
+| Werkzeug | Funktion |
+| --- | --- |
+| `read_bonanza_page` | Eines der sechs veröffentlichten Dokumente über die Inhalts-API lesen |
+| `navigate_bonanza_section` | Anreise, Natur, Erlebnisse, Sicherheit oder Kontakt über die vorhandene Navigation öffnen |
+| `get_bonanza_contact` | Die tatsächlich angezeigte öffentliche Kontaktadresse auslesen |
+| `open_bonanza_contact` | Den bestehenden Kontaktdialog anzeigen |
+
+Die Werkzeuge versenden keine Nachricht. Ihre Eingaben sind auf die vorhandenen Dokumente und Kapitel begrenzt. Abbruchsignale und das Aufräumen beim Verlassen beziehungsweise Verbergen der Seite sind umgesetzt. Die beiden Lesewerkzeuge sind mit `readOnlyHint` gekennzeichnet; Navigation und Dialogöffnung ändern die lokale Ansicht.
+
+Die Registrierung erfolgt nach Erkennung der **nativen `document.modelContext.registerTool`-Schnittstelle**, mit einem Kompatibilitätszweig für `navigator.modelContext`. Ohne Browserunterstützung bleibt die gewöhnliche Website nutzbar. Ein separat erreichbarer MCP-Server wird durch diese Browserintegration nicht bereitgestellt.
+
+Für **Chrome 149–162** ist die Teilnahme am WebMCP Origin Trial eingerichtet. Die Registrierung wurde am **7. Oktober 2026** über [Google Chrome Origin Trials](https://developer.chrome.com/origintrials/) für exakt `https://www.bonanza-ranch.com` abgeschlossen. Sie läuft bis **30. März 2027** und schließt Subdomains nicht ein. Diese Browserfreischaltung wird dort verwaltet; die Google Search Console dient der Suchindexierung.
+
+Der öffentliche, an diese Origin gebundene Token steht in [webmcp-trial.mjs](webmcp-trial.mjs). Das Layout gibt ihn nur für die passende Domain und vor Ablauf als `origin-trial`-Meta-Tag aus. Vor Ablauf muss die Teilnahme erneuert und der Token aktualisiert werden. Ein Token kann auch über `PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN` beim Build vorgegeben werden. Bei einem Domainwechsel ist eine passende neue Registrierung nötig. Für lokale Tests unterstützt Chrome außerdem das in der [WebMCP-Dokumentation](https://developer.chrome.com/docs/ai/webmcp) beschriebene Test-Flag.
+
+Alle vier Werkzeuge wurden im lokalen Browser über die native Schnittstelle erfolgreich ausgeführt. Ob ein bestimmter KI-Dienst sie verwendet, hängt von dessen Browserintegration ab. Der neue Produktionsstand wird gesondert geprüft; daraus wird noch keine Live-Wertung abgeleitet.
+
+Ein Kontaktformular ist auf dieser Website nicht vorhanden: Kontakt erfolgt per E-Mail-Link und Kontaktdialog. Deklaratives WebMCP für HTML-Formulare ist deshalb hier nicht anwendbar. Die tatsächlichen Funktionen und Prüfgrenzen stehen im [Prüfbericht vom 7. Oktober](docs/AGENT-READINESS-2026-10-07.md).
+
 ### Eine zentrale Domain-Konfiguration
 
 `site.config.mjs` steuert Canonicals, Sprachalternativen, Sitemap, robots.txt und llms.txt. Mit `SITE_URL` wird die öffentliche HTTPS-Domain festgelegt. Nach einem Domainwechsel werden alle diese Verweise durch einen neuen Build gemeinsam aktualisiert.
@@ -339,6 +379,8 @@ Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusät
 
 ## Qualitätssicherung
 
+Die Ergänzung vom **7. Oktober 2026** besteht den Build und **40 automatisierte Tests**. Dazu gehören die API-Verträge und erzeugten Inhalte, die Katalogdateien, die WebMCP-Eingabegrenzen, Abbruchsignale und Registrierungszyklen. Die vier WebMCP-Werkzeuge wurden zusätzlich im lokalen Browser über die native Schnittstelle aufgerufen. Den aktuellen Umfang dokumentiert [AGENT-READINESS-2026-10-07.md](docs/AGENT-READINESS-2026-10-07.md).
+
 Der dokumentierte Stand vom **6. Oktober 2026** besteht den Produktionsbuild und **25 automatisierte Tests**. `npm audit` meldet für sämtliche geprüften Produktions- und Entwicklungsabhängigkeiten **keine bekannten Sicherheitslücken**. Geprüft werden unter anderem:
 
 - Deutschland → Deutsch; andere und unbekannte Länder → Englisch.
@@ -398,6 +440,8 @@ scripts/                           Build-Nachbearbeitung und Tests
 docs/                              Technische und redaktionelle Dokumentation
 middleware.js                      Automatische Eingangssprache
 site.config.mjs                    Domain und kanonische Sprachseiten
+agent-api.mjs                      Inhalts-API-Verträge, OpenAPI und API-Katalog
+webmcp-trial.mjs                   Öffentlicher Origin-Trial-Token und Gültigkeit
 astro.config.mjs                   Astro-Build-Konfiguration
 vercel.json                        Hosting- und Sicherheitsheader
 ```
