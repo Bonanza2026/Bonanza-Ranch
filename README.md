@@ -32,6 +32,7 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 | Agent-Werkzeuge | Öffentliche Inhalts-API mit OpenAPI und RFC-9727-Katalog sowie vier native WebMCP-Werkzeuge im Browser |
 | Medienauslieferung | WebP-Fotos, responsive Bildgrößen, WebM-Video und MP4-Kompatibilitätsfallback |
 | Datenschutz | Lokale Medien und Schriften, Cookie-Hinweis, Sprachpräferenz, Impressum und Datenschutz in DE/EN |
+| Besucherstatistik | Vercel Web Analytics über die native Astro-Komponente, ohne Analyse-Cookies oder eigene Tracking-Events |
 | Technik | Statischer Astro-Build, Vercel-Middleware, Sicherheitsheader und automatisierte Integritätsprüfungen |
 | Veröffentlichung | GitHub mit automatischem Vercel-Deployment, eigene Hauptdomain, drei permanente Domain-Weiterleitungen und HTTPS |
 | Domainumstellung | Trennung der Domains vom bisherigen Homepage-Baukasten, externe DNS-Konfiguration und Erhalt der E-Mail-Einträge |
@@ -221,7 +222,7 @@ Nach dem Astro-Build und der CSS-Bereinigung erzeugt [scripts/generate-agent-con
 
 Die Markdown-Dokumente enthalten Überschriften, Texte, Listen, öffentliche Links und beschriebene Bilder. Ausführbarer Code, dekorative Elemente, Player-Steuerung und doppelte Navigation entfallen. Konzeptkennzeichnungen und rechtliche Angaben bleiben im Inhalt erhalten.
 
-Auf Vercel führt ein ausdrücklicher Request mit **`Accept: text/markdown`** von einer der sechs Seiten per **HTTP 307** zur passenden Markdown-Datei. Diese liefert **`Content-Type: text/markdown; charset=utf-8`**. Browser ohne diesen Header sowie Requests mit `text/markdown;q=0` erhalten die normale HTML-Seite. Die Root-Adresse `/` berücksichtigt auch für Markdown zuerst die Länderkennung oder die gespeicherte Sprachwahl.
+Auf Vercel liefert ein ausdrücklicher Request mit **`Accept: text/markdown`** an eine der sechs kanonischen Seiten deren Markdown-Fassung direkt mit **HTTP 200** unter derselben Adresse. Die Middleware schreibt intern auf die passende Build-Datei um; die Antwort enthält **`Content-Type: text/markdown; charset=utf-8`**, **`Vary: Accept`** und einen Canonical-Link. Browser ohne diesen Header sowie Requests mit `text/markdown;q=0` erhalten die normale HTML-Seite. Die Root-Adresse `/` berücksichtigt auch für Markdown zuerst die Länderkennung oder die gespeicherte Sprachwahl.
 
 HTTP-`Link`-Header und Links im HTML-Head machen `llms.txt`, `llms-full.txt` beziehungsweise die passende Markdown-Datei auffindbar. Die zusätzlichen Textfassungen tragen `X-Robots-Tag: noindex, follow`, damit die kanonischen HTML-Seiten für die Suchindexierung maßgeblich bleiben. Die Auslieferung hängt nicht von einem JavaScript-Rendering oder vom Abspielen der Scroll-Animationen ab.
 
@@ -308,12 +309,24 @@ Ankerlinks zu horizontalen Kapiteln werden in passende Scrollpositionen umgerech
 
 - Deutsch- und englischsprachiges Impressum und Datenschutzseiten.
 - Lokale Bild-, Video- und Font-Auslieferung.
-- Keine eingebundenen Analyse- oder Marketingdienste im aktuellen Projektstand.
+- Cookie-freie, aggregierte Besucherstatistik mit Vercel Web Analytics; keine Werbepixel, Google Analytics oder Vercel Speed Insights.
 - Kein Resend-Versand und kein Kontaktformular-Backend; Kontakt erfolgt per E-Mail-Link.
 - Sprachcookie `bonanza_language` nach bewusster DE/EN-Auswahl.
 - Lokaler Eintrag `bonanza_cookie_notice` zum Merken des geschlossenen Cookie-Hinweises, mit zeitlicher Begrenzung.
 - Cookie-Einstellungen sind im Footer erneut erreichbar.
 - Die Länderkennung kommt vom Hosting-Anbieter; es wird keine Standortfreigabe im Browser abgefragt.
+
+### Vercel Web Analytics
+
+`@vercel/analytics` ist als reguläre Abhängigkeit installiert. `SiteLayout.astro` bindet die offizielle Komponente aus `@vercel/analytics/astro` einmal für alle Seiten ein. Der SDK-Loader und die Übermittlung laufen in der veröffentlichten Website über dieselbe Domain; die Content Security Policy bleibt bei `script-src 'self'` und `connect-src 'self'`.
+
+Erfasst werden Seitenaufrufe für die aggregierte Vercel-Statistik, beispielsweise besuchte Seiten, Herkunftsseiten, Länder, Browser und Gerätetypen. Es gibt keine eigenen Klick-, Formular- oder Kauf-Events. Vercel verwendet keine Analyse-Cookies; die kurzlebige Besucherzuordnung läuft laut Anbieter über einen Hash und endet nach 24 Stunden. Das ist von den bereits dokumentierten Sprach- und Hinweis-Einstellungen getrennt.
+
+Der `webAnalyticsBeforeSend`-Hook entfernt sämtliche Query-Parameter und URL-Fragmente aus der Seitenadresse. Er verwirft fremde Adressen und andere Ereignistypen. Bei aktivem Do Not Track oder Global Privacy Control verbindet die Seite das Analytics-Element nicht und fordert das Erfassungsskript nicht an; der Hook berücksichtigt diese Signale zusätzlich vor jedem Ereignis. Die Astro-Komponente liegt bis zur Einrichtung dieses Hooks in einem inaktiven Template, damit auch der erste Seitenaufruf gefiltert wird. Im lokalen Entwicklungsmodus ist das Element nicht eingebunden.
+
+Für den Live-Betrieb im Vercel-Projekt **Analytics → Enable** aktivieren und anschließend neu deployen. Danach im Browser die erfolgreiche Anfrage an `/_vercel/insights/script.js` beziehungsweise den von Vercel erzeugten Erfassungspfad und einen Seitenaufruf prüfen. Do Not Track, Global Privacy Control und Werbeblocker können die Erfassung verhindern. Die Datenschutzseiten in DE und EN erläutern Zweck, Datenarten, Empfänger und Widerspruchsmöglichkeiten; „Verstanden“ im Cookie-Hinweis ist weiterhin keine Analyse-Einwilligung.
+
+Anbieterinformationen: [Einrichtung](https://vercel.com/docs/analytics/quickstart), [Datenschutz und Datenarten](https://vercel.com/docs/analytics/privacy-policy), [Redaktion sensibler Daten](https://vercel.com/docs/analytics/redacting-sensitive-data).
 
 ### Sicherheitsheader
 

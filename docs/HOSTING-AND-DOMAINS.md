@@ -38,7 +38,7 @@ https://www.bonanzaranch.co.za/en?source=partner
 → https://www.bonanza-ranch.com/en?source=partner
 ```
 
-Die `.co.za`-Weiterleitungen liegen in den Vercel-Projekteinstellungen. Die Weiterleitung der Adresse ohne `www` ist dagegen als erste, nur auf `bonanza-ranch.com` begrenzte Host-Regel in [vercel.json](../vercel.json) versioniert. Sie läuft vor den Markdown-Weiterleitungen und erhält den angeforderten Pfad. Am Einstieg `/` führt zusätzlich [middleware.js](../middleware.js) diese Host-Weiterleitung vor der Sprachauswahl aus: Der erste Live-Test zeigte hier trotz aktiver Konfigurationsregel noch HTTP 200. Die Sprachauswahl erfolgt anschließend auf der Hauptdomain. Auch eine reine Weiterleitungsdomain benötigt für einen HTTPS-Aufruf eine funktionierende Zertifikatszuordnung.
+Die `.co.za`-Weiterleitungen liegen in den Vercel-Projekteinstellungen. Die Weiterleitung der Adresse ohne `www` ist dagegen als erste, nur auf `bonanza-ranch.com` begrenzte Host-Regel in [vercel.json](../vercel.json) versioniert. Sie läuft vor der Inhaltsauswahl und erhält den angeforderten Pfad. Am Einstieg `/` und an den sechs kanonischen Seiten führt zusätzlich [middleware.js](../middleware.js) diese Host-Weiterleitung vor der Sprach- bzw. Formatauswahl aus: Der erste Live-Test am Einstieg zeigte trotz aktiver Konfigurationsregel noch HTTP 200. Die Sprachauswahl erfolgt anschließend auf der Hauptdomain. Auch eine reine Weiterleitungsdomain benötigt für einen HTTPS-Aufruf eine funktionierende Zertifikatszuordnung.
 
 Vercel ließ die Dashboard-Weiterleitung der Adresse ohne `www` nicht speichern, solange die `.co.za`-Domains auf diese Adresse zeigen. Deshalb wird diese Weiterleitung über die Projektkonfiguration ausgeliefert. Bei einer späteren Vereinfachung zunächst beide `.co.za`-Ziele direkt auf `www.bonanza-ranch.com` ändern; anschließend kann auch die Adresse ohne `www` im Dashboard weitergeleitet werden. Nach erfolgreicher Live-Prüfung lassen sich dann die Host-Regel in `vercel.json` und die Host-Weiterleitung am Anfang der Sprach-Middleware entfernen.
 
@@ -187,14 +187,18 @@ Die Vorbereitungen beginnen erst in der Nähe des Erlebnisbereichs. Weiter entfe
 
 **Ergänzung vom 4. Oktober 2026:** Neben HTML gibt es automatisch aus dem Produktionsbuild erzeugte Markdown-Fassungen aller sechs kanonischen Seiten sowie `/llms-full.txt`. `/llms.txt` verlinkt diese Fassungen. Die öffentlichen Antworten enthalten einen `Link`-Header zu beiden llms-Dateien; die HTML-Seiten verweisen zusätzlich auf ihre jeweilige Markdown-Alternative.
 
-Die Regeln in [vercel.json](../vercel.json) führen ausdrücklich angeforderte Markdown-Antworten mit HTTP 307 zur jeweiligen Datei unter `/_agent-markdown/`. Sie liefern `text/markdown; charset=utf-8`. Requests ohne ausdrückliche Markdown-Anforderung behalten HTML. `q=0` bedeutet, dass Markdown nicht akzeptiert wird. Für `/` wählt die Middleware vorher weiterhin die Sprache. Die Zusatzfassungen werden nicht als neue kanonische Seiten in die Sitemap aufgenommen.
+**Änderung vom 7. Oktober 2026:** [middleware.js](../middleware.js) liefert auf allen sechs kanonischen Seiten ausdrücklich angeforderte Markdown-Fassungen direkt unter der angefragten Adresse mit HTTP **200** aus. Dazu nutzt sie Vercels internen `rewrite()` auf die bestehende Build-Datei; der Client erhält keinen zusätzlichen HTTP-Redirect und die Middleware lädt den Inhalt nicht mit einem separaten `fetch()` nach. Die Antwort enthält `Content-Type: text/markdown; charset=utf-8`, `Vary: Accept`, `X-Robots-Tag: index, follow` und einen `Link` zur kanonischen Seitenadresse. Die bestehenden Discovery-Links bleiben im Header erhalten.
+
+Requests ohne ausdrückliche Markdown-Anforderung behalten HTML. Nur `GET` und `HEAD` werden umgeschrieben; `q=0` bedeutet, dass Markdown nicht akzeptiert wird. Die Auswahl hängt nicht vom User-Agent ab. Für `/` wählt die Middleware weiterhin zuerst anhand von Land und gespeicherter Sprachwahl die Sprache und leitet mit HTTP 307 auf `/de` oder `/en` weiter. Die direkt aufrufbaren Zusatzdateien unter `/_agent-markdown/` behalten `noindex, follow` und werden nicht als neue kanonische Seiten in die Sitemap aufgenommen.
+
+Vercels [Routing-Middleware-API](https://vercel.com/docs/routing-middleware/api) dokumentiert interne Rewrites und Response-Header. Astro `dev` und `preview` führen die Vercel-Middleware nicht aus; deshalb müssen Status, Header, unveränderte Browserdarstellung und Markdown-Inhalt zusätzlich nach dem Deployment geprüft werden. Die Umstellung vereinfacht die Formatauslieferung; sie ist kein Nachweis, dass ein vorher fehlgeschlagener externer Lesedienst anschließend funktioniert.
 
 Beispiele für öffentliche Prüfungen:
 
 ```powershell
 curl.exe -sS -I "https://www.bonanza-ranch.com/en"
-curl.exe -sS -L -D - -H "Accept: text/markdown" "https://www.bonanza-ranch.com/en"
-curl.exe -sS -L -D - -H "Accept: text/markdown" "https://www.bonanza-ranch.com/de"
+curl.exe -sS -D - -H "Accept: text/markdown" "https://www.bonanza-ranch.com/en"
+curl.exe -sS -D - -H "Accept: text/markdown" "https://www.bonanza-ranch.com/de"
 curl.exe -sS -I -H "Accept: text/markdown;q=0" "https://www.bonanza-ranch.com/en"
 curl.exe -sS "https://www.bonanza-ranch.com/llms-full.txt"
 curl.exe -sS "https://www.bonanza-ranch.com/robots.txt"

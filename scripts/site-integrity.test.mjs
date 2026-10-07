@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
 import { load } from 'cheerio';
 import { languagePages, siteUrl } from '../site.config.mjs';
 import { heroSources } from '../src/scripts/hero-video.mjs';
@@ -64,6 +65,91 @@ test('built pages can run with self-only scripts and contain no inline event han
     html('*').each((_, el) => {
       for (const attr of Object.keys(el.attribs)) assert.ok(!/^on/i.test(attr), `Inline handler: ${attr}`);
     });
+  }
+});
+
+const analyticsScripts = () => {
+  const html = page('/en');
+  const scripts = html('script[src]').map((_, element) => read(element.attribs.src.slice(1))).get();
+  return {
+    privacy: scripts.find((script) => script.includes('template[data-web-analytics]')),
+    sdk: scripts.find((script) => script.includes('customElements.define(`vercel-analytics`')),
+  };
+};
+
+function analyticsBrowser({ doNotTrack, globalPrivacyControl } = {}) {
+  const window = {};
+  const navigator = { doNotTrack, globalPrivacyControl };
+  const requests = [];
+  let analyticsElement;
+  let connected = false;
+  const template = { content: { cloneNode: () => ({}) }, remove: () => {} };
+  const browser = {
+    window, navigator, URL, location: { origin: siteUrl },
+    document: {
+      querySelector: () => template,
+      createElement: () => ({ dataset: {} }),
+      head: { querySelector: () => null, appendChild: (script) => requests.push(script.src) },
+      body: { append: () => {
+        connected = true;
+        if (analyticsElement) new analyticsElement();
+      } },
+    },
+    HTMLElement: class {
+      constructor() { this.dataset = { props: '{"mode":"production"}', params: '{}', pathname: '/en' }; }
+    },
+    customElements: { define: (name, element) => {
+      assert.equal(name, 'vercel-analytics');
+      analyticsElement = element;
+      if (connected) new analyticsElement();
+    } },
+  };
+  return { browser, window, navigator, requests };
+}
+
+test('native Vercel analytics registers its privacy filter before the first pageview in either module order', () => {
+  for (const path of paths) {
+    const html = page(path);
+    assert.equal(html('template[data-web-analytics]').length, 1);
+    const template = load(html('template[data-web-analytics]').html());
+    assert.equal(template('vercel-analytics').length, 1);
+    assert.deepEqual(JSON.parse(template('vercel-analytics').attr('data-props')), { mode: 'production' });
+    assert.equal(template('vercel-analytics').attr('data-pathname').replace(/\/$/, ''), path);
+  }
+  const scripts = analyticsScripts();
+  assert.ok(scripts.privacy && scripts.sdk);
+  for (const order of [['privacy', 'sdk'], ['sdk', 'privacy']]) {
+    const fixture = analyticsBrowser();
+    for (const name of order) runInNewContext(`(() => { ${scripts[name]} })()`, fixture.browser);
+    assert.deepEqual(fixture.requests, ['/_vercel/insights/script.js']);
+    assert.equal(fixture.window.vaq[0][0], 'beforeSend');
+    assert.equal(fixture.window.vaq[1][0], 'pageview');
+    const event = { type: 'pageview', url: siteUrl + '/en?email=private%40example.com#contact' };
+    const filtered = fixture.window.webAnalyticsBeforeSend(event);
+    assert.equal(filtered.url, siteUrl + '/en');
+    assert.equal(event.url, siteUrl + '/en?email=private%40example.com#contact', 'The SDK input is not mutated');
+    assert.equal(fixture.window.webAnalyticsBeforeSend({ type: 'event', url: siteUrl + '/en' }), null);
+    assert.equal(fixture.window.webAnalyticsBeforeSend({ type: 'pageview', url: 'https://other.example/private' }), null);
+    assert.equal(fixture.window.webAnalyticsBeforeSend({ type: 'pageview', url: 'https://[' }), null);
+    fixture.navigator.globalPrivacyControl = true;
+    assert.equal(fixture.window.webAnalyticsBeforeSend(event), null, 'A changed privacy signal also blocks later events');
+  }
+});
+
+test('Do Not Track and Global Privacy Control prevent the analytics intake script from loading', () => {
+  const scripts = analyticsScripts();
+  for (const signals of [{ doNotTrack: '1' }, { globalPrivacyControl: true }]) {
+    for (const order of [['privacy', 'sdk'], ['sdk', 'privacy']]) {
+      const fixture = analyticsBrowser(signals);
+      for (const name of order) runInNewContext(`(() => { ${scripts[name]} })()`, fixture.browser);
+      assert.deepEqual(fixture.requests, []);
+      assert.equal(fixture.window.vaq, undefined);
+    }
+  }
+  for (const [path, heading] of [['/datenschutz', 'Cookie-freie Besucherstatistik'], ['/en/privacy', 'Cookie-free visitor statistics']]) {
+    assert.ok(page(path)('main').text().includes(heading));
+    assert.ok(page(path)('main').text().includes('Vercel Web Analytics'));
+    assert.ok(page(path)('main').text().includes('Global Privacy Control'));
   }
 });
 

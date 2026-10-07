@@ -4,11 +4,11 @@ import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { languagePages, siteUrl } from '../site.config.mjs';
 import { acceptsMarkdown, markdownPath } from '../agent-content.mjs';
+import middleware, { config as middlewareConfig } from '../middleware.js';
 import { pageToMarkdown } from './generate-agent-content.mjs';
 
 const read = (path) => readFileSync(new URL('../dist/' + path, import.meta.url), 'utf8');
 const config = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
-const markdownRedirects = config.redirects.filter(rule => rule.has?.some(condition => condition.type === 'header' && condition.key === 'accept'));
 
 test('Markdown negotiation accepts explicit positive media ranges, not browser defaults or q=0', () => {
   const examples = [
@@ -22,8 +22,55 @@ test('Markdown negotiation accepts explicit positive media ranges, not browser d
   ];
   for (const [accept, expected] of examples) {
     assert.equal(acceptsMarkdown(accept), expected, accept);
-    for (const rule of markdownRedirects) {
-      assert.equal(new RegExp(rule.has[0].value).test(accept || ''), expected, accept);
+  }
+});
+
+test('canonical pages serve a negotiated Markdown representation without a client redirect', () => {
+  const paths = languagePages.flatMap(Object.values);
+  assert.deepEqual(middlewareConfig.matcher.slice(1).sort(), [...paths].sort());
+  assert.ok(!config.redirects.some(rule => rule.has?.some(condition => condition.type === 'header' && condition.key.toLowerCase() === 'accept')));
+  for (const path of paths) {
+    for (const method of ['GET', 'HEAD']) {
+      const response = middleware(new Request(`${siteUrl}${path}?source=reader`, {method, headers: {accept: 'text/markdown'}}));
+      assert.equal(response.status, 200);
+      assert.equal(response.headers.get('location'), null);
+      assert.equal(response.headers.get('x-middleware-rewrite'), `${siteUrl}${markdownPath(path)}?source=reader`);
+      assert.equal(response.headers.get('content-type'), 'text/markdown; charset=utf-8');
+      assert.equal(response.headers.get('vary'), 'Accept');
+      assert.equal(response.headers.get('x-robots-tag'), 'index, follow');
+      assert.ok(response.headers.get('link').includes(`<${siteUrl}${path}>; rel="canonical"`));
+      for (const resource of ['/llms.txt', '/llms-full.txt', '/.well-known/api-catalog', '/.well-known/ard.json', '/.well-known/ai-catalog.json']) {
+        assert.ok(response.headers.get('link').includes(`<${resource}>`));
+      }
+      assert.ok(read(markdownPath(path).slice(1)).length);
+    }
+  }
+});
+
+test('HTML remains the default, and only bounded read-only Markdown requests are rewritten', () => {
+  for (const path of languagePages.flatMap(Object.values)) {
+    for (const accept of [undefined, 'text/html,application/xhtml+xml,*/*;q=0.8', 'text/markdown;q=0', 'text/markdown;q=0.000', 'application/text/markdown']) {
+      const response = middleware(new Request(siteUrl + path, {headers: accept ? {accept} : {}}));
+      assert.equal(response.headers.get('x-middleware-next'), '1');
+      assert.equal(response.headers.get('x-middleware-rewrite'), null);
+    }
+    assert.equal(middleware(new Request(siteUrl + path, {method: 'POST', headers: {accept: 'text/markdown'}})).headers.get('x-middleware-next'), '1');
+  }
+  for (const path of ['/robots.txt', '/llms.txt', '/sitemap.xml', '/_agent-markdown/en.md', '/api/content/en.json', '/en/extra']) {
+    assert.equal(middleware(new Request(siteUrl + path, {headers: {accept: 'text/markdown'}})).headers.get('x-middleware-rewrite'), null);
+  }
+});
+
+test('explicit pages retain their language and identical content negotiation for browsers and crawlers', () => {
+  for (const path of languagePages.flatMap(Object.values)) {
+    for (const userAgent of ['Mozilla/5.0', 'ChatGPT-User', 'OAI-SearchBot', 'Googlebot', 'PerplexityBot']) {
+      const response = middleware(new Request(siteUrl + path, {headers: {
+        accept: 'text/markdown;q=0.8', 'user-agent': userAgent,
+        cookie: 'bonanza_language=en', 'x-vercel-ip-country': 'DE',
+      }}));
+      assert.equal(response.status, 200);
+      assert.equal(response.headers.get('x-middleware-rewrite'), siteUrl + markdownPath(path));
+      assert.equal(response.headers.get('vary'), 'Accept');
     }
   }
 });
@@ -70,13 +117,6 @@ test('all canonical Markdown pages and full content reflect the same built Germa
 });
 
 test('Vercel exposes real Markdown targets and discovery links while preserving public HTML indexation', () => {
-  const paths = languagePages.flatMap(Object.values);
-  assert.deepEqual(markdownRedirects.map(rule => rule.source).sort(), [...paths].sort());
-  for (const rule of markdownRedirects) {
-    assert.equal(rule.permanent, false);
-    assert.equal(rule.destination, markdownPath(rule.source));
-    assert.ok(read(rule.destination.slice(1)).length);
-  }
   const markdownHeaders = config.headers.find(rule => rule.source === '/_agent-markdown/(.*)').headers;
   assert.equal(markdownHeaders.find(header => header.key === 'Content-Type').value, 'text/markdown; charset=utf-8');
   assert.equal(markdownHeaders.find(header => header.key === 'X-Robots-Tag').value, 'noindex, follow');

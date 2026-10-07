@@ -41,3 +41,5 @@ scripts/*
 !scripts/canonical-routing.test.mjs
 !scripts/font-delivery.test.mjs
 !docs/PERFORMANCE-2026-10-07.md
+!docs/WEBREADER-DIAGNOSE-2026-10-07.md
+!docs/WEBREADER-SUPPORT-2026-10-07.md

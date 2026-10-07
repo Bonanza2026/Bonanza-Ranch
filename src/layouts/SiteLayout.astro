@@ -3,6 +3,7 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CookieNotice from "../components/CookieNotice.astro";
 import ContactOptions from "../components/ContactOptions.astro";
+import Analytics from '@vercel/analytics/astro';
 import { languagePages, siteUrl } from '../../site.config.mjs';
 import { markdownPath } from '../../agent-content.mjs';
 import { webMcpOriginTrialToken } from '../../webmcp-trial.mjs';
@@ -104,6 +105,30 @@ const webMcpTrialToken = import.meta.env.PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN?.trim(
         <source data-src="/media/film-v2.mp4" type='video/mp4; codecs="avc1.640028, mp4a.40.2"' />
       </video>
     </dialog>
+    {import.meta.env.PROD && <template data-web-analytics>
+      <Analytics mode="production" />
+    </template>}
+    <script>
+      // Configure privacy before connecting the SDK's custom element.
+      const analyticsTemplate = document.querySelector<HTMLTemplateElement>('template[data-web-analytics]');
+      const analyticsOptOut = () => navigator.doNotTrack === '1' || Reflect.get(navigator, 'globalPrivacyControl') === true;
+      window.webAnalyticsBeforeSend = (event) => {
+        if (analyticsOptOut() || event.type !== 'pageview') return null;
+        try {
+          const url = new URL(event.url, location.origin);
+          if (url.origin !== location.origin) return null;
+          url.search = '';
+          url.hash = '';
+          return { ...event, url: url.href };
+        } catch {
+          return null;
+        }
+      };
+      if (analyticsTemplate) {
+        if (!analyticsOptOut()) document.body.append(analyticsTemplate.content.cloneNode(true));
+        analyticsTemplate.remove();
+      }
+    </script>
     <script>
       import '../scripts/webmcp.mjs';
     </script>

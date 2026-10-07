@@ -33,6 +33,15 @@ test('apex entry reaches the canonical host before country, cookie or Markdown s
     }
   }
 });
+
+test('apex canonical pages redirect to www before representation negotiation', () => {
+  for (const path of ['/de', '/en', '/impressum', '/en/legal', '/datenschutz', '/en/privacy']) {
+    const response = middleware(new Request(`https://bonanza-ranch.com${path}?source=reader`, {headers: {accept: 'text/markdown'}}));
+    assert.equal(response.status, 308);
+    assert.equal(response.headers.get('location'), `https://www.bonanza-ranch.com${path}?source=reader`);
+    assert.equal(response.headers.get('x-middleware-rewrite'), null);
+  }
+});
 test('manual choice takes priority over country, malformed preferences are ignored', () => {
   assert.equal(middleware(request('DE','other=1; bonanza_language=en')).headers.get('location'), 'https://www.bonanza-ranch.com/en');
   assert.equal(middleware(request('ZA','bonanza_language=de; other=1')).headers.get('location'), 'https://www.bonanza-ranch.com/de');
