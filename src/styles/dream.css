@@ -12,10 +12,10 @@ body{font-weight:400;background:var(--dream-paper)}
 .flight-film video{width:100%;height:100%;object-fit:cover}
 .hero-poster,.hero-poster img,.flight-film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .flight-film video:not([src]){visibility:hidden}
-.flight-film-shade{background:linear-gradient(180deg,#051a1933,transparent 35%,#0b21163b)}
+.flight-film-shade{background:linear-gradient(180deg,#0000001f 0%,#00000042 28%,#00000042 55%,#00000052 100%);pointer-events:none}
 .flight-opening{display:flex;flex-direction:column;justify-content:flex-end;padding:0 4vw 2rem;z-index:2}
 .flight-opening-line{position:absolute;left:4vw;right:4vw;top:45%;display:flex;justify-content:space-between;align-items:center}
-.flight-opening-line>p{font:400 clamp(1.2rem,1.65vw,2rem)/1.28 var(--font-display)}
+.flight-opening-line>p{font:400 clamp(1.2rem,1.65vw,2rem)/1.28 var(--font-display);text-shadow:0 1px 8px #00000066}
 .dream-film-button{border:1px solid #ffffff55;background:transparent;color:inherit;padding:1rem 1.5rem;display:flex;align-items:center;gap:3rem;font:400 .8rem var(--font-sans);cursor:pointer;transition:background .3s}
 .dream-film-button:hover{background:#ffffff22}
 .dream-film-button span{font-size:1.2rem}
