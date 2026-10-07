@@ -76,6 +76,6 @@ Die erneute Lesetool-Prüfung nach dieser Veröffentlichung scheiterte weiterhin
 
 ## Konsequenz
 
-Aus diesen Prüfungen ergibt sich keine begründete DNS-Änderung oder Hosting-Migration. Die verbleibende Diagnose braucht den fehlgeschlagenen Backend-Abruf des Lesedienstes: Zeitpunkt, DNS-Antwort, TLS-Fehler oder HTTP-Status und gegebenenfalls die Request-ID. Dafür liegt eine separate Support-Vorlage in [WEBREADER-SUPPORT-2026-10-07.md](WEBREADER-SUPPORT-2026-10-07.md).
+Aus diesen Prüfungen ergibt sich keine begründete DNS-Änderung oder Hosting-Migration. Die verbleibende Diagnose braucht den fehlgeschlagenen Backend-Abruf des Lesedienstes: Zeitpunkt, DNS-Antwort, TLS-Fehler oder HTTP-Status und gegebenenfalls die Request-ID. Der Bericht wurde mit Betreiberfreigabe im offiziellen OpenAI-Support-Chat eingereicht. Nachricht und beobachteter Bearbeitungsstatus stehen in [WEBREADER-SUPPORT-2026-10-07.md](WEBREADER-SUPPORT-2026-10-07.md). Eine menschliche Weiterleitung oder Fallnummer wurde dort bislang nicht bestätigt.
 
 Weder Markdown, Indexierung, `llms.txt` noch WebMCP garantieren, dass ein externer Lesedienst eine URL abruft. Ein fehlgeschlagener URL-Abruf darf nicht allein als Beleg für eine offline geschaltete, gesperrte oder noch lokale Website dargestellt werden.

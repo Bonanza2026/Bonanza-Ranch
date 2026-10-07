@@ -1,6 +1,10 @@
 # Support-Vorlage: fehlgeschlagene URL-Abrufe im Web-Lesetool
 
-Die folgende Nachricht ist eine vorbereitete Anfrage. Sie wurde nicht versendet. Sie enthält öffentliche Website-Daten und keine privaten Konto- oder Anschlussdaten.
+Die folgende Nachricht wurde am 7. Oktober 2026 mit ausdrücklicher Freigabe des Betreibers im offiziellen OpenAI-Help-Center-Chat eingereicht. Sie enthält öffentliche Website-Daten und keine privaten Konto- oder Anschlussdaten.
+
+## Versandstatus
+
+Der Chat zeigte den vollständigen Bericht als gesendete Nachricht und bestätigte die hinterlegte Kontaktadresse mit „Email received“. Anschließend wurden der genaue Aufruf im nicht interaktiven `web.run`-Lesetool und der Vergleich mit Qilano ergänzt. Eine menschliche Prüfung und eine Fallnummer wurden ausdrücklich angefordert. Der automatische Support-Assistent bestätigte bislang keine Weiterleitung und erklärte, selbst weder interne Abrufprotokolle noch eine Fallnummer bereitstellen zu können. Der beobachtete Webleser-Fehler ist damit weiterhin offen; eine technische Behebung durch OpenAI wurde nicht bestätigt.
 
 ## Nachricht zum Kopieren
 
