@@ -384,6 +384,8 @@ Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusät
 
 Die Ergänzung vom **7. Oktober 2026** besteht den Build und **46 automatisierte Tests**. Dazu gehören die API-Verträge und erzeugten Inhalte, ARD- und API-Kataloge, die WebMCP-Eingabegrenzen, Abbruchsignale und Registrierungszyklen sowie Sprach-, Slash- und Kapitelweiterleitungen. Die vier WebMCP-Werkzeuge wurden zusätzlich lokal und auf der Produktionsdomain über die native Schnittstelle aufgerufen. Den aktuellen Umfang dokumentieren [AGENT-READINESS-2026-10-07.md](docs/AGENT-READINESS-2026-10-07.md) und [INDEXING-2026-10-07.md](docs/INDEXING-2026-10-07.md).
 
+Nach Veröffentlichung bestanden **87/87 öffentliche HTTP-Prüfungen**. Der aktuelle Live-Lauf mit **Lighthouse 13.5.0 / Chrome 152** zeigt **5/5 Agentic Browsing**: native Werkzeuge und gültige Eingabeschemas, gültiger AI-Katalog, llms.txt und stabile Seitenstruktur. Formularabdeckung bleibt mangels Kontaktformular nicht anwendbar. Der öffentliche Agent-Readiness-Scanner meldet unabhängig davon **Level 4: Agent Integrated**; seine abweichende WebMCP-Erkennung und der niedrige OpenAPI-Medienarten-Hinweis in Lighthouse sind im Prüfbericht festgehalten.
+
 Der dokumentierte Stand vom **6. Oktober 2026** besteht den Produktionsbuild und **25 automatisierte Tests**. `npm audit` meldet für sämtliche geprüften Produktions- und Entwicklungsabhängigkeiten **keine bekannten Sicherheitslücken**. Geprüft werden unter anderem:
 
 - Deutschland → Deutsch; andere und unbekannte Länder → Englisch.
