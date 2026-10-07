@@ -37,6 +37,12 @@ We also ran a fresh-query control at **2026-10-07 10:36:30–10:36:32 UTC**:
 - A separate Bonanza `curl` request with `User-Agent: Bonanza-Diagnostic-Control/20261007-1038` returned `307` and appeared in the visible Vercel middleware logs at **10:36:32.393 UTC**.
 - No additional root request was visible in that interval after refreshing the log view. We do not treat that absence as conclusive because log sampling, filtering or delay may apply.
 
+We then deployed and verified direct Markdown content negotiation in commit `42478af`; Vercel reported the deployment `READY`. All six canonical documents return HTTP `200` at the same URL for `Accept: text/markdown`, with `Content-Type: text/markdown; charset=utf-8`, `Vary: Accept`, a canonical link and `index, follow`. The response bodies match the built documents. HTML requests and requests rejecting Markdown with `q=0` still receive HTML. Separate Markdown helper files retain `noindex`; the existing root locale selection and apex-to-www redirects remain intact.
+
+After that deployment, a further web-tool comparison at approximately **2026-10-07 10:44:51–10:44:53 UTC** still failed for `https://www.bonanza-ranch.com/en` with the same generic error, while `https://www.qilano.de/` returned page text again.
+
+The corresponding Vercel middleware view for the explicit `/en` route showed independent live checks at **10:44:22.733 and 10:44:23.596 UTC**, and a marked `curl` control at **10:45:20.545 UTC**. No `/en` request was visible in the approximately **10:44:51–10:44:53 UTC** reader-failure interval. The controls demonstrate that this route could appear in the inspected log view. This supports investigating a failure before a visible origin request, but does not establish it conclusively because log sampling, filtering and delay are unknown.
+
 Please investigate the backend fetch attempt and provide the actual failure stage and diagnostic information:
 
 1. Did the reader make an origin request, or fail before sending it?
@@ -49,4 +55,4 @@ Please do not infer that the site is offline or still local from this generic to
 
 ## Ergänzungen bei späteren Tests
 
-Neue Abrufzeiten, unveränderte Fehlermeldungen und bestätigte Backend-Request-IDs können ergänzt werden. Änderungen an Markdown-Auslieferung oder Indexierung sollten nur mit ihrem tatsächlich geprüften Ergebnis beschrieben werden; sie sind kein Nachweis, dass dieser Abruffehler behoben wurde.
+Neue Abrufzeiten, unveränderte Fehlermeldungen und bestätigte Backend-Request-IDs können ergänzt werden. Die direkte Markdown-Auslieferung wurde veröffentlicht und live bestätigt; der anschließende Lesetool-Aufruf scheiterte weiterhin. Änderungen an Indexierung oder weiteren Schnittstellen sollten ebenfalls nur mit ihrem tatsächlich geprüften Ergebnis beschrieben werden.

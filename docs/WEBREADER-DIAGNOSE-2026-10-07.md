@@ -16,6 +16,8 @@ Die Bonanza-Website liefert bei den geprüften öffentlichen DNS-, TLS- und HTTP
 
 Auch eine Vercel-Vorschau und eine Unterseite der sonst lesbaren Qilano-Domain scheitern. Ein genereller Unterschied „eigene Domain gegenüber Vercel-Vorschau“ erklärt die Ergebnisse somit nicht. Der Hinweis „Crawled: today“ legt nicht offen, ob Qilanos Antwort beim Werkzeugaufruf frisch vom Server abgerufen oder aus einem zuvor erzeugten Abruf bereitgestellt wurde.
 
+Nach Veröffentlichung der unten beschriebenen Markdown-Erweiterung wurde der Vergleich um ungefähr **10:44:51–10:44:53 UTC / 12:44:51–12:44:53 MESZ** wiederholt. Bonanza `/en` lieferte im Lesetool weiterhin dieselbe generische Fehlermeldung, während Qilano `/` erneut Seiteninhalt lieferte.
+
 ## Öffentliche DNS-Prüfung
 
 Geprüft wurden Google Public DNS und Cloudflare mit aktivierter DNSSEC-Validierung, einschließlich A, AAAA, CNAME, HTTPS und DS. Die Antworten hatten Status `0` / `NOERROR`; es gab keinen DNSSEC-Validierungsfehler oder `SERVFAIL`.
@@ -59,8 +61,21 @@ Ein weiterer Vergleich lief **10:36:30–10:36:32 UTC / 12:36:30–12:36:32 MESZ
 
 Der Kontrollaufruf bestätigt, dass ein eingehender Request in dieser Ansicht sichtbar werden konnte. Ein fehlender Log-Eintrag ist wegen möglicher Verzögerung, Filterung oder Stichprobenerfassung kein abschließender Beweis, dass kein anderer Request Vercel erreichte. Die Ansicht liefert auch keinen internen Fehler des OpenAI-Lesedienstes.
 
+Nach dem erneuten Lesetool-Vergleich wurde auch die explizite Route `/en` in der Middleware-Logansicht geprüft. Sichtbar waren unabhängige Live-Prüfungen um **10:44:22.733 und 10:44:23.596 UTC** sowie ein gekennzeichneter `curl`-Kontrollaufruf um **10:45:20.545 UTC**. Im Zeitfenster des fehlgeschlagenen Lesetool-Aufrufs, ungefähr **10:44:51–10:44:53 UTC**, war kein `/en`-Eintrag sichtbar. Die Logansicht konnte also Aufrufe dieser konkreten Route erfassen. Zusammen mit den erfolgreichen Netzwerkprüfungen stützt das einen Fehler vor einem sichtbaren Origin-Aufruf; wegen unbekannter Log-Erfassung und möglicher Verzögerung ist es weiterhin kein abschließender Nachweis.
+
+## Markdown-Auslieferung: veröffentlicht und live geprüft
+
+Die Erweiterung aus Commit `42478af` wurde auf Vercel veröffentlicht; das Deployment meldete `READY`. Alle sechs kanonischen Dokumente wurden live geprüft: `/de`, `/en`, `/impressum`, `/en/legal`, `/datenschutz` und `/en/privacy`.
+
+- `Accept: text/markdown` liefert direkt HTTP `200` an derselben URL mit `Content-Type: text/markdown; charset=utf-8`, ohne Weiterleitung zu einer Hilfsdatei.
+- Die Antwort enthält `Vary: Accept`, den kanonischen Link und `index, follow`. Die Markdown-Inhalte stimmen mit dem gebauten Dokument überein.
+- HTML-Anfragen und Anfragen, die Markdown mit `q=0` ablehnen, liefern weiterhin HTTP `200` mit HTML.
+- Separate Markdown-Hilfsdateien bleiben mit `noindex` gekennzeichnet. Die Sprachwahl am Einstieg (`307`) und die Weiterleitung vom Apex auf `www` (`308`) bleiben erhalten.
+
+Die erneute Lesetool-Prüfung nach dieser Veröffentlichung scheiterte weiterhin für Bonanza `/en`. Direkte Markdown-Auslieferung verbessert damit die lesbare HTTP-Antwort für unterstützende Clients, hat aber den hier beobachteten Lesetool-Fehler nicht behoben.
+
 ## Konsequenz
 
 Aus diesen Prüfungen ergibt sich keine begründete DNS-Änderung oder Hosting-Migration. Die verbleibende Diagnose braucht den fehlgeschlagenen Backend-Abruf des Lesedienstes: Zeitpunkt, DNS-Antwort, TLS-Fehler oder HTTP-Status und gegebenenfalls die Request-ID. Dafür liegt eine separate Support-Vorlage in [WEBREADER-SUPPORT-2026-10-07.md](WEBREADER-SUPPORT-2026-10-07.md).
 
-Direkte Markdown-Antworten werden getrennt als Verbesserung der maschinenlesbaren Inhalte umgesetzt. Ihre Live-Auslieferung war zum Zeitpunkt dieser Diagnose noch nicht abschließend verifiziert. Weder Markdown, Indexierung, `llms.txt` noch WebMCP garantieren, dass ein externer Lesedienst eine URL abruft.
+Weder Markdown, Indexierung, `llms.txt` noch WebMCP garantieren, dass ein externer Lesedienst eine URL abruft. Ein fehlgeschlagener URL-Abruf darf nicht allein als Beleg für eine offline geschaltete, gesperrte oder noch lokale Website dargestellt werden.
