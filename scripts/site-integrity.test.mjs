@@ -86,6 +86,9 @@ test('HTML does not eagerly load several video formats or the unopened film', ()
     assert.equal(html('video[src], video source[src]').length, 0);
     assert.equal(html('.ranch-film source[data-src]').length, 2);
     assert.equal(html('.hero-poster img').attr('fetchpriority'), 'high');
+    const flightArt = html('.flight-cloud, .flight-plane img, .flight-cloud-front img');
+    assert.equal(flightArt.length, 5);
+    flightArt.each((_, image) => assert.equal(image.attribs.fetchpriority, 'low', 'Hidden flight art must not compete with the visible poster and type'));
     assert.equal(html('link[rel="stylesheet"]').length, 0, 'Production CSS should not add render-blocking round trips');
     for (const font of ['/fonts/PPFragment-GlareVariable-v1.woff2', '/fonts/Inter-Regular-latin-ext-v1.woff2', '/fonts/Inter-Medium-latin-ext-v1.woff2']) {
       assert.equal(html(`link[rel="preload"][as="font"][href="${font}"]`).length, 1);
