@@ -294,6 +294,8 @@ Die Auslieferung ist auf große Bildwelten bei möglichst wenig unnötigem Daten
 
 Ältere Medienvarianten und Ausgangsformate bleiben teilweise im Repository erhalten. Das bedeutet nicht, dass die aktuelle Seite sie alle lädt. Historische Performance-Messungen und Optimierungsschritte stehen in [TECHNICAL-REVIEW.md](docs/TECHNICAL-REVIEW.md); sie sind keine Messwerte für jeden späteren Stand der Website.
 
+Der mobile Live-Nachtest vom **7. Oktober 2026** ergibt **93 Performance-Punkte** und **1,8 s LCP**. Die eigene Ausgangsmessung mit derselben Lighthouse-/Chrome-Konfiguration lag bei 79 Punkten und 5,0 s LCP. Die Startübertragung sinkt um rund 2,65 MB, ohne Änderungen an Bild- oder Videodateien. Messbedingungen, sämtliche Einzelmetriken und die Vergleichsgrenzen stehen in [PERFORMANCE-2026-10-07.md](docs/PERFORMANCE-2026-10-07.md).
+
 ## Bedienbarkeit, Datenschutz und technische Schutzmaßnahmen
 
 ### Bedienbarkeit
