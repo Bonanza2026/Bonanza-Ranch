@@ -4,7 +4,7 @@
 
 ![Bonanza Ranch – die Landschaft der Klein Karoo](public/media/hero-poster-v3.webp)
 
-**Astro 7 · Lenis · GSAP ScrollTrigger · Deutsch / Englisch · WebP · WebM · Vercel**
+**Astro 7 · Lenis · GSAP ScrollTrigger · Deutsch / Englisch · WebP · WebM · Vercel · WebMCP · Markdown Content Negotiation**
 
 Die Website führt vom ersten Landschaftseindruck über die Anreise aus Europa und Asien bis zu Tierwelt, privaten Erlebnissen und dem Sternenhimmel Südafrikas. Gestaltung, Bildsprache, Texte und Bewegung greifen dabei ineinander: großzügige Fotografie, warme Beigetöne, grüne Typografie und abgestimmte Übergänge.
 
@@ -18,6 +18,34 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 
 **Ergänzung vom 7. Oktober 2026:** [Öffentliche Inhalts-API, Discovery und WebMCP-Prüfung](docs/AGENT-READINESS-2026-10-07.md) · [Indexierung und Sprach-URLs](docs/INDEXING-2026-10-07.md)
 
+## Technischer Prüfstand und neue Schnittstellen
+
+Neben der visuellen Website enthält das Projekt eine vollständige zweite Inhaltsausgabe für KI-Clients und vier native Browser-Werkzeuge. Deutsche und englische Inhalte werden als HTML, Markdown und JSON aus derselben Quelle veröffentlicht. Der Build hält Texte, Metadaten, Sprachzuordnung und kanonische URLs dabei zusammen.
+
+| Prüfung | Dokumentiertes Ergebnis vom 7. Oktober 2026 |
+| --- | --- |
+| Lighthouse SEO | **100/100** |
+| Lighthouse Best Practices | **100/100** |
+| Lighthouse Barrierefreiheit | **96/100** |
+| Lighthouse mobile Performance | **93/100**, Largest Contentful Paint **1,8 Sekunden** |
+| Lighthouse Agentic Browsing | **5/5 anwendbare Prüfungen bestanden**; interner Kategoriewert 0,98 wegen eines niedrigen OpenAPI-Medienarten-Hinweises |
+| Native WebMCP-Werkzeuge | **4 Werkzeuge**, lokal und auf der Produktionsdomain erfolgreich ausgeführt |
+| Öffentlicher Agent-Readiness-Scanner | **Level 4: Agent Integrated** |
+| Öffentliche HTTP-Prüfungen | **87/87 bestanden** im dokumentierten Veröffentlichungsnachtest |
+| Automatisierte Projekttests | **64/64 bestanden** beim erneuten Lauf am 7. Oktober 2026 |
+
+Die Lighthouse-Werte stammen aus den verlinkten Laborberichten mit Lighthouse 13.5.0 / Chrome 152. Sie sind Messungen des dort genannten Veröffentlichungsstands. Der frühere **100/100-Mobile-Performance-Lauf** auf der damaligen Vercel-Domain ist separat in der [Optimierungshistorie](docs/TECHNICAL-REVIEW.md) dokumentiert. Die vollständigen aktuellen Messbedingungen stehen im [Performance-Bericht](docs/PERFORMANCE-2026-10-07.md) und im [Agentic-Browsing-Bericht](docs/AGENT-READINESS-2026-10-07.md).
+
+### Was KI-Clients und Browser-Agenten nutzen können
+
+- **Inhalte direkt lesen:** Alle sechs kanonischen DE-/EN-Seiten liefern bei `Accept: text/markdown` die passende Markdown-Darstellung mit HTTP 200 unter derselben URL. Normale Browser erhalten weiterhin HTML.
+- **Die Website entdecken:** `llms.txt`, `llms-full.txt`, Sitemap, HTML-Verweise und HTTP-`Link`-Header führen zu den veröffentlichten Dokumenten und Schnittstellen.
+- **Strukturierte Inhalte abrufen:** Eine öffentliche JSON-Inhalts-API liefert Seiteninhalt und Metadaten. OpenAPI 3.1.1, der RFC-9727-API-Katalog und ARD/AI-Katalog beschreiben die tatsächlichen Leseoperationen.
+- **Die Seite bedienen:** Unterstützende Browser-Agenten können eine Seite lesen, zu einem Kapitel navigieren, die öffentliche Kontaktadresse auslesen oder den bestehenden Kontaktdialog öffnen. Eingaben und mögliche Aktionen sind auf diese Funktionen begrenzt.
+- **Entitäten zuordnen:** Schema.org-JSON-LD verbindet Website, Sprachseiten, rechtlichen Betreiber und Ranch, ohne die Korrespondenzadresse mit dem Besucherstandort gleichzusetzen.
+
+Die folgende Dokumentation beschreibt die jeweiligen Dateien, die Funktionsweise, die Prüfung und die Pflege der Schnittstellen. WebMCP wird über den Chrome Origin Trial aktiviert; Suchindexierung und Google-Unternehmensprofil sind davon unabhängige Dienste.
+
 ## Projektumfang auf einen Blick
 
 | Bereich | Umsetzung |
@@ -28,8 +56,8 @@ Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien
 | Mobile | Eigene Flugrichtung, vertikale Kapitel, angepasste Sticky-Panels, lesbare Texte und separat abgestimmte Bildabstände |
 | Sprachen | Eigene deutsche und englische Texte, manuelle Sprachwahl und automatische Ländererkennung am Einstieg |
 | Suchmaschinen | Metadaten, Canonicals, Sprachverweise, Social-Media-Vorschauen, Schema.org-JSON-LD, robots.txt und XML-Sitemap |
-| KI-Lesbarkeit | llms.txt, vollständige DE/EN-Inhalte in llms-full.txt, automatisch erzeugte Markdown-Seiten und HTTP-Link-Hinweise |
-| Agent-Werkzeuge | Öffentliche Inhalts-API mit OpenAPI und RFC-9727-Katalog sowie vier native WebMCP-Werkzeuge im Browser |
+| KI-Lesbarkeit | llms.txt, llms-full.txt, sechs automatisch erzeugte Markdown-Seiten, direkte HTTP-Content-Negotiation und Discovery-Link-Header |
+| Agent-Werkzeuge | Öffentliche JSON-Inhalts-API, OpenAPI 3.1.1, RFC-9727-API-Katalog, ARD/AI-Katalog und vier native WebMCP-Werkzeuge mit Chrome-Origin-Trial |
 | Medienauslieferung | WebP-Fotos, responsive Bildgrößen, WebM-Video und MP4-Kompatibilitätsfallback |
 | Datenschutz | Lokale Medien und Schriften, Cookie-Hinweis, Sprachpräferenz, Impressum und Datenschutz in DE/EN |
 | Besucherstatistik | Vercel Web Analytics über die native Astro-Komponente, ohne Analyse-Cookies oder eigene Tracking-Events |
@@ -51,6 +79,7 @@ Der Hero verbindet ein Landschaftsvideo mit der Bonanza-Marke und einer Einladun
 - Die mobile Sequenz ist bewusst kürzer und reagiert mit sanftem Nachlauf auf die Scrollbewegung.
 - Wenn das Video verdeckt oder außerhalb der Ansicht ist, wird es pausiert.
 - Wird Autoplay vom Browser verhindert, bleibt das Poster sichtbar.
+- Ein dezenter dunkler Verlauf und ein feiner Schatten hinter dem Einführungstext verbessern die Lesbarkeit über hellen und wechselnden Videoszenen.
 
 ### Karte mit zwei Anreiserouten
 
@@ -120,9 +149,9 @@ Aktuell prägen diese Dateien das Design:
 
 | Schrift | Lokale Datei | Einsatz |
 | --- | --- | --- |
-| PP Fragment Glare Variable | `public/fonts/PPFragment-GlareVariable.woff` | Große Überschriften und Display-Typografie |
-| Inter Regular | `public/fonts/Inter-Regular.woff2` | Fließtexte und Navigation |
-| Inter Medium | `public/fonts/Inter-Medium.woff2` | Mittlere Schriftstärke |
+| PP Fragment Glare Variable | `public/fonts/PPFragment-GlareVariable-v1.woff2` | Große Überschriften und Display-Typografie |
+| Inter Regular | `public/fonts/Inter-Regular-latin-ext-v1.woff2` | Fließtexte und Navigation; separate vollständige Unicode-Fallbackdatei |
+| Inter Medium | `public/fonts/Inter-Medium-latin-ext-v1.woff2` | Mittlere Schriftstärke; separate vollständige Unicode-Fallbackdatei |
 
 Die wichtigsten Fonts werden vorgeladen. `font-display: swap` ermöglicht die Textdarstellung auch während des Ladens.
 
@@ -224,7 +253,18 @@ Die Markdown-Dokumente enthalten Überschriften, Texte, Listen, öffentliche Lin
 
 Auf Vercel liefert ein ausdrücklicher Request mit **`Accept: text/markdown`** an eine der sechs kanonischen Seiten deren Markdown-Fassung direkt mit **HTTP 200** unter derselben Adresse. Die Middleware schreibt intern auf die passende Build-Datei um; die Antwort enthält **`Content-Type: text/markdown; charset=utf-8`**, **`Vary: Accept`** und einen Canonical-Link. Browser ohne diesen Header sowie Requests mit `text/markdown;q=0` erhalten die normale HTML-Seite. Die Root-Adresse `/` berücksichtigt auch für Markdown zuerst die Länderkennung oder die gespeicherte Sprachwahl.
 
-HTTP-`Link`-Header und Links im HTML-Head machen `llms.txt`, `llms-full.txt` beziehungsweise die passende Markdown-Datei auffindbar. Die zusätzlichen Textfassungen tragen `X-Robots-Tag: noindex, follow`, damit die kanonischen HTML-Seiten für die Suchindexierung maßgeblich bleiben. Die Auslieferung hängt nicht von einem JavaScript-Rendering oder vom Abspielen der Scroll-Animationen ab.
+HTTP-`Link`-Header und Links im HTML-Head machen `llms.txt`, `llms-full.txt` beziehungsweise die passende Markdown-Datei auffindbar. Die **separaten Hilfsdateien** unter `/_agent-markdown/` tragen `X-Robots-Tag: noindex, follow`, damit keine zusätzlichen Suchindex-URLs entstehen. Die **ausgehandelte Darstellung unter der kanonischen Seitenadresse** trägt dagegen `index, follow` und verweist auf dieselbe Canonical-URL wie HTML. Die Auslieferung hängt nicht von einem JavaScript-Rendering oder vom Abspielen der Scroll-Animationen ab.
+
+Die Content Negotiation ist für `/de`, `/en`, `/impressum`, `/en/legal`, `/datenschutz` und `/en/privacy` eingerichtet. Sie behandelt ausschließlich `GET` und `HEAD` und akzeptiert explizite positive Markdown-Gewichtungen. Ein Abruf mit `text/markdown;q=0` bleibt bei HTML. Es gibt keine Sonderfassung anhand eines KI-User-Agents: Die veröffentlichte Darstellung folgt dem angeforderten Medienformat.
+
+Zum Prüfen der veröffentlichten Antwortheader auf Windows:
+
+```powershell
+curl.exe -I -H "Accept: text/markdown" https://www.bonanza-ranch.com/en
+curl.exe -I -H "Accept: text/markdown;q=0" https://www.bonanza-ranch.com/en
+```
+
+Der erste Aufruf erwartet HTTP 200 und `Content-Type: text/markdown; charset=utf-8`, der zweite HTTP 200 und HTML. Der direkte Produktionsnachtest aller sechs URLs ist in [WEBREADER-DIAGNOSE-2026-10-07.md](docs/WEBREADER-DIAGNOSE-2026-10-07.md#markdown-auslieferung-veröffentlicht-und-live-geprüft) dokumentiert.
 
 Diese Ergänzungen orientieren sich an der Qilano-Auslieferung und sind an Bonanzas zwei Sprachen angepasst. Sie garantieren nicht, dass jedes KI-Lesetool eine Domain abrufen kann. Vercel-Login-Schutz und Firewall-Einstellungen sind eigene Hosting-Ebenen und werden durch diese Dateien nicht abgeschaltet.
 
@@ -241,6 +281,8 @@ Der Build erzeugt aus denselben veröffentlichten HTML- und Markdown-Inhalten ei
 | `/api/docs.html` | Direkt lesbare API-Dokumentation mit Beispielen |
 | `/.well-known/ard.json` und `/.well-known/ai-catalog.json` | Identische Discovery-Dateien mit Verweis auf die tatsächliche öffentliche Inhalts-API |
 
+Direkt erreichbare Beispiele: [Inhaltsverzeichnis](https://www.bonanza-ranch.com/api/content/index.json), [deutscher Seiteninhalt als JSON](https://www.bonanza-ranch.com/api/content/de.json), [englischer Seiteninhalt als Markdown](https://www.bonanza-ranch.com/_agent-markdown/en.md), [API-Katalog](https://www.bonanza-ranch.com/.well-known/api-catalog), [OpenAPI-Spezifikation](https://www.bonanza-ranch.com/openapi.json) und [API-Dokumentation](https://www.bonanza-ranch.com/api/docs.html).
+
 Der Katalog wird über HTML-Links und HTTP-`Link`-Header angekündigt. Die Verträge stehen in [agent-api.mjs](agent-api.mjs); [generate-agent-content.mjs](scripts/generate-agent-content.mjs) erzeugt die Dateien. Es gibt keine Buchungs-, Nachrichtenversand- oder Zahlungsoperation. Die API dokumentiert die vorhandenen Seiteninhalte und übernimmt deren Aktualisierungen bei jedem Build.
 
 [agent-discovery.mjs](agent-discovery.mjs) beschreibt dieselbe OpenAPI-Spezifikation im [ARD-Vorschlagsformat](https://agenticresourcediscovery.org/spec/). Die aktuelle ARD-Adresse und die von Lighthouse verwendete Vorgängeradresse `ai-catalog.json` sind über HTML- und HTTP-Link-Verweise auffindbar. Der Eintrag nennt ausschließlich die tatsächlich bereitgestellten Leseoperationen. RFC-9727-API-Katalog und ARD haben verschiedene Aufgaben und werden getrennt ausgeliefert.
@@ -256,7 +298,7 @@ Der Katalog wird über HTML-Links und HTTP-`Link`-Header angekündigt. Die Vertr
 | `get_bonanza_contact` | Die tatsächlich angezeigte öffentliche Kontaktadresse auslesen |
 | `open_bonanza_contact` | Den bestehenden Kontaktdialog anzeigen |
 
-Die Werkzeuge versenden keine Nachricht. Ihre Eingaben sind auf die vorhandenen Dokumente und Kapitel begrenzt. Abbruchsignale und das Aufräumen beim Verlassen beziehungsweise Verbergen der Seite sind umgesetzt. Die beiden Lesewerkzeuge sind mit `readOnlyHint` gekennzeichnet; Navigation und Dialogöffnung ändern die lokale Ansicht.
+Die Werkzeuge versenden keine Nachricht. Ihre Eingaben sind auf die vorhandenen Dokumente und Kapitel begrenzt. Jedes Werkzeug besitzt ein JSON-Eingabeschema mit `additionalProperties: false`; unbekannte Parameter und Dokumentkennungen werden auch in der Ausführung abgewiesen. Inhaltsabrufe sind auf die öffentliche API derselben Origin begrenzt und validieren Antworttyp und Dokumentkennung. Abbruchsignale und das Aufräumen beim Verlassen beziehungsweise Verbergen der Seite sind umgesetzt. Die Registrierung wird bei der Rückkehr aus dem Back/Forward-Cache wiederhergestellt. Die beiden Lesewerkzeuge sind mit `readOnlyHint` gekennzeichnet; Navigation und Dialogöffnung ändern die lokale Ansicht.
 
 Die Registrierung erfolgt nach Erkennung der **nativen `document.modelContext.registerTool`-Schnittstelle**, mit einem Kompatibilitätszweig für `navigator.modelContext`. Ohne Browserunterstützung bleibt die gewöhnliche Website nutzbar. Ein separat erreichbarer MCP-Server wird durch diese Browserintegration nicht bereitgestellt.
 
@@ -400,11 +442,11 @@ Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusät
 
 ## Qualitätssicherung
 
-Der Stand vom **7. Oktober 2026** besteht den Build und **58 automatisierte Tests**. Dazu gehören die API-Verträge und erzeugten Inhalte, ARD- und API-Kataloge, die WebMCP-Eingabegrenzen, Abbruchsignale und Registrierungszyklen sowie Sprach-, Slash- und Kapitelweiterleitungen. Zusätzlich geprüft werden die Startreihenfolge von Poster und Video, Bildquellen bei Scroll- und Cache-Wiederherstellung, JavaScript-freie Bildfallbacks und die WOFF2-/Unicode-Auslieferung. Die vier WebMCP-Werkzeuge wurden zusätzlich lokal und auf der Produktionsdomain über die native Schnittstelle aufgerufen. Die Einzelprüfungen dokumentieren [AGENT-READINESS-2026-10-07.md](docs/AGENT-READINESS-2026-10-07.md), [INDEXING-2026-10-07.md](docs/INDEXING-2026-10-07.md) und [PERFORMANCE-2026-10-07.md](docs/PERFORMANCE-2026-10-07.md).
+Der Stand vom **7. Oktober 2026** besteht den Build und **64 automatisierte Tests**. Dazu gehören die API-Verträge und erzeugten Inhalte, ARD- und API-Kataloge, die WebMCP-Eingabegrenzen, Abbruchsignale und Registrierungszyklen sowie Sprach-, Slash- und Kapitelweiterleitungen. Zusätzlich geprüft werden die Startreihenfolge von Poster und Video, Bildquellen bei Scroll- und Cache-Wiederherstellung, JavaScript-freie Bildfallbacks und die WOFF2-/Unicode-Auslieferung. Die vier WebMCP-Werkzeuge wurden zusätzlich lokal und auf der Produktionsdomain über die native Schnittstelle aufgerufen. Die Einzelprüfungen dokumentieren [AGENT-READINESS-2026-10-07.md](docs/AGENT-READINESS-2026-10-07.md), [INDEXING-2026-10-07.md](docs/INDEXING-2026-10-07.md) und [PERFORMANCE-2026-10-07.md](docs/PERFORMANCE-2026-10-07.md).
 
 Nach Veröffentlichung bestanden **87/87 öffentliche HTTP-Prüfungen**. Der aktuelle Live-Lauf mit **Lighthouse 13.5.0 / Chrome 152** zeigt **5/5 Agentic Browsing**: native Werkzeuge und gültige Eingabeschemas, gültiger AI-Katalog, llms.txt und stabile Seitenstruktur. Formularabdeckung bleibt mangels Kontaktformular nicht anwendbar. Der öffentliche Agent-Readiness-Scanner meldet unabhängig davon **Level 4: Agent Integrated**; seine abweichende WebMCP-Erkennung und der niedrige OpenAPI-Medienarten-Hinweis in Lighthouse sind im Prüfbericht festgehalten.
 
-Der dokumentierte Stand vom **6. Oktober 2026** besteht den Produktionsbuild und **25 automatisierte Tests**. `npm audit` meldet für sämtliche geprüften Produktions- und Entwicklungsabhängigkeiten **keine bekannten Sicherheitslücken**. Geprüft werden unter anderem:
+Die Abhängigkeitsprüfung vom **6. Oktober 2026** meldete mit `npm audit` für die damals geprüften Produktions- und Entwicklungsabhängigkeiten **keine bekannten Sicherheitslücken**. Die aktuelle Testsuite prüft unter anderem:
 
 - Deutschland → Deutsch; andere und unbekannte Länder → Englisch.
 - Vorrang einer gespeicherten Sprachwahl und Umgang mit ungültigen Cookie-Werten.
