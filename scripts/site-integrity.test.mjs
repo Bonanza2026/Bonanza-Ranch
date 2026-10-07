@@ -87,10 +87,18 @@ test('HTML does not eagerly load several video formats or the unopened film', ()
     assert.equal(html('.ranch-film source[data-src]').length, 2);
     assert.equal(html('.hero-poster img').attr('fetchpriority'), 'high');
     assert.equal(html('link[rel="stylesheet"]').length, 0, 'Production CSS should not add render-blocking round trips');
-    for (const font of ['/fonts/PPFragment-GlareVariable.woff', '/fonts/Inter-Regular.woff2']) {
+    for (const font of ['/fonts/PPFragment-GlareVariable-v1.woff2', '/fonts/Inter-Regular-latin-ext-v1.woff2', '/fonts/Inter-Medium-latin-ext-v1.woff2']) {
       assert.equal(html(`link[rel="preload"][as="font"][href="${font}"]`).length, 1);
       assert.ok(existsSync(new URL('../dist' + font, import.meta.url)));
     }
+    const delayed = html('img[data-journey-image]');
+    assert.equal(delayed.length, 4, 'Arrival and triptych pictures wait for their reveal');
+    delayed.each((_, image) => {
+      assert.equal(image.attribs.src, undefined, 'Clipped sticky pictures must not compete with the hero');
+      assert.ok(existsSync(new URL('../dist' + image.attribs['data-src'], import.meta.url)));
+    });
+    const withoutScripts = load(readFileSync(new URL(`../dist${path}/index.html`, import.meta.url), 'utf8'), { scriptingEnabled: false });
+    assert.equal(withoutScripts('noscript img').length, 4, 'All deferred pictures remain available without JavaScript');
   }
 });
 

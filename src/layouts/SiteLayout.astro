@@ -62,8 +62,9 @@ const webMcpTrialToken = import.meta.env.PUBLIC_WEBMCP_ORIGIN_TRIAL_TOKEN?.trim(
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json" set:html={serializeStructuredData(structuredData)} />
     <link rel="icon" type="image/webp" href="/bonanza/favicon.webp" />
-    <link rel="preload" href="/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/PPFragment-GlareVariable.woff" as="font" type="font/woff" crossorigin />
+    <link rel="preload" href="/fonts/PPFragment-GlareVariable-v1.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Inter-Regular-latin-ext-v1.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Inter-Medium-latin-ext-v1.woff2" as="font" type="font/woff2" crossorigin />
     {isHome && <>
       <link rel="preload" href="/media/hero-poster-mobile-v3.webp" as="image" media="(max-width: 767px)" fetchpriority="high" />
       <link rel="preload" href="/media/hero-poster-v3.webp" as="image" media="(min-width: 768px)" fetchpriority="high" />

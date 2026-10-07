@@ -52,7 +52,7 @@ export function pageToMarkdown(html, path) {
     }
     if (tag === 'img') {
       const alt = compact(node.attribs.alt || '');
-      const src = url(node.attribs.src);
+      const src = url(node.attribs.src || node.attribs['data-src']);
       return alt && src ? `\n\n![${escape(alt)}](<${src}>)\n\n` : '';
     }
     if (tag === 'strong' || tag === 'b') return `**${compact(children())}**`;

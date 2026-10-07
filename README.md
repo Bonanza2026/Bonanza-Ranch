@@ -280,7 +280,10 @@ Die Auslieferung ist auf große Bildwelten bei möglichst wenig unnötigem Daten
 - WebM als bevorzugtes Hero-Videoformat; MP4 dient als Kompatibilitätsfallback.
 - Getrennte mobile und Desktop-Videoquellen, statt beide Größen parallel zu laden.
 - Responsive Hero-Poster mit zum Bildschirm passendem Preload.
+- Hero-Autoplay beginnt erst nach dem dekodierten Poster und dem tatsächlich gemeldeten ersten sichtbaren Seitenaufbau (First Contentful Paint). Frühe Berührungen ziehen den Videodownload nicht vor. Browser ohne Paint Timing erhalten einen Zweiframe-Fallback.
 - Lazy Loading und asynchrones Decoding bei nachfolgenden Bildern, soweit in der jeweiligen Komponente vorgesehen.
+- Das später enthüllte Südafrika-Bild und die drei Tierporträts erhalten ihre Bildquellen erst mit ausreichendem Scroll-Vorlauf. So laden verdeckte Sticky-Bilder nicht bereits mit dem Hero; vollständige `noscript`-Bilder erhalten den Inhalt ohne JavaScript. Die Markdown-Ausgabe enthält weiterhin die Bildreferenzen.
+- Lokal gespeicherte Inter-Schriften werden für lateinische und erweiterte lateinische Zeichen als kleinere WOFF2-Dateien ausgeliefert. Konturen, Laufweiten und Kerning bleiben identisch; andere Schriftsysteme nutzen die vollständigen Originalfonts als getrennten Unicode-Fallback. PP Fragment bleibt bytegleich und wird korrekt als WOFF2 eingebunden.
 - Gezielter Ladevorlauf im Erlebnisbereich: Bilder bis zu zwei Bildschirmbreiten bzw. -höhen vor der sichtbaren Ansicht werden früher angefordert. Der zusätzliche Vorlauf startet höchstens zwei Bilder gleichzeitig und berücksichtigt die tatsächlichen Positionen im horizontal bewegten Kapitel. Bilddateien, Auflösung und responsive Quellen bleiben unverändert.
 - Der separat aufrufbare Film erhält seine Medienquelle erst beim Öffnen.
 - Pausieren des Hero-Videos bei verdecktem oder nicht sichtbarem Inhalt.
@@ -382,7 +385,7 @@ Die statischen Dateien liegen nach dem Build in `dist`. Vercel übernimmt zusät
 
 ## Qualitätssicherung
 
-Die Ergänzung vom **7. Oktober 2026** besteht den Build und **46 automatisierte Tests**. Dazu gehören die API-Verträge und erzeugten Inhalte, ARD- und API-Kataloge, die WebMCP-Eingabegrenzen, Abbruchsignale und Registrierungszyklen sowie Sprach-, Slash- und Kapitelweiterleitungen. Die vier WebMCP-Werkzeuge wurden zusätzlich lokal und auf der Produktionsdomain über die native Schnittstelle aufgerufen. Den aktuellen Umfang dokumentieren [AGENT-READINESS-2026-10-07.md](docs/AGENT-READINESS-2026-10-07.md) und [INDEXING-2026-10-07.md](docs/INDEXING-2026-10-07.md).
+Der Stand vom **7. Oktober 2026** besteht den Build und **58 automatisierte Tests**. Dazu gehören die API-Verträge und erzeugten Inhalte, ARD- und API-Kataloge, die WebMCP-Eingabegrenzen, Abbruchsignale und Registrierungszyklen sowie Sprach-, Slash- und Kapitelweiterleitungen. Zusätzlich geprüft werden die Startreihenfolge von Poster und Video, Bildquellen bei Scroll- und Cache-Wiederherstellung, JavaScript-freie Bildfallbacks und die WOFF2-/Unicode-Auslieferung. Die vier WebMCP-Werkzeuge wurden zusätzlich lokal und auf der Produktionsdomain über die native Schnittstelle aufgerufen. Die Einzelprüfungen dokumentieren [AGENT-READINESS-2026-10-07.md](docs/AGENT-READINESS-2026-10-07.md), [INDEXING-2026-10-07.md](docs/INDEXING-2026-10-07.md) und [PERFORMANCE-2026-10-07.md](docs/PERFORMANCE-2026-10-07.md).
 
 Nach Veröffentlichung bestanden **87/87 öffentliche HTTP-Prüfungen**. Der aktuelle Live-Lauf mit **Lighthouse 13.5.0 / Chrome 152** zeigt **5/5 Agentic Browsing**: native Werkzeuge und gültige Eingabeschemas, gültiger AI-Katalog, llms.txt und stabile Seitenstruktur. Formularabdeckung bleibt mangels Kontaktformular nicht anwendbar. Der öffentliche Agent-Readiness-Scanner meldet unabhängig davon **Level 4: Agent Integrated**; seine abweichende WebMCP-Erkennung und der niedrige OpenAPI-Medienarten-Hinweis in Lighthouse sind im Prüfbericht festgehalten.
 

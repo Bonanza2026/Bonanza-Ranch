@@ -23,7 +23,8 @@ const e = "/bonanza/experiences/";
         <figure class="reserve-side reserve-side-left">
           <div>
             <img
-              src={`${e}leopard-portrait.webp`}
+              data-journey-image="reserve"
+              data-src={`${e}leopard-portrait.webp`}
               alt={t(
                 "Leopard im südafrikanischen Busch",
                 "Leopard in the South African bush",
@@ -32,11 +33,15 @@ const e = "/bonanza/experiences/";
               height="799"
               loading="lazy"
             />
+            <noscript>
+              <img src={`${e}leopard-portrait.webp`} alt={t("Leopard im südafrikanischen Busch", "Leopard in the South African bush")} width="1080" height="799" loading="lazy" />
+            </noscript>
           </div>
         </figure>
         <figure class="reserve-center">
           <img
-            src={`${e}lioness-portrait.webp`}
+            data-journey-image="reserve"
+            data-src={`${e}lioness-portrait.webp`}
             alt={t(
               "Löwin im Porträt",
               "Portrait of a lioness",
@@ -45,11 +50,15 @@ const e = "/bonanza/experiences/";
             height="1401"
             loading="lazy"
           />
+          <noscript>
+            <img src={`${e}lioness-portrait.webp`} alt={t("Löwin im Porträt", "Portrait of a lioness")} width="1080" height="1401" loading="lazy" />
+          </noscript>
         </figure>
         <figure class="reserve-side reserve-side-right">
           <div>
             <img
-              src={`${e}springbok-leap.webp`}
+              data-journey-image="reserve"
+              data-src={`${e}springbok-leap.webp`}
               alt={t(
                 "Springböcke in der offenen Landschaft",
                 "Springbok in the open landscape",
@@ -58,6 +67,9 @@ const e = "/bonanza/experiences/";
               height="716"
               loading="lazy"
             />
+            <noscript>
+              <img src={`${e}springbok-leap.webp`} alt={t("Springböcke in der offenen Landschaft", "Springbok in the open landscape")} width="1080" height="716" loading="lazy" />
+            </noscript>
           </div>
         </figure>
       </div>

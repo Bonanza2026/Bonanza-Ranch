@@ -35,6 +35,7 @@ test('alternative documents keep content, readable headings and public links wit
     <p>Wine from our own vineyard. <a href="/en#contact">Contact us</a>.</p>
     <ul><li>First experience</li><li>Second experience</li></ul>
     <img src="/photo.webp" alt="Ranch landscape"><img src="/cloud.webp" alt="">
+    <img data-src="/wildlife.webp" alt="Wildlife portrait"><noscript><img src="/wildlife.webp" alt="Wildlife portrait"></noscript>
     <button>Player controls</button><div aria-hidden="true">Decorative duplicate</div>
     <script>alert('not content')</script><aside>Duplicate contents</aside>
     </main><footer><a href="mailto:info@bonanza-ranch.com">Email</a></footer></body></html>`;
@@ -44,6 +45,7 @@ test('alternative documents keep content, readable headings and public links wit
   assert.ok(markdown.includes(`Wine from our own vineyard. [Contact us](<${siteUrl}/en#contact>).`));
   assert.ok(markdown.includes('- First experience\n- Second experience'));
   assert.ok(markdown.includes(`![Ranch landscape](<${siteUrl}/photo.webp>)`));
+  assert.equal(markdown.split(`![Wildlife portrait](<${siteUrl}/wildlife.webp>)`).length - 1, 1);
   assert.ok(markdown.includes('[Email](<mailto:info@bonanza-ranch.com>)'));
   assert.doesNotMatch(markdown, /Navigation controls|Player controls|Decorative duplicate|alert\(|Duplicate contents|cloud.webp/);
 });

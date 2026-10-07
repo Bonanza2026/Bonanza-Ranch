@@ -1,3 +1,65 @@
+/** Gate scroll-revealed images whose sticky geometry defeats native lazy loading. */
+export function initializeJourneyImageLoading(root) {
+  if (!root) return { destroy() {} };
+  const view = root.ownerDocument.defaultView;
+  const arrival = [...root.querySelectorAll('img[data-journey-image="arrival"]')];
+  const portraits = [...root.querySelectorAll('img[data-journey-image="reserve"]')];
+  const flight = root.querySelector('[data-flight-image-trigger]');
+  const reserve = root.querySelector('.reserve-introduction');
+  const reduced = view.matchMedia?.('(prefers-reduced-motion: reduce)');
+  const loaded = new WeakSet();
+  let destroyed = false;
+
+  const load = (images) => {
+    if (destroyed) return;
+    for (const image of images) {
+      if (loaded.has(image)) continue;
+      loaded.add(image);
+      image.loading = 'eager';
+      // Keep the exact responsive candidates and browser DPR selection. Set the
+      // candidate list first so no fallback-only download races the real image.
+      if (image.dataset.srcset) image.srcset = image.dataset.srcset;
+      if (image.dataset.src) image.src = image.dataset.src;
+    }
+  };
+  if (typeof view.IntersectionObserver !== 'function') {
+    load(portraits);
+    if (!reduced?.matches) load(arrival);
+    return { destroy() { destroyed = true; } };
+  }
+
+  const flightObserver = new view.IntersectionObserver((entries) => {
+    if (!reduced?.matches && entries.some((entry) => entry.isIntersecting && entry.intersectionRatio > 0)) {
+      load(arrival);
+      flightObserver.disconnect();
+    }
+  }, { rootMargin: '0px', threshold: 0.001 });
+  const reserveObserver = new view.IntersectionObserver((entries) => {
+    if (entries.some((entry) => entry.isIntersecting)) {
+      load(portraits);
+      reserveObserver.disconnect();
+    }
+  }, { rootMargin: `${view.innerHeight}px 0px`, threshold: 0 });
+  const observeFlight = () => {
+    if (flight && !destroyed && !reduced?.matches && arrival.some((image) => !loaded.has(image))) flightObserver.observe(flight);
+    else flightObserver.disconnect();
+  };
+  const hide = (event) => { if (!event.persisted) destroy(); };
+  function destroy() {
+    if (destroyed) return;
+    destroyed = true;
+    flightObserver.disconnect();
+    reserveObserver.disconnect();
+    reduced?.removeEventListener('change', observeFlight);
+    view.removeEventListener('pagehide', hide);
+  }
+  observeFlight();
+  if (reserve && portraits.length) reserveObserver.observe(reserve);
+  reduced?.addEventListener('change', observeFlight);
+  view.addEventListener('pagehide', hide);
+  return { destroy };
+}
+
 /** Start nearby story photos early without changing their sources or quality. */
 export function createStoryImageLoader(film) {
   if (!film) return { update() {}, destroy() {} };

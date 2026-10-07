@@ -39,3 +39,5 @@ scripts/*
 !scripts/agent-api.test.mjs
 !scripts/agent-discovery.test.mjs
 !scripts/canonical-routing.test.mjs
+!scripts/font-delivery.test.mjs
+!docs/PERFORMANCE-2026-10-07.md

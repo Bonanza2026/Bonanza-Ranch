@@ -1,16 +1,35 @@
 @font-face {
   font-family: "PP Fragment";
-  src: url("/fonts/PPFragment-GlareVariable.woff") format("woff");
+  src: url("/fonts/PPFragment-GlareVariable-v1.woff2") format("woff2");
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
 }
 @font-face {
   font-family: "Inter";
+  src: url("/fonts/Inter-Regular-latin-ext-v1.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0000-024F, U+0259, U+0300-036F, U+1E00-1EFF, U+2000-209F, U+20A0-20CF, U+2100-214F, U+2190-21FF, U+2212, U+2215, U+25A0-25FF, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Medium-latin-ext-v1.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  unicode-range: U+0000-024F, U+0259, U+0300-036F, U+1E00-1EFF, U+2000-209F, U+20A0-20CF, U+2100-214F, U+2190-21FF, U+2212, U+2215, U+25A0-25FF, U+FEFF, U+FFFD;
+}
+/* Original glyphs for other scripts remain available without being downloaded
+   for Latin text. These ranges complement the Latin/Latin-Extended subsets. */
+@font-face {
+  font-family: "Inter";
   src: url("/fonts/Inter-Regular.woff2") format("woff2");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
+  unicode-range: U+0250-0258, U+025A-02FF, U+0370-1DFF, U+1F00-1FFF, U+20D0-20FF, U+2150-218F, U+2200-2211, U+2213-2214, U+2216-259F, U+2600-FEFE, U+FF00-FFFC, U+FFFE-10FFFF;
 }
 @font-face {
   font-family: "Inter";
@@ -18,6 +37,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
+  unicode-range: U+0250-0258, U+025A-02FF, U+0370-1DFF, U+1F00-1FFF, U+20D0-20FF, U+2150-218F, U+2200-2211, U+2213-2214, U+2216-259F, U+2600-FEFE, U+FF00-FFFC, U+FFFE-10FFFF;
 }
 :root {
   --font-display: "PP Fragment", Georgia, serif;
