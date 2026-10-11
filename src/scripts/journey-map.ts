@@ -2,7 +2,7 @@ type JourneyDependencies = {
   gsap: any;
 };
 
-/** Synchronized Europe/Asia routes over the local SVG map. */
+/** Synchronized Europe/Asia/UAE routes over the local SVG map. */
 export function bindJourneyMap({ gsap }: JourneyDependencies) {
   const root = document.querySelector<HTMLElement>("[data-journey-map]");
   if (!root) return () => {};
@@ -22,7 +22,7 @@ export function bindJourneyMap({ gsap }: JourneyDependencies) {
   for (const {route, length} of flights) route.style.strokeDasharray = String(length);
   onward.style.strokeDasharray = String(onwardLength);
   const paint = () => {
-    // Both flights reach Cape Town together, then share the short George leg.
+    // All flights reach Cape Town together, then share the short George leg.
     const flightProgress = Math.min(1, state.progress / 0.88);
     const onwardProgress = Math.max(0, (state.progress - 0.88) / 0.12);
     onward.style.strokeDashoffset = String(onwardLength * (1 - onwardProgress));

@@ -6,7 +6,7 @@
 
 **Astro 7 · Lenis · GSAP ScrollTrigger · Deutsch / Englisch · WebP · WebM · Vercel · WebMCP · Markdown Content Negotiation**
 
-Die Website führt vom ersten Landschaftseindruck über die Anreise aus Europa und Asien bis zu Tierwelt, privaten Erlebnissen und dem Sternenhimmel Südafrikas. Gestaltung, Bildsprache, Texte und Bewegung greifen dabei ineinander: großzügige Fotografie, warme Beigetöne, grüne Typografie und abgestimmte Übergänge.
+Die Website führt vom ersten Landschaftseindruck über die Anreise aus Europa, Asien und den Vereinigten Arabischen Emiraten bis zu Tierwelt, privaten Erlebnissen und dem Sternenhimmel Südafrikas. Gestaltung, Bildsprache, Texte und Bewegung greifen dabei ineinander: großzügige Fotografie, warme Beigetöne, grüne Typografie und abgestimmte Übergänge.
 
 Dieses Repository enthält den bearbeitbaren Astro-Quellcode, die lokalen Medien, die Animationen, die Sprachsteuerung sowie die Konfiguration für Build, Suchmaschinen und Hosting.
 
@@ -81,9 +81,9 @@ Der Hero verbindet ein Landschaftsvideo mit der Bonanza-Marke und einer Einladun
 - Wird Autoplay vom Browser verhindert, bleibt das Poster sichtbar.
 - Ein dezenter dunkler Verlauf und ein feiner Schatten hinter dem Einführungstext verbessern die Lesbarkeit über hellen und wechselnden Videoszenen.
 
-### Karte mit zwei Anreiserouten
+### Karte mit drei Anreiserouten
 
-Die Karte ordnet die Ranch geografisch ein. Animierte Routen führen aus **Europa und Asien** nach Kapstadt. Beide erreichen ihr Ziel gleichzeitig; anschließend führt die gemeinsame Strecke über George in Richtung Klein Karoo.
+Die Karte ordnet die Ranch geografisch ein. Animierte Routen führen aus **Europa, Asien und den Vereinigten Arabischen Emiraten** nach Kapstadt. Alle drei erreichen ihr Ziel gleichzeitig; anschließend führt die gemeinsame Strecke über George in Richtung Klein Karoo.
 
 Die Routen werden als SVG-Pfade gezeichnet und anhand des Scrollfortschritts animiert. Mobil sind Karte und Erklärung getrennt angeordnet, damit Ortsnamen und Text lesbar bleiben. Die Reliefkarte verwendet eine ausgewiesene Esri-Kartenquelle und stellt eine schematische Anreise dar.
 

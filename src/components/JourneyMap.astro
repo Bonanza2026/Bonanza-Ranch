@@ -9,12 +9,14 @@ const project = (lon: number, lat: number) => ({
 });
 const europe = project(12, 49);
 const asia = project(90, 34);
+const uae = project(54.5, 24.5);
 const cape = project(18.42322, -33.92584);
 const george = project(22.46173, -33.963);
 const northwest = project(-180, 90),
   southeast = project(180, -90);
 const europeRoute = `M ${europe.x} ${europe.y} C ${europe.x - 88} ${europe.y + 256}, ${cape.x - 116} ${cape.y - 192}, ${cape.x} ${cape.y}`;
 const asiaRoute = `M ${asia.x} ${asia.y} C ${asia.x - 70} ${asia.y + 350}, ${cape.x + 190} ${cape.y - 150}, ${cape.x} ${cape.y}`;
+const uaeRoute = `M ${uae.x} ${uae.y} C ${uae.x + 40} ${uae.y + 230}, ${cape.x + 120} ${cape.y - 160}, ${cape.x} ${cape.y}`;
 const onwardRoute = `M ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${george.x} ${george.y}`;
 ---
 
@@ -27,7 +29,7 @@ const onwardRoute = `M ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${geo
   <header class="jm-heading" data-nav-theme="light">
     <p class="jm-departure">
       {en ? "The departure" : "Der Aufbruch"}
-      <span>{en ? "Europe · Asia" : "Europa · Asien"}</span>
+      <span>{en ? "Europe · Asia · United Arab Emirates" : "Europa · Asien · Vereinigte Arabische Emirate"}</span>
     </p>
     <div>
       <h2>{en ? "A little further south." : "Ein Stück weiter südlich."}</h2>
@@ -80,9 +82,11 @@ const onwardRoute = `M ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${geo
         />
         <path class="jm-route-guide" d={europeRoute} />
         <path class="jm-route-guide" d={asiaRoute} />
+        <path class="jm-route-guide" d={uaeRoute} />
         <path class="jm-route-guide" d={onwardRoute} />
         <path class="jm-route" data-flight-route="europe" d={europeRoute} />
         <path class="jm-route" data-flight-route="asia" d={asiaRoute} />
+        <path class="jm-route" data-flight-route="uae" d={uaeRoute} />
         <path class="jm-route" data-onward-route d={onwardRoute} />
         <g class="jm-city" transform={`translate(${europe.x} ${europe.y})`}>
           <circle r="4" />
@@ -93,6 +97,10 @@ const onwardRoute = `M ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${geo
         <g class="jm-city" transform={`translate(${asia.x} ${asia.y})`}>
           <circle r="4" />
           <text x="-20" y="-12" text-anchor="end">{en ? "ASIA" : "ASIEN"}</text>
+        </g>
+        <g class="jm-city" transform={`translate(${uae.x} ${uae.y})`}>
+          <circle r="4" />
+          <text x="20" y="-12">{en ? "UAE" : "VAE"}</text>
         </g>
         <g class="jm-city" transform={`translate(${cape.x} ${cape.y})`}>
           <circle r="4" />
@@ -110,6 +118,10 @@ const onwardRoute = `M ${cape.x} ${cape.y} Q ${cape.x + 18} ${cape.y + 7}, ${geo
           </text>
         </g>
         <g class="jm-traveller" data-traveller="europe">
+          <circle class="jm-traveller-ring" r="16" />
+          <circle r="5" />
+        </g>
+        <g class="jm-traveller" data-traveller="uae">
           <circle class="jm-traveller-ring" r="16" />
           <circle r="5" />
         </g>
