@@ -198,7 +198,12 @@ test('authored languages stay intact and footer chapter links resolve in both la
   ]) {
     const html = page('/' + lang);
     assert.equal(html('html').attr('translate'), 'no');
+    assert.ok(html('html').hasClass('notranslate'));
     assert.equal(html('meta[name="google"]').attr('content'), 'notranslate');
+    const ranchLabel = html('.reserve-area small').first();
+    assert.equal(ranchLabel.contents().filter((_, el) => el.type === 'text').text(), 'BONANZA RANCH');
+    assert.equal(ranchLabel.attr('translate'), 'no');
+    assert.ok(ranchLabel.hasClass('notranslate'));
     const menuLabels = html('nav .menu-toggle .btn-text, nav .nav-left .btn-text').map((_, el) => html(el).text().trim()).get();
     assert.ok(menuLabels.length >= 2);
     assert.ok(menuLabels.every(label => label === menu), menuLabels.join(', '));

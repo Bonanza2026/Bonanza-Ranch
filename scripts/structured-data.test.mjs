@@ -90,6 +90,11 @@ test('legal pages have descriptions in their own language and one public contact
       assert.equal(html('.legal-intro > a').attr('href'), '/' + lang);
       const emails = html('.legal-copy address a[href^="mailto:"]').map((_, el) => html(el).attr('href')).get();
       assert.deepEqual(emails, ['mailto:' + operator.email]);
+      const contact = html('.legal-copy address');
+      assert.equal(contact.find('strong').text(), 'SKYWIND SOUTH AFRICA (PTY) LTD');
+      assert.equal(contact.attr('translate'), 'no');
+      assert.ok(contact.hasClass('notranslate'));
+      assert.equal(contact.attr('lang'), 'en');
       assert.ok(!html('.legal-copy').text().match(/info@skywind\./i));
     }
   }

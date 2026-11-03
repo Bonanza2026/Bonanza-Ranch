@@ -1,6 +1,6 @@
 import { operator } from './operator.mjs';
 export { operator };
-const contact = `<address><p><strong>${operator.company}</strong><br>${operator.representative}</p><p>${operator.address}<br><a href="mailto:${operator.email}">${operator.email}</a></p></address>`;
+const contact = `<address class="notranslate" translate="no" lang="en"><p><strong>${operator.company}</strong><br>${operator.representative}</p><p>${operator.address}<br><a href="mailto:${operator.email}">${operator.email}</a></p></address>`;
 const email = `<a href="mailto:${operator.email}">${operator.email}</a>`;
 type Section = { title: string; html: string };
 
