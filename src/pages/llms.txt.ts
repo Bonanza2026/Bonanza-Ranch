@@ -3,7 +3,7 @@ import { siteUrl } from '../../site.config.mjs';
 export function GET() {
   const content = `# Bonanza Ranch Eco Wildlife Estate
 
-> Bonanza Ranch in der Klein Karoo, Südafrika. Eine private Ranch mit 6.300 Hektar Natur, umgeben von weiteren 36.000 Hektar Wildtierschutzgebiet. Die Website stellt die Ranch, ihre Lage und das Wohn-, Natur- und Freizeitangebot vor.
+> Bonanza Ranch in der Klein Karoo, Südafrika. Eine private Ranch mit 6.300 Hektar Natur, umgeben von weiteren 27.000 Hektar Wildtierschutzgebiet. Die Website stellt die Ranch, ihre Lage und das Wohn-, Natur- und Freizeitangebot vor.
 
 Die Ranch und das umliegende Wildtierschutzgebiet bestehen bereits. Die Flächenangaben beschreiben zwei unterschiedliche Gebiete. Sie dürfen nicht gleichgesetzt werden. Auf der Website gekennzeichnete Konzeptvisualisierungen sind keine Fotografien fertiggestellter Anlagen.
 

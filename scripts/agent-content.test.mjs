@@ -110,8 +110,8 @@ test('all canonical Markdown pages and full content reflect the same built Germa
     assert.doesNotMatch(markdown, /<script|<style|data-nav-theme|custom-cursor/);
     assert.equal($('link[rel="alternate"][type="text/markdown"]').attr('href'), siteUrl + markdownPath(path));
   }
-  assert.match(read('_agent-markdown/de.md'), /6\.300[\s\S]*36\.000/);
-  assert.match(read('_agent-markdown/en.md'), /6,300[\s\S]*36,000/);
+  assert.match(read('_agent-markdown/de.md'), /6\.300[\s\S]*27\.000/);
+  assert.match(read('_agent-markdown/en.md'), /6,300[\s\S]*27,000/);
   assert.match(read('_agent-markdown/de.md'), /Lange ABENDE/);
   assert.match(read('_agent-markdown/en.md'), /Long EVENINGS/);
 });

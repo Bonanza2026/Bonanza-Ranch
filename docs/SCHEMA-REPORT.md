@@ -21,7 +21,7 @@ Jede Seite erhält einen beim Astro-Build erzeugten JSON-LD-Graphen. Der Graph s
 | jeweilige URL mit `#webpage` | `WebPage` | Die einzelne Sprachversion mit selbstreferenzieller URL, passendem Titel und passender Beschreibung. |
 | `/#hero-image` | `ImageObject` | Nur auf den Startseiten: das tatsächlich verwendete Giraffen-Titelbild mit korrekten Abmessungen und übersetzter Bildbeschreibung. |
 
-Die Korrespondenzanschrift in Sedgefield bezeichnet den Betreiber. Sie wird ausdrücklich nicht als Standort der Ranch ausgegeben. Das bestehende Wildtierschutzgebiet mit 36.000 Hektar wird nicht zur Fläche der Ranch addiert.
+Die Korrespondenzanschrift in Sedgefield bezeichnet den Betreiber. Sie wird ausdrücklich nicht als Standort der Ranch ausgegeben. Das bestehende Wildtierschutzgebiet mit 27.000 Hektar wird nicht zur Fläche der Ranch addiert (Flächenangabe auf Betreiberwunsch am 24. November 2026 aktualisiert).
 
 ## Prüfkriterien
 

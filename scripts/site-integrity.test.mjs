@@ -17,7 +17,7 @@ test('crawler files expose the real sitemap and resolvable public content', () =
   const llms = read('llms.txt');
   assert.match(llms, /^# Bonanza Ranch Eco Wildlife Estate\n/);
   assert.match(llms, /6\.300/);
-  assert.match(llms, /36\.000/);
+  assert.match(llms, /27\.000/);
   for (const [, href] of llms.matchAll(/\]\((https:[^)]+)\)/g)) {
     const url = new URL(href);
     assert.equal(url.origin, siteUrl);

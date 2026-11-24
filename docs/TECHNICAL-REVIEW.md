@@ -18,7 +18,7 @@ Baseline: production dependency audit found no known vulnerabilities. Residue an
 
 ## Boundaries
 
-The ranch area (6,300 ha) and surrounding wildlife conservation area (36,000 ha) are separate figures provided by the operator. Discovery text must not combine them or revive the Paris comparison. Existing motion and editorial content remain outside this cleanup.
+The ranch area (6,300 ha) and surrounding wildlife conservation area (27,000 ha, updated at the operator's request on 24 November 2026) are separate figures provided by the operator. Discovery text must not combine them or revive the Paris comparison. Existing motion and editorial content remain outside this cleanup.
 
 The current production hostname is bonanza-gamma.vercel.app. Set SITE_URL to the final HTTPS origin and rebuild when the domain changes. Canonicals, language alternates, robots, llms and sitemap all use that setting. The geographic entry at `/` stays available; `/de` and `/en` provide stable language URLs.
 

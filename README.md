@@ -94,7 +94,7 @@ Auf „Afrikas Wildnis. Ihr privater Rückzugsort.“ folgen drei Tiermotive mit
 Mobil verteilt sich der Zoom über eine längere Scrollstrecke, bevor der folgende Abschnitt das Bild überlagert. Das Ranch-Porträt verbindet die Landschaft mit den getrennt dargestellten Flächenangaben:
 
 - **6.300 Hektar Bonanza Ranch.**
-- **Weitere 36.000 Hektar umgebendes Wildtierschutzgebiet.**
+- **Weitere 27.000 Hektar umgebendes Wildtierschutzgebiet.**
 
 ### Natur als Sticky-Bildgeschichte
 
